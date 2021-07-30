@@ -42,9 +42,10 @@ module load container_env fastqc
 sbatch scripts/Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
 ```
 
-
 2. Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files
 *(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; reparing is done in 1-2 hrs)*
+
+* porque
 
 Scripts to run
 
