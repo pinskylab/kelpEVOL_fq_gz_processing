@@ -56,6 +56,11 @@ Scripts to run
 	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output, which is already set to run after these steps
 
 
+Execute runFASTP_1st_trim.sbatch
+```sh
+sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
+```
+
 Execute after you have update scripts with your species directories
 ```sh
 sbatch runFASTP_1st_trim.sbatch/
