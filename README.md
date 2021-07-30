@@ -47,33 +47,18 @@ sbatch scripts/Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_dat
 
 Scripts to run
 
-* [runFASTP_1st_trim.sbatch]()
+* [runFASTP_1st_trim.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch)
 * [cumplify.sbatch]()
 * [runFASTP_2st_trim.sbatch]()
 * [repair.sbatch]()
 
 	* open scripts for usage instructions
-	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output
+	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output, which is already set to run after these steps
 
-
-	       	 * open scripts for usage instructions    
-	       	 * review the outputs from `fastp` and `fastq_screen` with `multiqc` output
-
-5. Fetch the genome properties for your species
-        * [`denovo_genome_assembly/pre-assembly_processing`](https://github.com/philippinespire/denovo_genome_assembly/tree/main/pre-assembly_processing)
-	        * open scripts for usage instructions and setting up variables and directories
-			* runFASTP_1st_trim.sbatch
-                        * cumplify.sbatch
-                        * runFASTP_2st_trim.sbatch
-                        * fastqscrn.sbatch
-                        * repair.sbatch
-                * review the outputs from `fastp` and `fastq_screen` with `multiqc` output
-
-All scripts are located in `/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/scripts`
 
 Execute after you have update scripts with your species directories
 ```sh
-sbatch ../../scripts/runFASTP_1st_trim.sbatch/
+sbatch runFASTP_1st_trim.sbatch/
 ```
 
 Move your log file into the `logs` dir
