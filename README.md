@@ -5,24 +5,24 @@ List of steps to take in raw fq files
 
 ---
 
-The purpose of this repo is to provide the steps for pprocessing raw fq files for both `Shotgun Sequencing Libraries - SSL data` for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing) 
+The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing) 
 
 Scripts with the `ssl` are designed for shotgun data
 
 Scripts with the `cssl` are designed for capture-shotgun data
 
-Scripts with no suffix in the name can be used for both types of data 
+Scripts with no suffix in the name can be used for both types of data
 
 ---
 
-0. Create your `species dir` and tTransfer your raw data 
+0. Create your `species dir` and transfer your raw data 
 *(can take several hours)*
 
 1. Run `fastqc`
 *(can take several hours)*
     * review results with `multiqc` output
 
-Fastqc and Multiqc can be run simultaneously using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_ssl_data_processing/blob/main/scripts/Multi_FASTQC.sh) script in this repo
+Fastqc and Multiqc can be run simultaneously using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo
 
 Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, 
 (1) a suffix that will identify the files to be processed, and (2) the FULL path to these files. 
@@ -43,13 +43,18 @@ sbatch scripts/Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_dat
 ```
 
 
-4. Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files
+2. Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files
 *(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; reparing is done in 1-2 hrs)*
 
-	The stepts are listed in:	
-        * [`denovo_genome_assembly/pre-assembly_processing`](https://github.com/philippinespire/denovo_genome_assembly/tree/main/pre-assembly_processing)
-	        * open scripts for usage instructions    
-	        * review the outputs from `fastp` and `fastq_screen` with `multiqc` output
+Scripts to run:
+		* [runFASTP_1st_trim.sbatch]()
+                * [cumplify.sbatch]()
+                * [runFASTP_2st_trim.sbatch]()
+                * [fastqscrn.sbatch]()
+                * [repair.sbatch]()
+
+	       	 * open scripts for usage instructions    
+	       	 * review the outputs from `fastp` and `fastq_screen` with `multiqc` output
 
 5. Fetch the genome properties for your species
         * [`denovo_genome_assembly/pre-assembly_processing`](https://github.com/philippinespire/denovo_genome_assembly/tree/main/pre-assembly_processing)
