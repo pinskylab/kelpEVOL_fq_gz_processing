@@ -45,21 +45,16 @@ sbatch scripts/Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_dat
 2. Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files
 *(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; reparing is done in 1-2 hrs)*
 
-* porque
-
 Scripts to run
 
-        * from the literature or other sources
-        * estimate properties with *jellyfish* and *genomescope*
+* [runFASTP_1st_trim.sbatch]()
+* [cumplify.sbatch]()
+* [runFASTP_2st_trim.sbatch]()
+* [repair.sbatch]()
 
+	* open scripts for usage instructions
+	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output
 
-Scripts to run:
-
-		* [runFASTP_1st_trim.sbatch]()
-                * [cumplify.sbatch]()
-                * [runFASTP_2st_trim.sbatch]()
-                * [fastqscrn.sbatch]()
-                * [repair.sbatch]()
 
 	       	 * open scripts for usage instructions    
 	       	 * review the outputs from `fastp` and `fastq_screen` with `multiqc` output
