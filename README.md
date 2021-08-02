@@ -64,20 +64,25 @@ sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to 
 
 Execute `runCLUMPIFY_r1r2_array.bash` on Wahab. 
 
-The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sifno` to find out # of nodes idle in the main partition)
+The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
 ```sh
 #runCLUMPIFY_r1r2_array.bash <indir> <outdir> <tempdir> <max # of nodes to use at once>
-# do not use trailing / in paths
+# do not use trailing / in paths. Example:
 bash runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmparray /scratch/YOURUSERNAME 20
-#after completion, run checkClumpify.R to see if any files failed
-# look for this error "OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not e
-nough space' (errno=12)"
-# if some fail, try this: Then just raise "-c 20" to "-c 40".
 ```
 
-If the array set up doesn't work. Try running Clumpify on a turing himem node, see the [cssl repo for detail](https://github.com/philippinespire/pire_cssl_data_processing/tree/main/scripts)
+After completion, run `checkClumpify.R` to see if any files failed
+```
+enable_lmod
+module load container_env mapdamage2
+crun R < ../../pire_fq_gz_processing/checkClumpify.R --no-save
+```
+If all files were successful, `checkClumpify.R` will return "Clumpify Successfully worked on all samples". 
 
-Cleanup
-```
-mv *out ../logs
-```
+If some failed, the script will also let you know. Try raising "-c 20" to "-c 40" in `runCLUMPIFY_r1r2_array.bash` and run clumplify again
+
+Also look for this error "OpenJDK 64-Bit Server VM warning:
+INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not enough space' (errno=12)"
+
+If the array set up doesn't work. Try running Clumpify on a turing himem node, see the [cssl repo](https://github.com/philippinespire/pire_cssl_data_processing/tree/main/scripts) for details
+
