@@ -19,9 +19,9 @@ JOBID=$(sbatch --array=0-$((${#all_samples[@]}-1))%${NUMNODES} \
        --output=slurm-fqscrn.%A.%a.out \
        --partition main \
        -t 96:00:00 \
-       ../scripts/runFQSCRN_6.sbatch ${INDIR} ${OUTDIR} ${FQPATTERN})
+       /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.sbatch ${INDIR} ${OUTDIR} ${FQPATTERN})
 NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
 
 #Run Multiqc after array finishes
-JOBID=$(sbatch --dependency=afterany:${NUMBER1} ../scripts/runMULTIQC.sbatch ${OUTDIR} fqscrn_report)
+JOBID=$(sbatch --dependency=afterany:${NUMBER1} /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch ${OUTDIR} fqscrn_report)
 NUMBER2=$(echo ${JOBID} | sed 's/[^0-9]*//g')
