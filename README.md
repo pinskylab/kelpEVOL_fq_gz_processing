@@ -15,7 +15,8 @@ Scripts with no suffix in the name can be used for both types of data
 
 ---
 
-0. If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
+**0. Make a copy of your data**
+If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/<ssl|cssl>_raw_fq`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
 *(can take several hours)*
 
@@ -115,4 +116,11 @@ grep 'No reads in' slurm-fqscrn.JOBID*out
 bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ...
 bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
+```
+
+**6. Execute `runREPAIR.sbatch`
+
+```
+#runREPAIR.sbatch <indir> <outdir> <threads>
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmparray_fp2_fqscrn fq_fp1_clmparray_fp2_fqscrn_r$
 ```
