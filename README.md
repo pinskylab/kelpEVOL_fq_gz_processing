@@ -95,7 +95,7 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
 ```
 
-**5. Decontaminate files. Execute runFQSCRN_6.bash**
+**5. Decontaminate files. Execute `runFQSCRN_6.bash`**
 
 Check the number of available node `sinfo` (i.e. nodes in idle in the main partition).
  Try running one node per fq.gz file if possilbe or how many nodes are available.
@@ -118,7 +118,7 @@ bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 1 LlA0101
 bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 ```
 
-**6. Execute `runREPAIR.sbatch`
+**6. Execute `runREPAIR.sbatch`**
 
 ```
 #runREPAIR.sbatch <indir> <outdir> <threads>
