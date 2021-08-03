@@ -43,7 +43,7 @@ module load container_env fastqc
 sbatch scripts/Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
 ```
 
-2. Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files
+***Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
 *(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; reparing is done in 1-2 hrs)*
 
 Scripts to run
@@ -57,12 +57,12 @@ Scripts to run
 	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output, which is already set to run after these steps
 
 
-Execute `runFASTP_1st_trim.sbatch`
+2. Execute `runFASTP_1st_trim.sbatch`
 ```sh
 sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
 ```
 
-Execute `runCLUMPIFY_r1r2_array.bash` on Wahab. 
+3. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab. 
 
 The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
 ```sh
