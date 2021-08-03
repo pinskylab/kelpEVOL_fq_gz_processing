@@ -19,7 +19,7 @@ Scripts with no suffix in the name can be used for both types of data
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/<ssl|cssl>_raw_fq`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
 *(can take several hours)*
 
-1. Run `fastqc`
+1. Check the quality of your data. Run `fastqc`
 *(can take several hours)*
     * review results with `multiqc` output
 
@@ -57,12 +57,12 @@ Scripts to run
 	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output, which is already set to run after these steps
 
 
-2. Execute `runFASTP_1st_trim.sbatch`
+2. First trim. Execute `runFASTP_1st_trim.sbatch`
 ```sh
 sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
 ```
 
-3. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab. 
+3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab. 
 
 The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
 ```sh
@@ -86,10 +86,32 @@ INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not 
 
 If the array set up doesn't work. Try running Clumpify on a turing himem node, see the [cssl repo](https://github.com/philippinespire/pire_cssl_data_processing/tree/main/scripts) for details
 
-4. Execute `runFASTP_2.sbatch`
+4. Second trim. Execute `runFASTP_2.sbatch`
 ```sh
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
 sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
 ```
 
+5. Decontaminate files. Execute runFQSCRN_6.bash
+
+Check the number of available node `sinfo` (i.e. nodes in idle in the main partition).
+ Try running one node per fq.gz file if possilbe or how many nodes are available.
+ Yet, the number of nodes running simultaneously should not exceed that number of fq.gz files.
+```sh
+#runFQSCRN_6.bash <indir> <outdir> <number of nodes running simultaneously>
+# do not use trailing / in paths. Example:
+bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 20
+
+#confirm that all files were successfully completed
+# this will return any out files that had a problem, replace JOBID with your jobid
+grep 'error' slurm-fqscrn.JOBID*out
+grep 'No reads in' slurm-fqscrn.JOBID*out
+# if you see missing indiviudals or categories in the multiqc output, there was likely a ram error.  I'm not sure if the "error" search term catches it.
+
+# run the files that failed again.  This seems to work in most cases
+#runFQSCRN_6.bash <indir> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
+bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 1 LlA01010*r1.fq.gz
+...
+bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
+```
