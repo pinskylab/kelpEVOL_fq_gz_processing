@@ -101,7 +101,7 @@ Check the number of available node `sinfo` (i.e. nodes in idle in the main parti
  Try running one node per fq.gz file if possilbe or how many nodes are available.
  Yet, the number of nodes running simultaneously should not exceed that number of fq.gz files.
 * ***NOTE: you are executing the bash not the sbatch script***
-* ***This can take up to several days depending on the size of your dataset. Plan accordingly.
+* ***This can take up to several days depending on the size of your dataset. Plan accordingly***
 ```sh
 #runFQSCRN_6.bash <indir> <outdir> <number of nodes running simultaneously>
 # do not use trailing / in paths. Example:
