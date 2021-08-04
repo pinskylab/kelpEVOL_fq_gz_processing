@@ -11,6 +11,7 @@
 
 enable_lmod
 module load container_env pire_genome_assembly/2021.07.01
+module load multiqc
 
 export SINGULARITY_BIND=/home/e1garcia
 
@@ -55,4 +56,4 @@ ls $INDIR/$FQPATTERN | \
 
 # run multiqc on the fp2 results
 
-crun multiqc $OUTDIR -n $OUTDIR/2nd_fastp_report
+srun crun multiqc $OUTDIR -n $OUTDIR/2nd_fastp_report

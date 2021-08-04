@@ -23,5 +23,5 @@ JOBID=$(sbatch --array=0-$((${#all_samples[@]}-1))%${NUMNODES} \
 NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
 
 #Run Multiqc after array finishes
-JOBID=$(sbatch --dependency=afterany:${NUMBER1} /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch ${OUTDIR} fqscrn_report)
-NUMBER2=$(echo ${JOBID} | sed 's/[^0-9]*//g')
+#JOBID=$(sbatch --dependency=afterany:${NUMBER1} /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch ${OUTDIR} fqscrn_report)
+#NUMBER2=$(echo ${JOBID} | sed 's/[^0-9]*//g')
