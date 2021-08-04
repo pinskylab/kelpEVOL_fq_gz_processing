@@ -100,27 +100,50 @@ sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
 Check the number of available node `sinfo` (i.e. nodes in idle in the main partition).
  Try running one node per fq.gz file if possilbe or how many nodes are available.
  Yet, the number of nodes running simultaneously should not exceed that number of fq.gz files.
+* ***NOTE: you are executing the bash not the sbatch script***
+* ***This can take up to several days depending on the size of your dataset. Plan accordingly.
 ```sh
 #runFQSCRN_6.bash <indir> <outdir> <number of nodes running simultaneously>
 # do not use trailing / in paths. Example:
 bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 20
+```
+Confirm that all files were successfully completed
+```sh
+# Fastqc Screen generates 5 files (*tagged.fastq.gz, *tagged_filter.fastq.gz, *screen.txt, *screen.png, *screen.html) for each input fq.gz file
+#check that all 5 files were created for each file: 
+ls fq_fp1_clmparray_fp2_fqscrn/*tagged.fastq.gz | wc -l
+ls fq_fp1_clmparray_fp2_fqscrn/*tagged_filter.fastq.gz | wc -l 
+ls fq_fp1_clmparray_fp2_fqscrn/*screen.txt | wc -l
+ls fq_fp1_clmparray_fp2_fqscrn/*screen.png | wc -l
+ls fq_fp1_clmparray_fp2_fqscrn/*screen.html | wc -l
 
-#confirm that all files were successfully completed
-# this will return any out files that had a problem, replace JOBID with your jobid
+# for each, you should have the same number as the number of input files
+
+#You should also check for errors in the *out files:
+# this will return any out files that had a problem
+
+#do all out files at once
+grep 'error' slurm-fqscrn.*out
+grep 'No reads in' slurm-fqscrn.*out
+
+# or check individuals files <replace JOBID with your actual job ID>
 grep 'error' slurm-fqscrn.JOBID*out
 grep 'No reads in' slurm-fqscrn.JOBID*out
-# if you see missing indiviudals or categories in the multiqc output, there was likely a ram error.  I'm not sure if the "error" search term catches it.
+```
+If you see missing indiviudals or categories in the multiqc output, there was likely a ram error. I'm not sure if the "error" search term catches it.
 
-# run the files that failed again.  This seems to work in most cases
+Run the files that failed again. This seems to work in most cases
+```sh
 #runFQSCRN_6.bash <indir> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
 bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ...
 bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 ```
 
+
 **6. Execute `runREPAIR.sbatch`**
 
 ```
 #runREPAIR.sbatch <indir> <outdir> <threads>
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmparray_fp2_fqscrn fq_fp1_clmparray_fp2_fqscrn_r$
+sbatch runREPAIR.sbatch fq_fp1_clmparray_fp2_fqscrn fq_fp1_clmparray_fp2_fqscrn_repaired 40
 ```
