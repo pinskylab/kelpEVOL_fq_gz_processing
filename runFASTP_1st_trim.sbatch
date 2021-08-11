@@ -11,7 +11,6 @@
 
 enable_lmod
 module load container_env pire_genome_assembly/2021.07.01
-module load multiqc
 
 # this code is requires if the input files don't live within your own parent directory
 # modify "e1garcia" to the user ID where the files are located
@@ -58,5 +57,6 @@ ls $INDIR/$FQPATTERN | \
 		--trim_poly_x \
 		--report_title "First Trim 4 De Novo" 
 
-#add multiqc line when it's updated
+#run multiqc 
+module load multiqc
 srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report

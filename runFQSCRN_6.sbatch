@@ -5,7 +5,7 @@
 
 #SBATCH --job-name=fqscr_array
 #SBATCH --exclusive
-#SBATCH -c 40
+#SBATCH -c 32
 
 #module load parallel/gcc7/20190222  #tamucc
 #module load fastq_screen/0.14.1  #tamucc

@@ -5,10 +5,11 @@
 #SBATCH --job-name=mqc
 #SBATCH -o mqc-%j.out
 #SBATCH --time=00:00:00
-#SBATCH --cpus-per-task=40
+#SBATCH --cpus-per-task=32
 
 enable_lmod
 module load container_env pire_genome_assembly/2021.07.01
+module load multiqc
 
 export SINGULARITY_BIND=/home/e1garcia
 
@@ -17,4 +18,4 @@ REPORTNAME=$2
 
 # run multiqc on the fp1, fp2 and fastq screen results
 
-crun multiqc $DIR -n $DIR/$REPORTNAME
+srun crun multiqc $DIR -n $DIR/$REPORTNAME

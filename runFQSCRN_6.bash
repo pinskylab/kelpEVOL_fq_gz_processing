@@ -23,5 +23,14 @@ JOBID=$(sbatch --array=0-$((${#all_samples[@]}-1))%${NUMNODES} \
 NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
 
 #Run Multiqc after array finishes
+
+#Chris' way was lauching multiqc as individuals arrays were ending, and thus creating a lot of multiqc outputs
 #JOBID=$(sbatch --dependency=afterany:${NUMBER1} /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch ${OUTDIR} fqscrn_report)
 #NUMBER2=$(echo ${JOBID} | sed 's/[^0-9]*//g')
+
+#running Multiqc only once 
+#enable_lmod
+#module load container_env pire_genome_assembly/2021.07.01
+#module load multiqc
+
+#srun crun multiqc $OUTDIR -n $OUTDIR/fastqc_screen_report

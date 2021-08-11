@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 #SBATCH --job-name=repr_fqscrn
-#SBATCH -o repr_-%j.out
+#SBATCH -o repr-%j.out
 #SBATCH --time=00:00:00
 # cpu =40 for wahab and 32 for turing
 #SBATCH --cpus-per-task=40

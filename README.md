@@ -1,6 +1,6 @@
 # Pre-Processing PIRE Data
 
-List of steps to take in raw fq files 
+List of steps to take in raw fq files from shotgun and capture-shotgun
 
 
 ---
@@ -12,6 +12,21 @@ Scripts with the `ssl` are designed for shotgun data
 Scripts with the `cssl` are designed for capture-shotgun data
 
 Scripts with no suffix in the name can be used for both types of data
+
+To run scripts, you can either 
+1. Clone this repo in your working dir AND use relative paths to the scripts
+```sh
+git clone https://github.com/philippinespire/pire_fq_gz_processing.git
+```
+OR
+2. Add the full path (to the directory which already includes all of them) before the script's name.
+```sh
+#add this path when running scripts
+/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
+
+#Example:
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
+```
 
 ---
 
@@ -41,7 +56,7 @@ enable_lmod
 module load parallel
 module load container_env multiqc
 module load container_env fastqc
-sbatch scripts/Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
+sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
 ```
 
 ***Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
@@ -77,9 +92,9 @@ After completion, run `checkClumpify.R` to see if any files failed
 ```
 enable_lmod
 module load container_env mapdamage2
-crun R < checkClumpify.R --no-save
+crun R < checkClumpify_EG.R --no-save
 ```
-If all files were successful, `checkClumpify.R` will return "Clumpify Successfully worked on all samples". 
+If all files were successful, `checkClumpify_EG.R` will return "Clumpify Successfully worked on all samples". 
 
 If some failed, the script will also let you know. Try raising "-c 20" to "-c 40" in `runCLUMPIFY_r1r2_array.bash` and run clumplify again
 
@@ -97,7 +112,7 @@ sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
 
 **5. Decontaminate files. Execute `runFQSCRN_6.bash`**
 
-Check the number of available node `sinfo` (i.e. nodes in idle in the main partition).
+Check the number of available nodes `sinfo` (i.e. nodes in idle in the main partition).
  Try running one node per fq.gz file if possilbe or how many nodes are available.
  Yet, the number of nodes running simultaneously should not exceed that number of fq.gz files.
 * ***NOTE: you are executing the bash not the sbatch script***
