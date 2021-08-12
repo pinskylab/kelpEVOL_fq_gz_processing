@@ -13,8 +13,8 @@ module load parallel
 #######  read_calculator_ssl.sh  ########
 
 #read_calculator_ssl.sh counts the number of reads before and after each step in the pre-process of ssl data and creates 2 tables reporting
- # (1) the step-specific percent of read loss and final accumulative read loss "readLoss_table.tsv"
- # (2) the step-specific percent of read loss and final accumulative read loss "readsRemaining_table.tsv"
+ # (1) "readLoss_table.tsv" the step-specific percent of read loss and final accumulative read loss
+ # (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining
 
 SPDIR=$1
 
@@ -30,6 +30,10 @@ fi
 # Create and move to preprocess_read_change directory
 mkdir ${SPDIR}/preprocess_read_change
 cd ${SPDIR}/preprocess_read_change
+
+echo "read_calculator_ssl.sh counts the number of reads before and after each step in the pre-process of ssl data and creates 2 tables reporting
+  (1) "readLoss_table.tsv" the step-specific percent of read loss and final accumulative read loss
+  (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining" > README_read_calculator_ssl
 
 ## Create temporary files with read counts
 ls ${SPDIR}/shotgun_raw_fq/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > raw.temp
@@ -47,7 +51,7 @@ ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn_repaired/*gz | parallel --no-notice -kj$
 #cat <(echo "file        #_reads_raw      #_reads_fp1      #_reads_clmp     #_reads_fp2      #_reads_fqscrn   #_reads_repr     %_readLoss_fp1     %_readLoss_clmp     %_readLoss_fp2     %_readLoss_fqscrn     %_readLoss_repr     %_total_readLoss") <(\
 #paste raw.temp fp1.temp clm.temp fp2.temp fqscrn.temp repr.temp | awk -F "\t" 'NR==FNR{i = ((($3/$2)*(-100))+100);print $0"\t"i }' | awk -F "\t" 'NR==FNR{i = ((($4/$3)*(-100))+100);print $0"\t"i }' | awk -F "\t" 'NR==FNR{i = ((($5/$4)*(-100))+100);print $0"\t"i }' | awk -F "\t" 'NR==FNR{i = ((($6/$5)*(-100))+100);print $0"\t"i }' | awk -F "\t" 'NR==FNR{i = ((($7/$6)*(-100))+100);print $0"\t"i }' | awk -F "\t" 'NR==FNR{i = ((($7/$2)*(-100))+100);print $0"\t"i }') >testMitable
 
-cat <(echo "file	#reads_raw	#reads_fp1	#reads_clmp	#reads_fp2	#reads_fqscrn	#reads_repr	%_readLoss_fp1	%_readLoss_clmp	%_readLoss_fp2	%_readLoss_fqscrn	%_readLoss_repr	%_total_readLoss") <(\
+cat <(echo "file 	#reads_raw	#reads_fp1	#reads_clmp	#reads_fp2	#reads_fqscrn	#reads_repr	%_readLoss_fp1	%_readLoss_clmp	%_readLoss_fp2	%_readLoss_fqscrn	%_readLoss_repr	%_total_readLoss") <(\
 	paste raw.temp fp1.temp clm.temp fp2.temp fqscrn.temp repr.temp | \
 		sed 's/.*fq\///' | \
 		awk -F "\t" 'NR==FNR{i = ((($3/$2)*(-100))+100);print $0"\t"i }' | \
