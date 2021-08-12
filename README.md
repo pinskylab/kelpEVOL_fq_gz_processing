@@ -162,3 +162,21 @@ bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 #runREPAIR.sbatch <indir> <outdir> <threads>
 sbatch runREPAIR.sbatch fq_fp1_clmparray_fp2_fqscrn fq_fp1_clmparray_fp2_fqscrn_repaired 40
 ```
+
+---
+
+**Calculate the percent of reads lost in each step**
+
+Execute [read_calculator_ssl.sh]()
+```sh
+#read_calculator_ssl.sh <Species home dir> 
+# do not use trailing / in paths
+sbatch /home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/scripts/read_calculator_ssl.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis"
+```
+
+`read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl data and creates the dir `reprocess_read_change` with the following 2 tables:
+1. `readLoss_table.tsv` which reporsts the step-specific percent of read loss and final accumulative read loss
+2. `readsRemaining_table.tsv` which reports the step-specific percent of read loss and final accumulative read loss
+
+Inspect these tables and revisit steps if too much data was lost
+
