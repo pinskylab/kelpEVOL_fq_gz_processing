@@ -5,7 +5,7 @@
 #SBATCH --job-name=mqc
 #SBATCH -o mqc-%j.out
 #SBATCH --time=00:00:00
-#SBATCH --cpus-per-task=32
+#SBATCH --cpus-per-task=40
 
 enable_lmod
 module load container_env pire_genome_assembly/2021.07.01
