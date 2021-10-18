@@ -19,7 +19,8 @@ To run scripts, you can either
 git clone https://github.com/philippinespire/pire_fq_gz_processing.git
 ```
 OR
-2. Add the full path (to the directory which already includes all of them) before the script's name.
+
+2. Add the full path (to the directory which already includes all of them) before the script's name. **RECOMMENDED**
 ```sh
 #add this path when running scripts
 /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
