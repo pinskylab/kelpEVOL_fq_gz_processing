@@ -31,6 +31,8 @@ FWDEXT=r1.fq.gz
 REVEXT=r2.fq.gz
 THREADS=20 			#1/2 of total threads avail
 
+MINLEN=$((140-$nBP_FRONT_TRIM))
+
 mkdir $OUTDIR $OUTDIR/failed
 
 # trim r1 & r2 files
@@ -51,7 +53,7 @@ ls $INDIR/$FQPATTERN | \
 		--detect_adapter_for_pe \
 		--trim_front1 $nBP_FRONT_TRIM \
 		--trim_front2 $nBP_FRONT_TRIM \
-		--length_required 140 \
+		--length_required $MINLEN \
 		--cut_front \
 		--cut_front_window_size 1 \
 		--cut_front_mean_quality 20 \
