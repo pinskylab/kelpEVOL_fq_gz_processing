@@ -19,7 +19,7 @@ export SINGULARITY_BIND=/home/e1garcia
 INDIR=$1   			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp
 OUTDIR=$2  			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp_fp2
 
-if [[ -z $3 ]]; then
+if [[ -z "$3" ]]; then
 	nBP_FRONT_TRIM=0
 else
 	nBP_FRONT_TRIM=$3
