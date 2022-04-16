@@ -18,6 +18,13 @@ export SINGULARITY_BIND=/home/e1garcia
 
 INDIR=$1   			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp
 OUTDIR=$2  			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp_fp2
+
+if [[ -z $3 ]]; then
+	nBP_FRONT_TRIM=0
+else
+	nBP_FRONT_TRIM=$3
+fi
+
 FQPATTERN=*r1.fq.gz  		#determines files to be trimmed
 EXTPATTERN=r[12]\.fq\.gz  	# pattern match to fq extensions
 FWDEXT=r1.fq.gz
@@ -42,6 +49,8 @@ ls $INDIR/$FQPATTERN | \
 		-h $OUTDIR/{}r1r2_fastp.html \
 		-j $OUTDIR/{}r1r2_fastp.json \
 		--detect_adapter_for_pe \
+		--trim_front1 $nBP_FRONT_TRIM \
+		--trim_front2 $nBP_FRONT_TRIM \
 		--length_required 140 \
 		--cut_front \
 		--cut_front_window_size 1 \
