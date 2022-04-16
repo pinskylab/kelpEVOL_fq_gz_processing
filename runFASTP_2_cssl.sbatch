@@ -29,10 +29,10 @@ FWDEXT=r1.fq.gz
 REVEXT=r2.fq.gz
 THREADS=20 			#1/2 of total threads avail
 
-MINLEN=$((33-$nBP_FRONT_TRIM))
-if [[ $MINLEN < 33 ]]; then
+#MINLEN=$((33-$nBP_FRONT_TRIM))
+#if [[ $MINLEN < 33 ]]; then
 	MINLEN=33
-fi
+#fi
 
 mkdir $OUTDIR $OUTDIR/failed
 
