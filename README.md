@@ -31,10 +31,23 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 
 ---
 
-**0. Make a copy of your data**
+**0. Make a copy of your data and rename**
+
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/<ssl|cssl>_raw_fq`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
 *(can take several hours)*
+
+Then use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  `renameFQGZ.bash` allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
+
+```bash
+renameFQGZ.bash NAMEOFDECODEFILE.tsv 
+```
+
+After you are satisfied that the orginal and new file names are correct, then you can change the names.  This script will ask you twice whether you want to proceed with renaming.
+
+```bash
+renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
+```
 
 ---
 
@@ -118,10 +131,11 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
 ```
 
-We've noticed that the GC content can be problematic in the first n nucleotides of the reads (see the multiqc output from fp1). You can specify the number of nt to remove from the left sides of the reads prior to any sliding window trimming as follows:
+We've noticed that the GC content can be problematic in the first n nucleotides of the reads (see the multiqc output from fp1 to determine how many nt to trim). You can optionally specify the number of nt to remove from the left sides of the reads prior to any sliding window trimming as follows:
 
 ```bash
-sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2b 15
+# example where 15 nt are trimmed from the left (beginning) side of each read
+sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2 15
 ```
 
 **5. Decontaminate files. Execute `runFQSCRN_6.bash`**
