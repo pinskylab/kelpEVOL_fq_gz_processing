@@ -34,6 +34,7 @@ enable_lmod
 module load parallel
 module load container_env multiqc
 module load container_env fastqc
+export SINGULARITY_BIND=/home/e1garcia
 ```
 # 3.- Execute the script
 # in the command line, type "sbatch", the name of the script <Multi_FASTQC.sh>, the suffix identifying the files to be analyzed in quotations. The last can be file extensions or any other shared file identifier at the end of the files' names, and the full path to the directory containing the files to be processed
