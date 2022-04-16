@@ -36,6 +36,8 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/<ssl|cssl>_raw_fq`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
 *(can take several hours)*
 
+---
+
 **1. Check the quality of your data. Run `fastqc`**
 *(can take several hours)*
     * review results with `multiqc` output
@@ -52,7 +54,7 @@ sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_proces
 
 If you get a message about not finding "crun" then load the containers in your current session and run `Multi_FASTQC.sh` again
 
-```sh
+```bash
 enable_lmod
 module load parallel
 module load container_env multiqc
@@ -74,23 +76,26 @@ Scripts to run
 	* open scripts for usage instructions
 	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output, which is already set to run after these steps
 
+---
 
 **2. First trim. Execute `runFASTP_1st_trim.sbatch`**
-```sh
+```bash
 sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
 ```
+
+---
 
 **3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab**
 
 The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
-```sh
+```bash
 #runCLUMPIFY_r1r2_array.bash <indir;fast1 files > <outdir> <tempdir> <max # of nodes to use at once>
 # do not use trailing / in paths. Example:
 bash runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmparray /scratch/YOURUSERNAME 20
 ```
 
 After completion, run `checkClumpify.R` to see if any files failed
-```
+```bash
 enable_lmod
 module load container_env mapdamage2
 crun R < checkClumpify_EG.R --no-save
@@ -104,11 +109,19 @@ INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not 
 
 If the array set up doesn't work. Try running Clumpify on a turing himem node, see the [cssl repo](https://github.com/philippinespire/pire_cssl_data_processing/tree/main/scripts) for details
 
+---
+
 **4. Second trim. Execute `runFASTP_2.sbatch`**
-```sh
+```bash
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
 sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
+```
+
+We've noticed that the GC content can be problematic in the first n nucleotides of the reads (see the multiqc output from fp1). You can specify the number of nt to remove from the left sides of the reads prior to any sliding window trimming as follows:
+
+```bash
+sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2b 15
 ```
 
 **5. Decontaminate files. Execute `runFQSCRN_6.bash`**
