@@ -14,7 +14,7 @@ Scripts with the `cssl` are designed for capture-shotgun data
 Scripts with no suffix in the name can be used for both types of data
 
 To run scripts, you can either 
-1. Clone this repo in your working dir AND use relative paths to the scripts
+## 1. Clone this repo in your working dir AND use relative paths to the scripts
 ```sh
 git clone https://github.com/philippinespire/pire_fq_gz_processing.git
 ```
