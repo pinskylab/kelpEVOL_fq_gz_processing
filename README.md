@@ -138,6 +138,8 @@ We've noticed that the GC content can be problematic in the first n nucleotides 
 sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2 15
 ```
 
+---
+
 **5. Decontaminate files. Execute `runFQSCRN_6.bash`**
 
 Check the number of available nodes `sinfo` (i.e. nodes in idle in the main partition).
@@ -183,6 +185,7 @@ bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 1 LlA0101
 bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 ```
 
+---
 
 **6. Execute `runREPAIR.sbatch`**
 
