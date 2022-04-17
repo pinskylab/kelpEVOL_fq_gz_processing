@@ -40,7 +40,7 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 Then use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  `renameFQGZ.bash` allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
 ```bash
-renameFQGZ.bash NAMEOFDECODEFILE.tsv 
+bash renameFQGZ.bash NAMEOFDECODEFILE.tsv 
 ```
 
 After you are satisfied that the orginal and new file names are correct, then you can change the names.  This script will ask you twice whether you want to proceed with renaming.
