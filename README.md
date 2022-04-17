@@ -46,7 +46,7 @@ renameFQGZ.bash NAMEOFDECODEFILE.tsv
 After you are satisfied that the orginal and new file names are correct, then you can change the names.  This script will ask you twice whether you want to proceed with renaming.
 
 ```bash
-renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
+bash renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
 ```
 
 ---
