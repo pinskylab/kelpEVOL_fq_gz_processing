@@ -20,7 +20,7 @@ git clone https://github.com/philippinespire/pire_fq_gz_processing.git
 ```
 OR
 
-2. Add the full path (to the directory which already includes all of them) before the script's name. **RECOMMENDED**
+## 2. Add the full path (to the directory which already includes all of them) before the script's name. **RECOMMENDED**
 ```sh
 #add this path when running scripts
 /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
@@ -31,7 +31,7 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 
 ---
 
-**0. Make a copy of your data and rename**
+## **0. Make a copy of your data and rename**
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/<ssl|cssl>_raw_fq`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
@@ -51,7 +51,7 @@ renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
 
 ---
 
-**1. Check the quality of your data. Run `fastqc`**
+## **1. Check the quality of your data. Run `fastqc`**
 *(can take several hours)*
     * review results with `multiqc` output
 
@@ -91,14 +91,14 @@ Scripts to run
 
 ---
 
-**2. First trim. Execute `runFASTP_1st_trim.sbatch`**
+## **2. First trim. Execute `runFASTP_1st_trim.sbatch`**
 ```bash
 sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
 ```
 
 ---
 
-**3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab**
+## **3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab**
 
 The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
 ```bash
@@ -124,7 +124,7 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 
 ---
 
-**4. Second trim. Execute `runFASTP_2.sbatch`**
+## ## **4. Second trim. Execute `runFASTP_2.sbatch`**
 ```bash
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
@@ -140,7 +140,7 @@ sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2 15
 
 ---
 
-**5. Decontaminate files. Execute `runFQSCRN_6.bash`**
+## **5. Decontaminate files. Execute `runFQSCRN_6.bash`**
 
 Check the number of available nodes `sinfo` (i.e. nodes in idle in the main partition).
  Try running one node per fq.gz file if possilbe or how many nodes are available.
@@ -187,7 +187,7 @@ bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 
 ---
 
-**6. Execute `runREPAIR.sbatch`**
+## **6. Execute `runREPAIR.sbatch`**
 
 ```
 #runREPAIR.sbatch <indir> <outdir> <threads>
@@ -196,7 +196,7 @@ sbatch runREPAIR.sbatch fq_fp1_clmparray_fp2_fqscrn fq_fp1_clmparray_fp2_fqscrn_
 
 ---
 
-**Calculate the percent of reads lost in each step**
+## **7. Calculate the percent of reads lost in each step**
 
 Execute [read_calculator_ssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator_ssl.sh)
 ```sh
