@@ -24,6 +24,8 @@ NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
 
 #Run Multiqc after array finishes
 
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch $OUTDIR fqscrn_mqc_
+
 #Chris' way was lauching multiqc as individuals arrays were ending, and thus creating a lot of multiqc outputs
 #JOBID=$(sbatch --dependency=afterany:${NUMBER1} /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch ${OUTDIR} fqscrn_report)
 #NUMBER2=$(echo ${JOBID} | sed 's/[^0-9]*//g')
