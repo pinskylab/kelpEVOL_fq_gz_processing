@@ -114,7 +114,7 @@ The max # of nodes to use at once should not exceed the number of pairs of r1-r2
 ```bash
 #runCLUMPIFY_r1r2_array.bash <indir;fast1 files > <outdir> <tempdir> <max # of nodes to use at once>
 # do not use trailing / in paths. Example:
-bash runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmparray /scratch/YOURUSERNAME 20
+bash runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/YOURUSERNAME 20
 ```
 
 After completion, run `checkClumpify.R` to see if any files failed
@@ -138,14 +138,14 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 ```bash
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
-sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2
+sbatch runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
 ```
 
 We've noticed that the GC content can be problematic in the first n nucleotides of the reads (see the multiqc output from fp1 to determine how many nt to trim). You can optionally specify the number of nt to remove from the left sides of the reads prior to any sliding window trimming as follows:
 
 ```bash
 # example where 15 nt are trimmed from the left (beginning) side of each read
-sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2 15
+sbatch runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 15
 ```
 
 ---
@@ -160,17 +160,17 @@ Check the number of available nodes `sinfo` (i.e. nodes in idle in the main part
 ```sh
 #runFQSCRN_6.bash <indir> <outdir> <number of nodes running simultaneously>
 # do not use trailing / in paths. Example:
-bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 20
+bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
 ```
 Confirm that all files were successfully completed
 ```sh
 # Fastqc Screen generates 5 files (*tagged.fastq.gz, *tagged_filter.fastq.gz, *screen.txt, *screen.png, *screen.html) for each input fq.gz file
 #check that all 5 files were created for each file: 
-ls fq_fp1_clmparray_fp2_fqscrn/*tagged.fastq.gz | wc -l
-ls fq_fp1_clmparray_fp2_fqscrn/*tagged_filter.fastq.gz | wc -l 
-ls fq_fp1_clmparray_fp2_fqscrn/*screen.txt | wc -l
-ls fq_fp1_clmparray_fp2_fqscrn/*screen.png | wc -l
-ls fq_fp1_clmparray_fp2_fqscrn/*screen.html | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*tagged.fastq.gz | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*tagged_filter.fastq.gz | wc -l 
+ls fq_fp1_clmp_fp2_fqscrn/*screen.txt | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*screen.png | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*screen.html | wc -l
 
 # for each, you should have the same number as the number of input files
 
@@ -190,7 +190,7 @@ If you see missing indiviudals or categories in the multiqc output, there was li
 Run the files that failed again. This seems to work in most cases
 ```sh
 #runFQSCRN_6.bash <indir> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
-bash runFQSCRN_6.bash fq_fp1_clmparray_fp2 fq_fp1_clmparray_fp2_fqscrn 1 LlA01010*r1.fq.gz
+bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ...
 bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 ```
@@ -201,7 +201,7 @@ bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 
 ```
 #runREPAIR.sbatch <indir> <outdir> <threads>
-sbatch runREPAIR.sbatch fq_fp1_clmparray_fp2_fqscrn fq_fp1_clmparray_fp2_fqscrn_repaired 40
+sbatch runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired 40
 ```
 
 ---
