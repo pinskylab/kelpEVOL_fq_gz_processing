@@ -31,7 +31,7 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 
 ---
 
-## **0. Rename the raw fq.gz files and make a copy**
+## **0. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
 
 Then use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  `renameFQGZ.bash` allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
@@ -52,7 +52,7 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 
 ---
 
-## **1. Check the quality of your data. Run `fastqc`**
+## **1. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
 *(can take several hours)*
     * review results with `multiqc` output
 
@@ -92,7 +92,7 @@ Scripts to run
 
 ---
 
-## **2. First trim. Execute `runFASTP_1st_trim.sbatch`**
+## **2. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 ```bash
 # sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
 sbatch runFASTP_1st_trim.sbatch fq_raw_shotgun fq_fp1
@@ -100,7 +100,7 @@ sbatch runFASTP_1st_trim.sbatch fq_raw_shotgun fq_fp1
 
 ---
 
-## **3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` on Wahab**
+## **3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` (0.5-3 hours run time)**
 
 The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
 ```bash
@@ -126,7 +126,7 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 
 ---
 
-## ## **4. Second trim. Execute `runFASTP_2.sbatch`**
+## ## **4. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
 ```bash
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
@@ -142,7 +142,7 @@ sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2 15
 
 ---
 
-## **5. Decontaminate files. Execute `runFQSCRN_6.bash`**
+## **5. Decontaminate files. Execute `runFQSCRN_6.bash` (several hours run time)**
 
 Check the number of available nodes `sinfo` (i.e. nodes in idle in the main partition).
  Try running one node per fq.gz file if possilbe or how many nodes are available.
@@ -189,7 +189,7 @@ bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 
 ---
 
-## **6. Execute `runREPAIR.sbatch`**
+## **6. Execute `runREPAIR.sbatch` (<1 hour run time)**
 
 ```
 #runREPAIR.sbatch <indir> <outdir> <threads>
