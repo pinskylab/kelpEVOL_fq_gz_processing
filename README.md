@@ -100,7 +100,7 @@ sbatch runFASTP_1st_trim.sbatch fq_raw_shotgun fq_fp1
 
 ---
 
-## **3. Remove duplicates. Execute `runCLUMPIFY_r1r2_array.bash` (0.5-3 hours run time)**
+## **3. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
 The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. If you have many sets of files, you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition)
 ```bash
@@ -126,7 +126,7 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 
 ---
 
-## ## **4. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
+## ## **4. Second trim. Execute [`runFASTP_2.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch) (0.5-3 hours run time)**
 ```bash
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
@@ -142,7 +142,7 @@ sbatch runFASTP_2.sbatch fq_fp1_clmparray fq_fp1_clmparray_fp2 15
 
 ---
 
-## **5. Decontaminate files. Execute `runFQSCRN_6.bash` (several hours run time)**
+## **5. Decontaminate files. Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
 Check the number of available nodes `sinfo` (i.e. nodes in idle in the main partition).
  Try running one node per fq.gz file if possilbe or how many nodes are available.
@@ -189,7 +189,7 @@ bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01005*r2.fq.gz
 
 ---
 
-## **6. Execute `runREPAIR.sbatch` (<1 hour run time)**
+## **6. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
 
 ```
 #runREPAIR.sbatch <indir> <outdir> <threads>
