@@ -31,11 +31,7 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 
 ---
 
-## **0. Make a copy of your data and rename**
-
-If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
-`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/<ssl|cssl>_raw_fq`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
-*(can take several hours)*
+## **0. Rename the raw fq.gz files and make a copy**
 
 Then use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  `renameFQGZ.bash` allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
@@ -48,6 +44,11 @@ After you are satisfied that the orginal and new file names are correct, then yo
 ```bash
 bash renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
 ```
+
+If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
+`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/fq_raw_<ssl|cssl>`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
+*(can take several hours)*
+
 
 ---
 
@@ -62,7 +63,7 @@ Execute `Multi_FASTQC.sh` while providing, in quotations and in this order,
 
 Example:
 ```sh
-sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"  
+sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun"  
 ```
 
 If you get a message about not finding "crun" then load the containers in your current session and run `Multi_FASTQC.sh` again
@@ -72,7 +73,7 @@ enable_lmod
 module load parallel
 module load container_env multiqc
 module load container_env fastqc
-sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
+sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun"
 ```
 
 ***Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
@@ -93,7 +94,8 @@ Scripts to run
 
 ## **2. First trim. Execute `runFASTP_1st_trim.sbatch`**
 ```bash
-sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
+# sbatch runFASTP_1st_trim.sbatch <INDIR/full path to files> <OUTDIR/full path to desired outdir>
+sbatch runFASTP_1st_trim.sbatch fq_raw_shotgun fq_fp1
 ```
 
 ---
