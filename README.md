@@ -72,7 +72,7 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 
 ---
 
-## **1. Check the quality of your data. Run [`fastqc`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) (1-2 hours run time)**
+## **1. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
 *(can take several hours)*
     * review results with `multiqc` output
 
