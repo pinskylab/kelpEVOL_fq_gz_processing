@@ -134,7 +134,7 @@ If the array set up doesn't work. Try running Clumpify on a turing himem node, s
 
 ---
 
-## ## **4. Second trim. Execute [`runFASTP_2.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch) (0.5-3 hours run time)**
+## **4. Second trim. Execute [`runFASTP_2.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch) (0.5-3 hours run time)**
 ```bash
 #sbatch runFASTP_2.sbatch <INDIR/full path to cumplified files> <OUTDIR/full path to desired outdir>
 # do not use trailing / in paths. Example:
