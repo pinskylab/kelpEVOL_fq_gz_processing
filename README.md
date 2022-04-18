@@ -53,7 +53,7 @@ Scripts to run
 
 ## **0. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
 
-Then use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  `renameFQGZ.bash` allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
+Then use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
 ```bash
 bash renameFQGZ.bash NAMEOFDECODEFILE.tsv 
@@ -72,7 +72,7 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 
 ---
 
-## **1. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
+## **1. Check the quality of your data. Run [`fastqc`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) (1-2 hours run time)**
 *(can take several hours)*
     * review results with `multiqc` output
 
