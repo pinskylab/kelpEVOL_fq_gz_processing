@@ -122,6 +122,19 @@ After completion, run `checkClumpify.R` to see if any files failed
 enable_lmod
 module load container_env mapdamage2
 crun R < checkClumpify_EG.R --no-save
+
+# if the previous line returns an error that tidyverse is missing then do the following
+crun R
+
+# you are now in the R environment (there should be a > rather than $), install tidyverse
+install.packages("tidyverse")
+# when prompted, type "yes"
+
+# when the install is complete, exit R with the following keystroke combo: ctrl-d
+# type "no" when asked about saving the environment
+
+# you are now in the shell environment and you should be able to run the checkClumpify script
+crun R < checkClumpify_EG.R --no-save
 ```
 If all files were successful, `checkClumpify_EG.R` will return "Clumpify Successfully worked on all samples". 
 
