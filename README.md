@@ -237,3 +237,13 @@ sbatch read_calculator_ssl.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_process
 
 Inspect these tables and revisit steps if too much data was lost
 
+## **8. Clean Up
+
+Move the `.out` files into the `logs` dir after each step is completed:
+```sh
+mv *out /home/youruserID/shotgun_PIRE/pire_ssl_data_processing/yourspecies/logs
+```
+
+Be sure to update your readme file so that others know what happened in your directory. Ideally, somebody should be able to replicate what you did exactly.
+
+
