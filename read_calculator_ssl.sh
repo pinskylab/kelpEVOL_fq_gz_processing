@@ -19,7 +19,7 @@ module load parallel
 SPDIR=$1
 
 # Determine # of threads
-FILES_No=$(ls fq_shotgun_raw/*gz | wc -l)
+FILES_No=$(ls fq_raw_shotgun/*gz | wc -l)
 
 if [[ "$FILES_No" -ge 32 ]]; then
         PARALLELISM=32
@@ -36,7 +36,7 @@ echo "read_calculator_ssl.sh counts the number of reads before and after each st
   (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining" > README_read_calculator_ssl
 
 ## Create temporary files with read counts
-ls ${SPDIR}/shotgun_raw_fq/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > raw.temp
+ls ${SPDIR}/fq_raw_shotgun/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > raw.temp
 ls ${SPDIR}/fq_fp1/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > fp1.temp
 ls ${SPDIR}/fq_fp1_clmparray/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > clm.temp
 ls ${SPDIR}/fq_fp1_clmparray_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > fp2.temp
