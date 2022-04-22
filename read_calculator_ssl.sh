@@ -19,7 +19,7 @@ module load parallel
 SPDIR=$1
 
 # Determine # of threads
-FILES_No=$(ls shotgun_raw_fq/*gz | wc -l)
+FILES_No=$(ls fq_shotgun_raw/*gz | wc -l)
 
 if [[ "$FILES_No" -ge 32 ]]; then
         PARALLELISM=32
