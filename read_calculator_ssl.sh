@@ -30,20 +30,20 @@ fi
 
 # Create and move to preprocess_read_change directory
 mkdir ${SPDIR}/preprocess_read_change
-cd ${SPDIR}/preprocess_read_change
 
 echo "read_calculator_ssl.sh counts the number of reads before and after each step in the pre-process of ssl data and creates 2 tables reporting
   (1) "readLoss_table.tsv" the step-specific percent of read loss and final accumulative read loss
   (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining" > README_read_calculator_ssl
 
 ## Create temporary files with read counts
-ls ${SPDIR}/fq_raw_shotgun/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > raw.temp
-ls ${SPDIR}/fq_fp1/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > fp1.temp
-ls ${SPDIR}/fq_fp1_clmparray/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > clm.temp
-ls ${SPDIR}/fq_fp1_clmparray_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > fp2.temp
-ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn/*tagged_filter.fastq.gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > fqscrn.temp
-ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn_repaired/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > repr.temp
+ls ${SPDIR}/fq_raw_shotgun/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/raw.temp
+ls ${SPDIR}/fq_fp1/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp1.temp
+ls ${SPDIR}/fq_fp1_clmparray/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/clm.temp
+ls ${SPDIR}/fq_fp1_clmparray_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp2.temp
+ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn/*tagged_filter.fastq.gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fqscrn.temp
+ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn_repaired/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/repr.temp
 
+cd ${SPDIR}/preprocess_read_change
 
 #cat <(echo "file	#reads_raw	#reads_fp1	#reads_clmp	#reads_fp2	#reads_fqscrn	#reads_repr	#reads_remaining") <(\
 #	paste raw.temp fp1.temp clm.temp fp2.temp) > 1_Catpaste
