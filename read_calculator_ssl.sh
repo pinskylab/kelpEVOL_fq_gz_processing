@@ -9,6 +9,7 @@
 
 enable_lmod
 module load parallel
+export SINGULARITY_BIND=/home/e1garcia
 
 #######  read_calculator_ssl.sh  ########
 
