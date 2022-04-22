@@ -3,9 +3,9 @@
 #SBATCH --job-name=readCal
 #SBATCH --output=readCal-%j.out
 #SBATCH -c 32
-#SBATCH --mail-user=<your email>
-#SBATCH --mail-type=begin
-#SBATCH --mail-type=END
+##SBATCH --mail-user=<your email>
+##SBATCH --mail-type=begin
+##SBATCH --mail-type=END
 
 enable_lmod
 module load parallel
