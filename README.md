@@ -55,8 +55,6 @@ Scripts to run
 
 ## **0. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
 
-Use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
-
 Make sure you check and edit the decode file as necessary so that the following naming format is followed:
 
 `PopSampleID_LibraryID` where,
@@ -68,6 +66,8 @@ Make sure you check and edit the decode file as necessary so that the following 
 Examples of compatible names:
 
 `Sne-CTaw_051-Ex1-3F`  or `Sne-CTaw_051` or `Sne-CTaw_051b`
+
+Then, use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
 ```bash
 bash renameFQGZ.bash NAMEOFDECODEFILE.tsv 
