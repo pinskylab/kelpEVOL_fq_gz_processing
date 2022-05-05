@@ -59,15 +59,15 @@ Use the decode file to rename your raw `fq.gz` files. If you make a mistake here
 
 Make sure you check and edit the decode file as necessary so that the following naming format is followed:
 
-`PopSampleID_LibraryID`
+`PopSampleID_LibraryID` where,
 
-PopSampleID = 3LetterSpeciesCode-CorA3LetterSiteCode
+`PopSampleID` = `3LetterSpeciesCode-CorA3LetterSiteCode`, and 
 
-LibraryID = IndiviudalID-Extraction-PlateAddress  or just IndividualID if there is only 1 library for the individual. Do not use `_` in the LibraryID
+`LibraryID` = `IndiviudalID-Extraction-PlateAddress`  or just `IndividualID` if there is only 1 library for the individual. Do not use `_` in the LibraryID
 
-for example:
+Examples of compatible names:
 
-`Sne-CTaw_051-Ex1-3F`  or `Sne-CTaw_051`
+`Sne-CTaw_051-Ex1-3F`  or `Sne-CTaw_051` or `Sne-CTaw_051b`
 
 ```bash
 bash renameFQGZ.bash NAMEOFDECODEFILE.tsv 
