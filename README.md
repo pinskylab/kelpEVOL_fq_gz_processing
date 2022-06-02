@@ -97,7 +97,7 @@ Execute `Multi_FASTQC.sh` while providing, in quotations and in this order,
 
 Example:
 ```sh
-sbatch Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun" "fq.gz"   
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun" "fq.gz"   
 ```
 
 If you get a message about not finding "crun" then load the containers in your current session and run `Multi_FASTQC.sh` again
