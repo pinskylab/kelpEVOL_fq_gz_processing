@@ -90,14 +90,14 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 *(can take several hours)*
     * review results with `multiqc` output
 
-Fastqc and Multiqc can be run simultaneously using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo
+Fastqc and then Multiqc can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02)
 
 Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, 
-(1) a suffix that will identify the files to be processed, and (2) the FULL path to these files. 
+(1) the FULL path to these files and (2) a suffix that will identify the files to be processed. 
 
 Example:
 ```sh
-sbatch Multi_FASTQC.sh "fq.gz" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun"  
+sbatch Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun" "fq.gz"   
 ```
 
 If you get a message about not finding "crun" then load the containers in your current session and run `Multi_FASTQC.sh` again
