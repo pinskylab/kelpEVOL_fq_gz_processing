@@ -4,14 +4,11 @@
 #SBATCH -o Multi_fastqc-%j.out
 #SBATCH -p main
 #SBATCH -c 32
-#SBATCH --mail-user=youremail
-#SBATCH --mail-type=begin
-#SBATCH --mail-type=END
-
 
 ############# Multi_FASTQC.sh ###################
 ## runs FASTQC and MultiQC reports in parallel ##
 ##   contact: Eric Garcia, e1garcia@odu.edu    ##
+##  ceb updated this 2022-06-02                ##
 #################################################
 
 ## Requirements: parallel, fastqc, and multiqc in current session 
@@ -45,19 +42,16 @@ export SINGULARITY_BIND=/home/e1garcia
 
 # Multi_FASTQC.sh has been tested in "fq", "fq.gz" and "bam" files.
 
-
-#### Script
-
-#move to directory where files are stored
-cd $2
+inDIR=$(echo $1 | sed 's/\\/$//')
+PATTERN=$2
 
 #run fastqc in parallel 
-ls *$1 | parallel -kj32 "crun fastqc {}" &&
+ls ${inDIR}/*${PATTERN} | parallel -kj32 "crun fastqc {}"
 
 # run multiqc with specific report and subdirectory names
-crun multiqc . -n multiqc_report_$1.html -o ../Multi_FASTQC &&
+crun multiqc $inDIR -n $inDIR/fastqc_report
 
 # move fastqc files to new subdirectory
-ls *fastqc.html | parallel -kj 32 "mv {} ../Multi_FASTQC" &&
-ls *fastqc.zip | parallel -kj 32 "mv {} ../Multi_FASTQC"
+#ls *fastqc.html | parallel -kj 32 "mv {} ../Multi_FASTQC" &&
+#ls *fastqc.zip | parallel -kj 32 "mv {} ../Multi_FASTQC"
 mv *out ../logs
