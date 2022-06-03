@@ -42,7 +42,8 @@ export SINGULARITY_BIND=/home/e1garcia
 
 # Multi_FASTQC.sh has been tested in "fq", "fq.gz" and "bam" files.
 
-inDIR=$(echo $1 | sed 's/\\/$//')
+#inDIR=$(echo $1 | sed 's/\\/$//')
+inDIR=$1
 PATTERN=$2
 
 #run fastqc in parallel 
