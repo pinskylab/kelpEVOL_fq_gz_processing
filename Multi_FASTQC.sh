@@ -46,7 +46,7 @@ inDIR=$(echo $1 | sed 's/\\/$//')
 PATTERN=$2
 
 #run fastqc in parallel 
-ls ${inDIR}/*${PATTERN} | parallel -kj32 "crun fastqc {}"
+ls ${inDIR}/*${PATTERN} | parallel --no-notice -j32 "crun fastqc {}"
 
 # run multiqc with specific report and subdirectory names
 crun multiqc $inDIR -n $inDIR/fastqc_report
