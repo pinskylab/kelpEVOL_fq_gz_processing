@@ -36,12 +36,12 @@ echo "read_calculator_ssl.sh counts the number of reads before and after each st
   (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining" > README_read_calculator_ssl
 
 ## Create temporary files with read counts
-ls ${SPDIR}/fq_raw_shotgun/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/raw.temp
+ls ${SPDIR}/shotgun_raw_fq/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/raw.temp
 ls ${SPDIR}/fq_fp1/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp1.temp
-ls ${SPDIR}/fq_fp1_clmparray/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/clm.temp
-ls ${SPDIR}/fq_fp1_clmparray_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp2.temp
-ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn/*tagged_filter.fastq.gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fqscrn.temp
-ls ${SPDIR}/fq_fp1_clmparray_fp2_fqscrn_repaired/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/repr.temp
+ls ${SPDIR}/fq_fp1_clmp/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/clm.temp
+ls ${SPDIR}/fq_fp1_clmp_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp2.temp
+ls ${SPDIR}/fq_fp1_clmp_fp2_fqscrn/*tagged_filter.fastq.gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fqscrn.temp
+ls ${SPDIR}/fq_fp1_clmp_fp2_fqscrn_repaired/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/repr.temp
 
 cd ${SPDIR}/preprocess_read_change
 
