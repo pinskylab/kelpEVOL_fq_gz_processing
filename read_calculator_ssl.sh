@@ -20,7 +20,7 @@ export SINGULARITY_BIND=/home/e1garcia
 SPDIR=$1
 
 # Determine # of threads
-FILES_No=$(ls fq_raw_shotgun/*gz | wc -l)
+FILES_No=$(ls shotgun_raw_fq/*gz | wc -l)
 
 if [[ "$FILES_No" -ge 32 ]]; then
         PARALLELISM=32
