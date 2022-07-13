@@ -324,7 +324,7 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/f
 
 ## **7. Calculate the percent of reads lost in each step**
 
-If you are going to assemble a genome with this data, use [read_calculator_ssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator_ssl.sh). Otherwise, use [read_calculator_cssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary.
+If you are going to assemble a genome with this data, use [read_calculator_ssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator_ssl.sh). Otherwise, use [read_calculator_cssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator_cssl.sh).  Modify the script name in the code blocks below as necessary.
 
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
 
