@@ -29,7 +29,7 @@ OR
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
 ```
 
-*We recommend option 2, because, if a script changes while you are processing data, you will automatically be using the most updated version of the script if you specify the full path. Cloning or copying means you will have to double-check the script/pull new changes every time.*
+*We recommend option 2 because, if a script changes while you are processing data, you will automatically be using the most updated version of the script if you specify the full path. Cloning or copying means you will have to double-check the script/pull new changes every time.*
 
 ---
 
@@ -69,6 +69,8 @@ Examples of compatible names:
   * `Sne-CTaw_051-Ex1-3F` = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate
   * `Sne-CTaw_051` = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
   * `Sne-CTaw_051`-Ex1-L4 = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc L4 (lane 4)
+
+`*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual.
 
 Then, use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
