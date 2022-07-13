@@ -333,14 +333,17 @@ If you are going to assemble a genome with this data, use [read_calculator_ssl.s
 ```sh
 cd YOUR_SPECIES_DIR
 
+#FOR SSL:
 #read_calculator_ssl.sh "<path to species home dir>"
 #do not use trailing / in paths. Example:
 sbatch read_calculator_ssl.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis"
 #or 
 sbatch read_calculator_ssl.sh "."
 
-#for SSL: read_calculator_ssl.sh
-#for CSSL: read_calculator_cssl.sh
+#FOR CSSL:
+#read_calculator_cssl.sh "<Path to species home dir>" "<Path to dir with species raw files>"
+#do not use trailing / in paths. Example:
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/read_calculator_cssl.sh "/scratch/r3clark/taeniamia_zosterophora" "/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/taeniamia_zosterophora"
 ```
 
 Once the job has finished, inspect the two tables and revisit steps if too much data was lost.
