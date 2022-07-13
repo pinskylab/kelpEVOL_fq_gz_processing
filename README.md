@@ -6,7 +6,7 @@ List of steps to take in raw fq files from shotgun and capture-shotgun
 
 ## Before You Start, Read This
 
-The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing) 
+The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing).
 
 Scripts with the `ssl` are designed for shotgun data
 
@@ -14,14 +14,17 @@ Scripts with the `cssl` are designed for capture-shotgun data
 
 Scripts with no suffix in the name can be used for both types of data
 
-To run scripts, you can either 
+To run scripts, you can either:
+
 1. Clone this repo in your working dir AND use relative paths to the scripts
+
 ```sh
 git clone https://github.com/philippinespire/pire_fq_gz_processing.git
 ```
 OR
 
 2. Add the full path (to the directory which already includes all of them) before the script's name. **RECOMMENDED**
+
 ```sh
 #add this path when running scripts
 /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
@@ -30,12 +33,14 @@ OR
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
 ```
 
+*We recommend option 2, because, if a script changes while you are processing data, you will automatically be using the most updated version of the script if you specify the full path. Cloning or copying means you will have to double-check the script/pull new changes every time.*
+
 ---
 
 ## Overview
 
 ***Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
-*(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; reparing is done in 1-2 hrs)*
+*(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; repairing is done in 1-2 hrs)*
 
 Scripts to run
 
@@ -48,7 +53,7 @@ Scripts to run
 * [runREPAIR.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch)
 
 	* open scripts for usage instructions
-	* review the outputs from `fastp` and `fastq_screen` with `multiqc` output, which is already set to run after these steps
+	* review the outputs from `fastp`, `fastq_screen`, and `repair` with `MultiQC` output.
 
 
 ---
@@ -61,36 +66,48 @@ Make sure you check and edit the decode file as necessary so that the following 
 
 `PopSampleID` = `3LetterSpeciesCode-CorA3LetterSiteCode`, and 
 
-`LibraryID` = `IndiviudalID-Extraction-PlateAddress`  or just `IndividualID` if there is only 1 library for the individual. Do not use `_` in the LibraryID
+`LibraryID` = `IndiviudalID-Extraction-PlateAddress`  or just `IndividualID` if there is only 1 library for the individual. Do NOT use `_` in the LibraryID. *The only `_` should be separating `PopSampleID` and `LibraryID`.*
 
 Examples of compatible names:
 
-`Sne-CTaw_051-Ex1-3F`  or `Sne-CTaw_051` or `Sne-CTaw_051b`
+  * `Sne-CTaw_051-Ex1-3F` = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate
+  * `Sne-CTaw_051` = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
+  * `Sne-CTaw_051`-Ex1-L4 = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc L4 (lane 4)
 
-Then, use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses.  [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
+Then, use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
+
+First, run `renameFQGZ.bash` to view the original and new file names and create `tsv` files to store the original and new file naming conventions.
 
 ```bash
 bash renameFQGZ.bash NAMEOFDECODEFILE.tsv 
 ```
 
-After you are satisfied that the orginal and new file names are correct, then you can change the names.  This script will ask you twice whether you want to proceed with renaming.
+After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
+
+Example of how the file names line up:
+
+  * `Sne-CTaw_051` = `SnC01051` at the beginning of the original file name
+    * Sn = Sne, C = C, 01 = population/location 1 if there are more than 1 populations/locations in the dataset (here Taw location), 051 = 051
+    
+When you are ready to change names, execute the line of code below. This script will ask you twice whether you want to proceed with renaming.
 
 ```bash
 bash renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
+
+#you will need to say y 2X
 ```
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/fq_raw_<ssl|cssl>`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
 *(can take several hours)*
 
-
 ---
 
-## **1. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
+## **1. Check the quality of your data. Run `fastqc`**
 *(can take several hours)*
     * review results with `multiqc` output
 
-Fastqc and then Multiqc can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02)
+FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02)
 
 Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, 
 (1) the FULL path to these files and (2) a suffix that will identify the files to be processed. 
