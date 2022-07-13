@@ -74,7 +74,7 @@ Examples of compatible names:
 
 Then, use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
-First, run `renameFQGZ.bash` to view the original and new file names and create `tsv` files to store the original and new file naming conventions.
+Run `renameFQGZ.bash` to view the original and new file names and create `tsv` files to store the original and new file naming conventions.
 
 ```bash
 cd YOUR_SPECIES_DIR/shotgun_raw_fq
