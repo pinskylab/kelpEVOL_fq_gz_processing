@@ -175,7 +175,7 @@ cd YOUR_SPECIES_DIR
 bash runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/YOURUSERNAME 20
 ```
 
-After completion, run `checkClumpify_EG.R` to see if any files failed.
+After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
 ```sh
 cd YOUR_SPECIES_DIR
@@ -284,7 +284,7 @@ cd YOUR_SPECIES_DIR
 bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ```
 
-Once `FastQ Screen` has finished running and there are no issues, run `runMULTIQC.sbatch` to get the MultiQC output.
+Once `FastQ Screen` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
 cd YOUR_SPECIES_DIR
@@ -309,7 +309,7 @@ cd YOUR_SPECIES_DIR
 sbatch runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired 40
 ```
 
-Once the job has finished, run `FastQC-MultiQC` separately.
+Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
 ```sh
 cd YOUR_SPECIES_DIR/fq_fp1_clmp_fp2_fqscrn_repaired
