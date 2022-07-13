@@ -145,12 +145,11 @@ Review the `MultiQC` output (`shotgun_raw_fq/fastqc_report.html` OR `raw_fq_capt
 ## **2. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
 ```sh
-cd YOUR_SPECIES_DIR/shotgun_raw_fq
-#or raw_fq_capture if using cssl data
+cd YOUR_SPECIES_DIR
 
 #sbatch runFASTP_1st_trim.sbatch <indir> <outdir>
 #do not use trailing / in paths
-sbatch runFASTP_1st_trim.sbatch fq_raw_shotgun fq_fp1
+sbatch runFASTP_1st_trim.sbatch shotgun_raw_fq fq_fp1 #CSSL: replace shotgun_raw_fq with raw_fq_capture
 ```
 
 Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`.
