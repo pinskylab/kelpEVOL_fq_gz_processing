@@ -18,6 +18,7 @@ export SINGULARITY_BIND=/home/e1garcia
  # (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining
 
 SPDIR=$1
+RAWDIR=$2
 
 # Determine # of threads
 FILES_No=$(ls fq_fp1/*gz | wc -l)
@@ -36,7 +37,7 @@ echo "read_calculator_cssl.sh counts the number of reads before and after each s
   (2) "readsRemaining_table.tsv" the step-specific percent of reads remaining and final accumulative number of reads remaining" > README_read_calculator_cssl
 
 ## Create temporary files with read counts
-ls ${SPDIR}/raw_fq_capture/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/raw.temp
+ls ${RAWDIR}/raw_fq_capture/*gz | parallel --no-notice -kj${PARALLELISM} "echo -n {}'	' && zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/raw.temp
 ls ${SPDIR}/fq_fp1/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp1.temp
 ls ${SPDIR}/fq_fp1_clmp/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/clm.temp
 ls ${SPDIR}/fq_fp1_clmp_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp2.temp
