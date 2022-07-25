@@ -117,7 +117,9 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 
 FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02).
 
-Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) the FULL path to these files and (2) a suffix that will identify the files to be processed. 
+Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) the FULL path to these files and (2) a suffix that will identify the files to be processed.
+
+`Multi_FASTQC.sh` should be run from the directory that holds the raw, renamed `fq.gz` files. This will be `shotgun_raw_fq` for the ssl pipeline and `raw_fq_capture` for the cssl pipeline.
 
 ```sh
 cd YOUR_SPECIES_DIR/shotgun_raw_fq
