@@ -85,7 +85,7 @@ bash renameFQGZ.bash NAMEOFDECODEFILE.tsv
 
 **NOTE:** Depending on how you have your `.wahab_tcshrc` (or `.turing_tcshrc` if on Turing) set-up, you may get the following error when you try to execute this script: *Cwd.c: loadable library and perl binaries are mismatched (got handshake key 0xcd00080, needed 0xde00080)*. To fix this:
 
-  1. Open up `.wahab_tcshrc` (it will be in your home (`~`) directory) and delete any `tre` or `python` modules that are preloaded under the `if (! $?MODULES_LOADED) then` line. One of these modules loads a "bad" perl library that is causing the error message downstream.
+  1. Open up `.wahab_tcshrc` (it will be in your home (`~`) directory) and add `unsetenv PERL5LIB` at the end of the chunk of code under the `if (! $?MODULES_LOADED) then` line. One of the modules we are loading for the scripts loads a "bad" perl library that is causing the error message downstream.
   2. Save your changes.
   3. Close out of your Terminal connection and restart it. You should be able to run `renameFQGZ.bash` now without any issues.
 
