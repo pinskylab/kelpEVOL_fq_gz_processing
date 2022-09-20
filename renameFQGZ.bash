@@ -59,7 +59,11 @@ echo "writing newFileNames.txt..."
 sed 's/_.*_\(L[1-9]\)/_\1/' origFileNames.txt > newFileNames.txt
 
 echo "editing newFileNames.txt..."
-parallel --no-notice -k --link sed -i "s/{1}/{2}/" newFileNames.txt ::: ${origName[@]} ::: ${newName[@]}
+# parallel --no-notice -k --link sed -i "s/{1}/{2}/" newFileNames.txt ::: ${origName[@]} ::: ${newName[@]}
+for j in $(seq 0 $((${#origName[@]}-1)) ); do
+        sed -i "s/${origName[j]}/${newName[j]}/" newFileNames.txt
+        #echo ${origName[j]} ${newName[j]}
+done
 
 if [[ $MODE == rename ]]; then
         echo "preview of orig and new R1 file names..."
