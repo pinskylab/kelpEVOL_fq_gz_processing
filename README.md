@@ -66,9 +66,9 @@ Do NOT use `_` in the LibraryID. *The only `_` should be separating `PopSampleID
 
 Examples of compatible names:
 
-  * `Sne-CTaw_051-Ex1-3F` = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate
-  * `Sne-CTaw_051` = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
-  * `Sne-CTaw_051`-Ex1-L4 = *Sphyaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc L4 (lane 4)
+  * `Sne-CTaw_051-Ex1-3F` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate
+  * `Sne-CTaw_051` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
+  * `Sne-CTaw_051`-Ex1-L4 = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc L4 (lane 4)
 
 `*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual.
 
