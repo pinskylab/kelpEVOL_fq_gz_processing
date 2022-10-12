@@ -38,17 +38,6 @@ else
         MODE="test"
 fi
 
-origName=($(tail -n +2 $1 | \
-                        tr -s " " "\t" | \
-                        cut -f1 ))
-
-newName=($(tail -n +2 $1 | \
-                        tr -s " " "\t" | \
-                        cut -f2))
-
-#oldFileNames=($(ls *_1.fq.gz | \
-#                               sed 's/1\.fq\.gz//'))
-
 echo "writing original file names to file, origFileNames.txt..."
 ls *_1.fq.gz | \
         sed 's/1\.fq\.gz//' | \
@@ -56,14 +45,13 @@ ls *_1.fq.gz | \
         origFileNames.txt
 
 echo "writing newFileNames.txt..."
-sed 's/_.*_\(L[1-9]\)/_\1/' origFileNames.txt > newFileNames.txt
+sed 's/_.*_L[1-9]_/./1' origFileNames.txt > newFileNames.txt
+sed $'s/\t/\//' $1 > decode_sedlist.txt
+sed -i 's/^/s\//' decode_sedlist.txt
+sed -i 's/$/\//' decode_sedlist.txt
 
 echo "editing newFileNames.txt..."
-# parallel --no-notice -k --link sed -i "s/{1}/{2}/" newFileNames.txt ::: ${origName[@]} ::: ${newName[@]}
-for j in $(seq 0 $((${#origName[@]}-1)) ); do
-        sed -i "s/${origName[j]}/${newName[j]}/" newFileNames.txt
-        #echo ${origName[j]} ${newName[j]}
-done
+sed -i -f decode_sedlist.txt newFileNames.txt
 
 if [[ $MODE == rename ]]; then
         echo "preview of orig and new R1 file names..."
