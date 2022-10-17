@@ -53,16 +53,20 @@ Scripts to run
 
 ---
 
-## **Downdload your data from the TAMUCC grid**
+## **Download your data from the TAMUCC grid**
 
-   1. **Navigate to the directory where files will be downloaded**. Organize your directories according to the data type that you are downloading (ssl, cssl, lcWGS, etc). e.g. ```cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/gazza_minuta/raw_fq_capture```
-   2. **Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded. e.g. (https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture)[https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture]. Make sure it works: click on it and your web browser should open listing your data files.
+   1. **Organize your directories according to the data type that you are downloading (ssl, cssl, lcWGS, etc)**. e.g. 
+```
+/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/gazza_minuta/raw_fq_capture
+```
+   2. **Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded.  Make sure it works: click on it and your web browser should open listing your data files.
+e.g. [https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture](https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture).
    3. **Execute gridDownloader.sh**. See below.
 
 To execute gridDownloader.sh
 ```
 # Navigate to dir where to download files. e.g.
-/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/<your_species>/raw_fq_capture
+cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/<your_species>/raw_fq_capture
 
 # sbatch gridDownloader.sh <outdir> <link-to-files>
 # outdir becomes "." since you have already navigated there
