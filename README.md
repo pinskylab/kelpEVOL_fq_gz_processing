@@ -35,11 +35,11 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 
 ## Overview
 
-***Trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
-*(few hours for each of the 2 trims and deduplication, decontamination can take 1-2 days; repairing is done in 1-2 hrs)*
+***Download data, rename files, trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
+*(plan for a few hours for each every step except for decontamination, which can take 1-2 days)*
 
 Scripts to run
-
+  * [gridDownloader.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/gridDownloader.sh)
   * [renameFQGZ.bash](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash)
   * [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh)
   * [runFASTP_1st_trim.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch)
@@ -50,6 +50,27 @@ Scripts to run
   
     * open scripts for usage instructions
     * review the outputs from `fastp`, `fastq_screen`, and `repair` with `MultiQC` output
+
+---
+
+## **Downdload your data from the TAMUCC grid**
+
+   1. **Navigate to the directory where files will be downloaded**. Organize your directories according to the data type that you are downloading (ssl, cssl, lcWGS, etc). e.g. ```cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/gazza_minuta/raw_fq_capture```
+   2. **Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded. e.g. (https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture)[https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture]. Make sure it works: click on it and your web browser should open listing your data files.
+   3. **Execute gridDownloader.sh**. See below.
+
+To execute gridDownloader.sh
+```
+# Navigate to dir where to download files. e.g.
+/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/<your_species>/raw_fq_capture
+
+# sbatch gridDownloader.sh <outdir> <link-to-files>
+# outdir becomes "." since you have already navigated there
+sbatch gridDownloader.sh . https://gridftp.tamucc.edu/genomics/20221011_PIRE-<your_species>-capture/
+```
+
+If you download fails, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
+
 
 ---
 
