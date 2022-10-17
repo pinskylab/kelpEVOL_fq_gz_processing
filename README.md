@@ -36,7 +36,7 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 ## Overview
 
 ***Download data, rename files, trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
-*(plan for a few hours for each every step except for decontamination, which can take 1-2 days)*
+*(plan for a few hours for each step except for decontamination, which can take 1-2 days)*
 
 Scripts to run
   * [gridDownloader.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/gridDownloader.sh)
@@ -73,7 +73,7 @@ cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/<your_species>/raw_fq_c
 sbatch gridDownloader.sh . https://gridftp.tamucc.edu/genomics/20221011_PIRE-<your_species>-capture/
 ```
 
-If you download fails, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
+If your download fails, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
 
 
 ---
