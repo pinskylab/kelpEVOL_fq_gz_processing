@@ -352,8 +352,6 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/f
 
 ## **7. Calculate the percent of reads lost in each step**
 
-If you are going to assemble a genome with this data, use [read_calculator_ssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator_ssl.sh). Otherwise, use [read_calculator_cssl.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator_cssl.sh).  Modify the script name in the code blocks below as necessary.
-
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
 
   1. `readLoss_table.tsv` which reports the step-specific percentage of reads lost and the final cumulative percentage of reads lost.
@@ -362,17 +360,19 @@ If you are going to assemble a genome with this data, use [read_calculator_ssl.s
 ```sh
 cd YOUR_SPECIES_DIR
 
-#FOR SSL:
-#read_calculator_ssl.sh "<path to species home dir>"
-#do not use trailing / in paths. Example:
-sbatch read_calculator_ssl.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis"
-#or 
-sbatch read_calculator_ssl.sh "."
+#read_calculator_ssl.sh "<path to species home dir>" "<Path to dir with raw files>"
+#do not use trailing / in paths.
 
-#FOR CSSL:
-#read_calculator_cssl.sh "<Path to species home dir>" "<Path to dir with species raw files>"
-#do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/read_calculator_cssl.sh "/scratch/r3clark/taeniamia_zosterophora" "/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/taeniamia_zosterophora"
+# SSL Example:
+sbatch read_calculator.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
+# or (after cd YOUR_SPECIES_DIR)
+sbatch read_calculator.sh "." "shotgun_raw_fq"
+
+# CSSL Example:
+sbatch read_calculator.sh "/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/spratelloides_gracilis" "/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/spratelloides_gracilis/raw_fq_capture"
+# or (after cd YOUR_SPECIES_DIR)
+sbatch read_calculator.sh "." "raw_fq_capture"
+
 ```
 
 Once the job has finished, inspect the two tables and revisit steps if too much data was lost.
