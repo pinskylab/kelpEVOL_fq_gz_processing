@@ -17,9 +17,13 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 <details><summary>Using Wahab or Turing, ODU's HPCs</summary>
 <p>
 
-1. Goto `/home/e1garcia/shotgun_PIRE` and use the `pire_fq_gz_processing` repo along with either `pire_ssl_processing` or `pire_cssl_processing`. 
+0. Log onto wahab
 
-2. Immediately start by pulling changes from github in the repos you are using each time you log in
+	```bash
+	ssh YourUserName@wahab.hpc.odu.edu
+	```
+
+1. Goto `/home/e1garcia/shotgun_PIRE` and use the `pire_fq_gz_processing` repo along with either `pire_ssl_processing` or `pire_cssl_processing`, and immediately start by pulling changes from github in the repos you are using **EACH TIME YOU LOG IN**
 
 	```bash
 	cd /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing
@@ -38,7 +42,7 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 	git pull
 	```
 
-3. When your session is done, i.e. you are about to log off, push your changes to github
+2. When your session is done, i.e. you are about to log off, push your changes to github
 
 	```bash
 	git pull
@@ -53,8 +57,7 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 	git push
 	```
 
-4. As you work through this tutorial it is assumed that you will be running scripts from either `pire_ssl_data_processing` or `pire_cssl_data_processing` and you will need to add the path to the `pire_fq_gz_processing` directory before the script's name in the code blocks below.
-
+3. As you work through this tutorial it is assumed that you will be running scripts from either `pire_ssl_data_processing` or `pire_cssl_data_processing` or `pire_lcwgs_data_processing` and you will need to add the path to the `pire_fq_gz_processing` directory before the script's name in the code blocks below.
 
 	```sh
 	#add this path when running scripts
@@ -73,9 +76,9 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 
 If you know that you deliberately don't want to use the shared repos on wahab and turing in `/home/e1garcia/shotgun_PIRE`, then here is how you would get started on another hpc and realize that you will have to modify all of the paths given in these `README.md` and tutorials.
 
-**ONLY DO THESE STEPS IF YOU ARE NOT USING WAHAB**
+**ONLY DO THESE STEPS IF YOU ARE NOT USING WAHAB OR TURING**
 
-1. Clone the repos in your working dir AND use relative paths to the scripts
+0. Clone the repos in your PIRE working dir 
 
 ```sh
 #cd to your working dir then
@@ -84,11 +87,54 @@ git clone https://github.com/philippinespire/pire_fq_gz_processing.git
 # then choose which repo you are using
 git clone https://github.com/philippinespire/pire_ssl_data_processing.git
 git clone https://github.com/philippinespire/pire_cssl_data_processing.git
+git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
 ```
 
-2. 
+1. Any time you return to these repos on another HPC, goto your PIRE working dir and use the `pire_fq_gz_processing` repo along with either `pire_ssl_processing` or `pire_cssl_processing`, and immediately start by pulling changes from github in the repos you are using **EACH TIME YOU LOG IN**
 
-*We recommend option 2 because, if a script changes while you are processing data, you will automatically be using the most updated version of the script if you specify the full path. Cloning or copying means you will have to double-check the script/pull new changes every time.*
+	```bash
+	cd <yourPireDirPath>/pire_fq_gz_processing
+	git pull
+
+	# if working in pire_ssl_data_processing, then
+	cd <yourPireDirPath>/pire_ssl_data_processing
+	git pull
+
+	# if working in pire_cssl_data_processing, then
+	cd <yourPireDirPath>/pire_cssl_data_processing
+	git pull
+
+	# if working in pire_lcwgs_data_processing, then
+	cd <yourPireDirPath>/pire_cssl_data_processing
+	git pull
+	```
+
+2. When your session is done, i.e. you are about to log off, push your changes to github
+
+	```bash
+	git pull
+
+	# if there are no errors, then proceed, otherwise get help
+	git add --all
+
+	# if there are no errors, then proceed, otherwise get help
+	git commit -m "insert message here"
+
+	# if there are no errors, then proceed, otherwise get help
+	git push
+	```
+
+3. As you work through this tutorial it is assumed that you will be running scripts from either `pire_ssl_data_processing` or `pire_cssl_data_processing` or `pire_lcwgs_data_processing` and you will need to add the path to the `pire_fq_gz_processing` directory before the script's name in the code blocks below.
+
+	```sh
+	#add this path when running scripts
+	/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
+
+	#Example:
+	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
+	```
+
+
 
 </p>
 </details>
