@@ -53,11 +53,13 @@ If, however, you know that you deliberately don't want to use the shared repos o
 	git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
 	```
 
---- 
-
 </p>
 </details>
 
+---
+
+</p>
+</details>
 
 <details><summary>Regardless of HPC, **git** Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
 <p>
@@ -102,8 +104,6 @@ You must constantly be pulling and pushing changes to github with git or else yo
 	```
 
 
-</p>
-</details>
 
 
 ---
