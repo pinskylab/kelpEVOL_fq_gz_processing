@@ -174,7 +174,7 @@ e.g. [https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture](https://gri
 
 
 ```bash
-# Navigate to dir where to download files. e.g.
+# Navigate to dir to download files into, e.g.
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 # sbatch gridDownloader.sh <outdir> <link-to-files>
@@ -184,6 +184,7 @@ sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridf
 
 If your download fails, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
 
+`*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual.
 
 ---
 
@@ -191,12 +192,12 @@ If your download fails, go back to the web browser and check that you can see a 
 </details>
 
 
-<details><summary>2. Rename the raw fq.gz files</summary>
+<details><summary>2. Proofread the decode files</summary>
 <p>
 
-## **2. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
+## **2. Proofread the decode file(s) (<1 minute run time) **
 
-Make sure you check and edit the decode file as necessary so that the following naming format is followed:
+Make sure you check and edit the decode file(s) as necessary so that the following naming format is followed:
 
 `PopSampleID_LibraryID` where:
 
@@ -211,17 +212,51 @@ Examples of compatible names:
   * `Sne-CTaw_051` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
   * `Sne-CTaw_051-Ex1-L4` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc L4 (lane 4)
 
-`*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual.
 
-Then, use the decode file to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
+Here are some other QC checks on the downloaded data and the decode files:
+
+```bash
+salloc
+bash
+
+# Navigate to dir with downloaded files, e.g.
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
+
+#check that you got back sequencing data for all individuals in decode file
+#XX files (2 additional files for README.md & decode.tsv = XX/2 = XX individuals (R&F)
+ls | wc -l 
+
+#XX lines (1 additional line for header = XX individuals), checks out
+wc -l <NAMEOFDECODEFILE>.tsv 
+
+#run renameFQGZ.bash first to make sure new names make sense
+bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/renameFQGZ.bash NAMEOFDECODEFILE.tsv
+
+#run renameFQGZ.bash again to actually rename files
+#need to say "yes" 2X
+bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
+```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>3. Perform a renaming dry run</summary>
+<p>
+
+## **3. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
+
+Then, use the decode file with [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
 Run `renameFQGZ.bash` to view the original and new file names and create `tsv` files to store the original and new file naming conventions.
 
 ```bash
-cd YOUR_SPECIES_DIR/shotgun_raw_fq
-#or raw_fq_capture if using cssl data
+# Navigate to dir with downloaded files, e.g.
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
-bash renameFQGZ.bash NAMEOFDECODEFILE.tsv 
+bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.tsv 
 ```
 
 **NOTE:** Depending on how you have your `.wahab_tcshrc` (or `.turing_tcshrc` if on Turing) set-up, you may get the following error when you try to execute this script: *Cwd.c: loadable library and perl binaries are mismatched (got handshake key 0xcd00080, needed 0xde00080)*. To fix this:
@@ -229,6 +264,15 @@ bash renameFQGZ.bash NAMEOFDECODEFILE.tsv
   1. Open up `.wahab_tcshrc` (it will be in your home (`~`) directory) and add `unsetenv PERL5LIB` at the end of the chunk of code under the `if (! $?MODULES_LOADED) then` line. One of the modules we are loading for the scripts loads a "bad" perl library that is causing the error message downstream.
   2. Save your changes.
   3. Close out of your Terminal connection and restart it. You should be able to run `renameFQGZ.bash` now without any issues.
+
+---
+
+</p>
+</details>
+
+
+<details><summary>4. Rename the files for real</summary>
+<p>
 
 After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
