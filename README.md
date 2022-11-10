@@ -4,6 +4,9 @@ List of steps to take in raw fq files from shotgun and capture-shotgun
 
 ---
 
+
+<details><summary>Before You Start, Read This</summary>
+<p>
 ## Before You Start, Read This
 
 The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing).
@@ -33,6 +36,13 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>Overview</summary>
+<p>
+
 ## Overview
 
 ***Download data, rename files, trim, deduplicate, decontaminate, and repair the raw `fq.gz` files***
@@ -52,6 +62,13 @@ Scripts to run
     * review the outputs from `fastp`, `fastq_screen`, and `repair` with `MultiQC` output
 
 ---
+
+</p>
+</details>
+
+
+<details><summary>Download data</summary>
+<p>
 
 ## **Download your data from the TAMUCC grid**
 
@@ -77,6 +94,13 @@ If your download fails, go back to the web browser and check that you can see a 
 
 
 ---
+
+</p>
+</details>
+
+
+<details><summary>0. Rename the raw fq.gz files</summary>
+<p>
 
 ## **0. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
 
@@ -138,6 +162,13 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>1. Check the quality of raw data</summary>
+<p>
+
 ## **1. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
 
 FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02).
@@ -171,6 +202,13 @@ Review the `MultiQC` output (`shotgun_raw_fq/fastqc_report.html` OR `raw_fq_capt
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>2. First trim</summary>
+<p>
+
 ## **2. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
 ```sh
@@ -184,6 +222,13 @@ sbatch runFASTP_1st_trim.sbatch shotgun_raw_fq fq_fp1 #CSSL: replace shotgun_raw
 Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`.
 
 ---
+
+</p>
+</details>
+
+
+<details><summary>3. Remove duplicates</summary>
+<p>
 
 ## **3. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
@@ -237,6 +282,13 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>4. Second trim</summary>
+<p>
+
 ## **4. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
 
 If you are going to assemble a genome with this data, use [runFASTP_2_ssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch). Otherwise, use [runFASTP_2_cssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary. 
@@ -255,6 +307,13 @@ sbatch runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
 Review the results with the `FastQC` output (`fq_fp1_clmp_fp2/2nd_fastp_report.html`) and update your `README.md`.
 
 ---
+
+</p>
+</details>
+
+
+<details><summary>5. Decontaminate</summary>
+<p>
 
 ## **5. Decontaminate files. Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
@@ -325,6 +384,13 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastqc_scr
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>6. Repair</summary>
+<p>
+
 ## **6. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
 
 `runREPAIR.sbatch` does not "repair" reads but instead re-pairs them. Basically, it matches up forward (r1) and reverse (r2) reads so that the `*1.fq.gz` and `*2.fq.gz` files have reads in the same order.
@@ -349,6 +415,13 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/fastqc_report.html`) and update your `README.md`.
 
 ---
+
+</p>
+</details>
+
+
+<details><summary>7. Calculate the percent of reads lost in each step</summary>
+<p>
 
 ## **7. Calculate the percent of reads lost in each step**
 
@@ -379,6 +452,13 @@ Once the job has finished, inspect the two tables and revisit steps if too much 
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>8. Clean Up</summary>
+<p>
+
 ## **8. Clean Up**
 
 Move any `.out` files into the `logs` dir (if you have not already done this as you went along):
@@ -392,3 +472,8 @@ mv *out logs/
 Be sure to update your `README.md` file so that others know what happened in your directory. Ideally, somebody should be able to replicate what you did exactly.
 
 ***Congratulations!!** You have finished the pre-processing steps for your data analysis. Now move on to either the [SSL](https://github.com/philippinespire/pire_ssl_data_processing) or [CSSL](https://github.com/philippinespire/pire_cssl_data_processing) pipelines.*
+
+</p>
+</details>
+
+
