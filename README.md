@@ -294,7 +294,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 </details>
 
 
-<details><summary>5. Rename the files for real</summary>
+<details><summary>5. Make a copy of the renamed files</summary>
 <p>
 
 ## **5. Make a copy of the renamed files (several hours run time)**
