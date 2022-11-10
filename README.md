@@ -7,15 +7,30 @@ List of steps to take in raw fq files from shotgun and capture-shotgun
 
 <details><summary>Before You Start, Read This</summary>
 <p>
+
 ## Before You Start, Read This
+
+<details><summary>Using Wahab or Turing, ODU's HPCs</summary>
+<p>
 
 The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing).
 
-Scripts with `ssl` in the name are designed for shotgun data. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data.
+Scripts with `ssl` in the name are designed for shotgun data. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the the `pire_ssl_processing` and `pire_cssl_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  Further, the `README.md` and tutorials in all three of these repos are written with the assumption that you are using our shared dir on `wahab.hpc.odu.edu` where these repos have already been cloned, `/home/e1garcia/shotgun_PIRE`. 
 
-To run scripts, you can either:
+When in doubt, goto `/home/e1garcia/shotgun_PIRE` and use the repos there. 
 
-1. Clone this repo in your working dir AND use relative paths to the scripts
+</p>
+</details>
+
+
+<details><summary>Using Other HPCs</summary>
+<p>
+
+If you know that you deliberately don't want to use the shared repos on wahab, then here is how you would get started on another hpc and realize that you will have to modify all of the paths given in these `README.md` and tutorials.
+
+**ONLY DO THESE STEPS IF YOU ARE NOT USING WAHAB**
+
+1. Clone the repos in your working dir AND use relative paths to the scripts
 
 ```sh
 git clone https://github.com/philippinespire/pire_fq_gz_processing.git
@@ -33,6 +48,10 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script
 ```
 
 *We recommend option 2 because, if a script changes while you are processing data, you will automatically be using the most updated version of the script if you specify the full path. Cloning or copying means you will have to double-check the script/pull new changes every time.*
+
+</p>
+</details>
+
 
 ---
 
