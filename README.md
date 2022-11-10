@@ -203,7 +203,7 @@ Make sure you check and edit the decode file as necessary so that the following 
   * `PopSampleID` = `3LetterSpeciesCode-CorA3LetterSiteCode`
   * `LibraryID` = `IndiviudalID-Extraction-PlateAddress`  or just `IndividualID` if there is only 1 library for the individual 
 
-**Do NOT use `_` in the LibraryID. *The only `_` should be separating `PopSampleID` and `LibraryID`.**
+__Do NOT use `_` in the LibraryID. *The only `_` should be separating `PopSampleID` and `LibraryID`.__
 
 Examples of compatible names:
 
