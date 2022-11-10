@@ -369,7 +369,9 @@ Make notes in your <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing
 <details><summary>7. First trim</summary>
 <p>
 
-## **7. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
+## **7. First trim. 
+
+Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
 ```sh
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
@@ -403,7 +405,9 @@ Potential issues:
 <details><summary>8. Remove duplicates</summary>
 <p>
 
-## **8. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
+## **8. Remove duplicates. 
+
+Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
 `runCLUMPIFY_r1r2_array.bash` is a bash script that executes several sbatch jobs to de-duplicate and clumpify your `fq.gz` files. It does two things:
 
@@ -422,9 +426,8 @@ bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp 
 
 After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
-```sh
+```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-
 
 salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
 enable_lmod
@@ -445,6 +448,7 @@ install.packages("tidyverse") #when prompted, type "yes"
 #you are now in the shell environment and you should be able to run the checkClumpify script
 crun R < checkClumpify_EG.R --no-save
 ```
+
 If all files were successful, `checkClumpify_EG.R` will return "Clumpify Successfully worked on all samples". 
 
 If some failed, the script will also let you know. Try raising "-c 20" to "-c 40" in the `runCLUMPIFY_r1r2_array.bash` and run Clumplify again.
@@ -460,19 +464,19 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 </details>
 
 
-<details><summary>5. Second trim</summary>
+<details><summary>9. Second trim</summary>
 <p>
 
-## **5. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
+## **9. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
 
 If you are going to assemble a genome with this data, use [runFASTP_2_ssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch). Otherwise, use [runFASTP_2_cssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary. 
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runFASTP_2.sbatch <indir; clumpified files> <outdir>
 #do not use trailing / in paths
-sbatch runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
+sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
 
 #for SSL: runFASTP_2_ssl.sbatch
 #for CSSL: runFASTP_2_cssl.sbatch
@@ -480,16 +484,31 @@ sbatch runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
 
 Review the results with the `FastQC` output (`fq_fp1_clmp_fp2/2nd_fastp_report.html`) and update your `README.md`.
 
+Potential issues:  
+  * % duplication - 
+    * Alb: XX%, Contemp: XX%
+  * GC content - 
+    *  Alb: XX%, Contemp: XX%
+  * passing filter - 
+    * Alb: XX%, Contemp: XX%
+  * % adapter - 
+    * Alb: XX%, Contemp: XX%
+  * number of reads - 
+    * Alb: XX mil, Contemp: XX mil
+
+
 ---
 
 </p>
 </details>
 
 
-<details><summary>6. Decontaminate</summary>
+<details><summary>10. Decontaminate</summary>
 <p>
 
-## **6. Decontaminate files. Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
+## **10. Decontaminate files. 
+
+Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
 `FastQ Screen` works to identify and remove contamination by mapping the reads in our `fq.gz` files to a set of bacterial, protist, virus, fungi, human, etc. genome assemblies that we previously downloaded. If any of the reads in any of the `fq.gz` files map (or "hit") to one or more of these assemblies they are removed from the `fq.gz` file. 
 
@@ -498,17 +517,17 @@ Like with Clumpify, `runFQSCRN_6.bash` is a bash script that executes several sb
   * ***This can take up to several days depending on the size of your dataset. Plan accordingly!***
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes running simultaneously>
 #do not use trailing / in paths
-bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
+bash ../../pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
 ```
 
 Once done, confirm that all files were successfully completed.
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #FastQ Screen generates 5 files (*tagged.fastq.gz, *tagged_filter.fastq.gz, *screen.txt, *screen.png, *screen.html) for each input fq.gz file
 #check that all 5 files were created for each file: 
@@ -537,24 +556,31 @@ If you see missing indiviudals or categories in the FastQC output, there was lik
 Run the files that failed again.
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
 #do not use trailing / in paths. Example:
-bash runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
+bash ../../pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ```
 
 Once `FastQ Screen` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runMULTIQC.sbatch <indir; fqscreen files> <report name>
 #do not use trailing / in paths
-sbatch runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastqc_screen_report
+sbatch ../../pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastqc_screen_report
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastqc_screen_report.html`) and update your `README.md`.
+
+Potential issues:
+
+  * one hit, one genome, no ID - 
+    * Alb: XX%, Contemp: XX%
+  * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
+    * Alb: XX%, Contemp: XX%
 
 ---
 
@@ -562,31 +588,40 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastqc_scr
 </details>
 
 
-<details><summary>7. Repair</summary>
+<details><summary>11. Repair</summary>
 <p>
 
-## **7. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
+## **11. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
 
 `runREPAIR.sbatch` does not "repair" reads but instead re-pairs them. Basically, it matches up forward (r1) and reverse (r2) reads so that the `*1.fq.gz` and `*2.fq.gz` files have reads in the same order.
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads>
-sbatch runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired 40
+sbatch ../../pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired 40
 ```
 
 Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
 ```sh
-cd YOUR_SPECIES_DIR/fq_fp1_clmp_fp2_fqscrn_repaired
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+/fq_fp1_clmp_fp2_fqscrn_repaired
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
+sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "<yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/fastqc_report.html`) and update your `README.md`.
+
+Potential issues:  
+  * % duplication - 
+    * Alb: XX%, Contemp: XX%
+  * GC content - 
+    * Alb: XX%, Contemp: XX%
+  * number of reads - 
+    * Alb: XX mil, Contemp: XX mil
 
 ---
 
@@ -594,10 +629,10 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/f
 </details>
 
 
-<details><summary>8. Calculate the percent of reads lost in each step</summary>
+<details><summary>12. Calculate the percent of reads lost in each step</summary>
 <p>
 
-## **8. Calculate the percent of reads lost in each step**
+## **12. Calculate the percent of reads lost in each step**
 
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
 
@@ -605,7 +640,7 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/f
   2. `readsRemaining_table.tsv` which reports the step-specific percentage of reads that remain and the final cumulative percentage of reads that remain.
  
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #read_calculator_ssl.sh "<path to species home dir>" "<Path to dir with raw files>"
 #do not use trailing / in paths.
