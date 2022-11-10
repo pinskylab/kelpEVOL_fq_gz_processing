@@ -14,85 +14,57 @@ The purpose of this repo is to provide the steps for processing raw fq files for
 
 Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the the `pire_ssl_data_processing` and `pire_cssl_data_processing` and `pire_lcwgs_data_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  
 
-<details><summary>Using Wahab or Turing, ODU's HPCs</summary>
+<details><summary>Which HPC Are You Using?</summary>
 <p>
 
-0. Log onto wahab
+We encourage everybody to use `wahab.hpc.odu.edu` or `turing.hpc.odu.edu`, preferably wahab.  You can start by logging onto wahab
 
 	```bash
 	ssh YourUserName@wahab.hpc.odu.edu
 	```
 
-1. Goto `/home/e1garcia/shotgun_PIRE` and use the `pire_fq_gz_processing` repo along with either `pire_ssl_processing` or `pire_cssl_processing`, and immediately start by pulling changes from github in the repos you are using **EACH TIME YOU LOG IN**
+There are shared repos on wahab and turing in `/home/e1garcia/shotgun_PIRE` that you are encouraged to use.
 
 	```bash
-	cd /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing
-	git pull
-
-	# if working in pire_ssl_data_processing, then
-	cd /home/e1garcia/shotgun_PIRE/pire_ssl_data_processing
-	git pull
-
-	# if working in pire_cssl_data_processing, then
-	cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing
-	git pull
-
-	# if working in pire_lcwgs_data_processing, then
-	cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing
-	git pull
+	cd /home/e1garcia/shotgun_PIRE
 	```
 
-2. When your session is done, i.e. you are about to log off, push your changes to github
+If, however, you know that you deliberately don't want to use the shared repos on wahab and turing in `/home/e1garcia/shotgun_PIRE`, then here is how you would get started on another hpc and realize that you will have to modify all of the paths given in these `README.md` and tutorials.
+
+**ONLY DO THESE STEPS IF YOU ARE NOT USING WAHAB OR TURING**
+
+0. Create a directory for your PIRE repos to live in, and cd into it
 
 	```bash
-	git pull
-
-	# if there are no errors, then proceed, otherwise get help
-	git add --all
-
-	# if there are no errors, then proceed, otherwise get help
-	git commit -m "insert message here"
-
-	# if there are no errors, then proceed, otherwise get help
-	git push
+	mkdir <pathToPireDir>
+	cd <pathToPireDir>
 	```
 
-3. As you work through this tutorial it is assumed that you will be running scripts from either `pire_ssl_data_processing` or `pire_cssl_data_processing` or `pire_lcwgs_data_processing` and you will need to add the path to the `pire_fq_gz_processing` directory before the script's name in the code blocks below.
+1. Clone the repos into your PIRE working dir 
 
 	```sh
-	#add this path when running scripts
-	/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
+	#cd to your working dir then
+	git clone https://github.com/philippinespire/pire_fq_gz_processing.git
 
-	#Example:
-	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
+	# then choose which repo you are using
+	git clone https://github.com/philippinespire/pire_ssl_data_processing.git
+	git clone https://github.com/philippinespire/pire_cssl_data_processing.git
+	git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
 	```
 
 </p>
 </details>
 
 
-<details><summary>Using Other HPCs</summary>
+<details><summary>Git Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
 <p>
 
-If you know that you deliberately don't want to use the shared repos on wahab and turing in `/home/e1garcia/shotgun_PIRE`, then here is how you would get started on another hpc and realize that you will have to modify all of the paths given in these `README.md` and tutorials.
+You must constantly be pulling and pushing changes to github with git or else you're going to mess up the repo.
 
-**ONLY DO THESE STEPS IF YOU ARE NOT USING WAHAB OR TURING**
-
-0. Clone the repos in your PIRE working dir 
-
-```sh
-#cd to your working dir then
-git clone https://github.com/philippinespire/pire_fq_gz_processing.git
-
-# then choose which repo you are using
-git clone https://github.com/philippinespire/pire_ssl_data_processing.git
-git clone https://github.com/philippinespire/pire_cssl_data_processing.git
-git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
-```
-
-1. Any time you return to these repos on another HPC, goto your PIRE working dir and use the `pire_fq_gz_processing` repo along with either `pire_ssl_processing` or `pire_cssl_processing`, and immediately start by pulling changes from github in the repos you are using **EACH TIME YOU LOG IN**
+1. Goto your PIRE working dir (`/home/e1garcia/shotgun_PIRE` on wahab) and use the `pire_fq_gz_processing` repo along with either `pire_ssl_data_processing` or `pire_cssl_data_processing` or `pire_lcwgs_data_processing`, and immediately start by pulling changes from github in the repos you are using **EACH TIME YOU LOG IN**
 
 	```bash
+	# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 	cd <yourPireDirPath>/pire_fq_gz_processing
 	git pull
 
@@ -109,7 +81,7 @@ git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
 	git pull
 	```
 
-2. When your session is done, i.e. you are about to log off, push your changes to github
+2. When your session is done, i.e. you are about to log off, push your changes to github **EACH TIME YOU LOG OUT**
 
 	```bash
 	git pull
@@ -127,13 +99,12 @@ git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
 3. As you work through this tutorial it is assumed that you will be running scripts from either `pire_ssl_data_processing` or `pire_cssl_data_processing` or `pire_lcwgs_data_processing` and you will need to add the path to the `pire_fq_gz_processing` directory before the script's name in the code blocks below.
 
 	```sh
-	#add this path when running scripts
+	#add this path when running scripts on wahab
 	/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
 
 	#Example:
 	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
 	```
-
 
 
 </p>
