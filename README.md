@@ -646,14 +646,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #do not use trailing / in paths.
 
 # SSL Example:
-sbatch read_calculator.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis" "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/shotgun_raw_fq"
-# or (after cd YOUR_SPECIES_DIR)
-sbatch read_calculator.sh "." "shotgun_raw_fq"
-
-# CSSL Example:
-sbatch read_calculator.sh "/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/spratelloides_gracilis" "/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/spratelloides_gracilis/raw_fq_capture"
-# or (after cd YOUR_SPECIES_DIR)
-sbatch read_calculator.sh "." "raw_fq_capture"
+sbatch ../../pire_fq_gz_processing/read_calculator.sh "." "fq_raw"
 
 ```
 
@@ -665,15 +658,15 @@ Once the job has finished, inspect the two tables and revisit steps if too much 
 </details>
 
 
-<details><summary>9. Clean Up</summary>
+<details><summary>13. Clean Up</summary>
 <p>
 
-## **9. Clean Up**
+## **13. Clean Up**
 
 Move any `.out` files into the `logs` dir (if you have not already done this as you went along):
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 mv *out logs/
 ```
