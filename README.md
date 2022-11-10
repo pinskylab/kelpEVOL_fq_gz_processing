@@ -300,7 +300,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 ## **5. Make a copy of the renamed files (several hours run time)**
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
-`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw`.  
+`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
 *(can take several hours)*
 
 ```bash
@@ -317,24 +317,23 @@ cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_pro
 </details>
 
 
-<details><summary>2. Check the quality of raw data</summary>
+<details><summary>6. Check the quality of raw data</summary>
 <p>
 
-## **2. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
+## **6. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
 
-FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02).
+FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](Multi_FASTQC.sh) script in this repo.
 
 Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) the FULL path to these files and (2) a suffix that will identify the files to be processed.
 
-`Multi_FASTQC.sh` should be run from the directory that holds the raw, renamed `fq.gz` files. This will be `shotgun_raw_fq` for the ssl pipeline and `raw_fq_capture` for the cssl pipeline.
+`Multi_FASTQC.sh` should be run from the directory that holds the raw, renamed `fq.gz` files. This will be `fq_raw`. If not, rename it to fq_raw
 
-```sh
-cd YOUR_SPECIES_DIR/shotgun_raw_fq
-#or raw_fq_capture if using cssl data
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun" "fq.gz"   
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw" "fq.gz"   
 ```
 
 If you get a message about not finding `crun` then load the following containers in your current session and run `Multi_FASTQC.sh` again.
@@ -346,10 +345,20 @@ module load container_env multiqc
 module load container_env fastqc
 
 #Example:
-sbatch Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw_shotgun" "fq.gz"
+sbatch Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw" "fq.gz"
 ```
 
-Review the `MultiQC` output (`shotgun_raw_fq/fastqc_report.html` OR `raw_fq_capture/fastqc_report.html`) and update your `README.md`.
+Review the `MultiQC` output (`fq_raw/fastqc_report.html`). You can push your changes to github, then copy and paste the url to the raw html on github into this site: https://htmlpreview.github.io/ .  Note that because our repo is private, there is a token attached to the link that goes stale pretty quickly. 
+
+Make notes in your <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/README.md file as follows:
+
+	Potential issues:  
+	  * % duplication - 
+		* Alb: XX%, Contemp: XX%
+	  * GC content - 
+		* Alb: XX%, Contemp: XX%
+	  * number of reads - 
+		* Alb: XX mil, Contemp: XX mil
 
 ---
 
