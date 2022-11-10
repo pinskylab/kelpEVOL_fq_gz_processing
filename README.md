@@ -67,7 +67,7 @@ Scripts to run
 </details>
 
 
-<details><summary>Download data</summary>
+<details><summary>0. Download data</summary>
 <p>
 
 ## **Download your data from the TAMUCC grid**
@@ -99,10 +99,10 @@ If your download fails, go back to the web browser and check that you can see a 
 </details>
 
 
-<details><summary>0. Rename the raw fq.gz files</summary>
+<details><summary>1. Rename the raw fq.gz files</summary>
 <p>
 
-## **0. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
+## **1. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
 
 Make sure you check and edit the decode file as necessary so that the following naming format is followed:
 
@@ -166,10 +166,10 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 </details>
 
 
-<details><summary>1. Check the quality of raw data</summary>
+<details><summary>2. Check the quality of raw data</summary>
 <p>
 
-## **1. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
+## **2. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
 
 FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) script in this repo (last updated 2022-06-02).
 
@@ -206,10 +206,10 @@ Review the `MultiQC` output (`shotgun_raw_fq/fastqc_report.html` OR `raw_fq_capt
 </details>
 
 
-<details><summary>2. First trim</summary>
+<details><summary>3. First trim</summary>
 <p>
 
-## **2. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
+## **3. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
 ```sh
 cd YOUR_SPECIES_DIR
@@ -227,10 +227,10 @@ Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `REA
 </details>
 
 
-<details><summary>3. Remove duplicates</summary>
+<details><summary>4. Remove duplicates</summary>
 <p>
 
-## **3. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
+## **4. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
 `runCLUMPIFY_r1r2_array.bash` is a bash script that executes several sbatch jobs to de-duplicate and clumpify your `fq.gz` files. It does two things:
 
@@ -286,10 +286,10 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 </details>
 
 
-<details><summary>4. Second trim</summary>
+<details><summary>5. Second trim</summary>
 <p>
 
-## **4. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
+## **5. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
 
 If you are going to assemble a genome with this data, use [runFASTP_2_ssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch). Otherwise, use [runFASTP_2_cssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary. 
 
@@ -312,10 +312,10 @@ Review the results with the `FastQC` output (`fq_fp1_clmp_fp2/2nd_fastp_report.h
 </details>
 
 
-<details><summary>5. Decontaminate</summary>
+<details><summary>6. Decontaminate</summary>
 <p>
 
-## **5. Decontaminate files. Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
+## **6. Decontaminate files. Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
 `FastQ Screen` works to identify and remove contamination by mapping the reads in our `fq.gz` files to a set of bacterial, protist, virus, fungi, human, etc. genome assemblies that we previously downloaded. If any of the reads in any of the `fq.gz` files map (or "hit") to one or more of these assemblies they are removed from the `fq.gz` file. 
 
@@ -388,10 +388,10 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastqc_scr
 </details>
 
 
-<details><summary>6. Repair</summary>
+<details><summary>7. Repair</summary>
 <p>
 
-## **6. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
+## **7. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
 
 `runREPAIR.sbatch` does not "repair" reads but instead re-pairs them. Basically, it matches up forward (r1) and reverse (r2) reads so that the `*1.fq.gz` and `*2.fq.gz` files have reads in the same order.
 
@@ -420,10 +420,10 @@ Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/f
 </details>
 
 
-<details><summary>7. Calculate the percent of reads lost in each step</summary>
+<details><summary>8. Calculate the percent of reads lost in each step</summary>
 <p>
 
-## **7. Calculate the percent of reads lost in each step**
+## **8. Calculate the percent of reads lost in each step**
 
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
 
@@ -456,10 +456,10 @@ Once the job has finished, inspect the two tables and revisit steps if too much 
 </details>
 
 
-<details><summary>8. Clean Up</summary>
+<details><summary>9. Clean Up</summary>
 <p>
 
-## **8. Clean Up**
+## **9. Clean Up**
 
 Move any `.out` files into the `logs` dir (if you have not already done this as you went along):
 
