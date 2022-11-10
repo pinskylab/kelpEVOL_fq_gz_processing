@@ -150,13 +150,15 @@ Scripts to run
 
 All types of data will share the following directories associated with data qc
 
-	```bash
-	# if it does not exist, make the directory for your species 
-	# you must replace the <> with the real val
-	mkdir <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
-	cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
-	mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired
-	```
+```bash
+# if it does not exist, make the directory for your species 
+# you must replace the <> with the real val
+mkdir <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
+cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
+mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired
+```
+
+---
 
 </p>
 </details>
