@@ -84,6 +84,7 @@ You must constantly be pulling and pushing changes to github with git or else yo
 2. When your session is done, i.e. you are about to log off, push your changes to github **EACH TIME YOU LOG OUT**
 
 	```bash
+	cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing
 	git pull
 
 	# if there are no errors, then proceed, otherwise get help
@@ -100,7 +101,7 @@ You must constantly be pulling and pushing changes to github with git or else yo
 
 	```sh
 	#add this path when running scripts on wahab
-	/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
+	#<yourPireDirPath>/pire_fq_gz_processing/<script's name> <script arguments>
 
 	#Example:
 	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
