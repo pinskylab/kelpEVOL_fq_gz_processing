@@ -366,20 +366,33 @@ Make notes in your <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing
 </details>
 
 
-<details><summary>3. First trim</summary>
+<details><summary>7. First trim</summary>
 <p>
 
-## **3. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
+## **7. First trim. Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runFASTP_1st_trim.sbatch <indir> <outdir>
 #do not use trailing / in paths
-sbatch runFASTP_1st_trim.sbatch shotgun_raw_fq fq_fp1 #CSSL: replace shotgun_raw_fq with raw_fq_capture
+# note, if your dir is set up correctly, this relative path will work
+sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
 ```
 
-Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`.
+Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`:
+
+Potential issues:  
+  * % duplication - 
+    * Alb: XX%, Contemp: XX%
+  * GC content -
+    * Alb: XX%, Contemp: XX%
+  * passing filter - 
+    * Alb: XX%, Contemp: XX%
+  * % adapter - 
+    * Alb: XX%, Contemp: XX%
+  * number of reads - 
+    * Alb: XX mil, Contemp: XX mil
 
 ---
 
@@ -387,10 +400,10 @@ Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `REA
 </details>
 
 
-<details><summary>4. Remove duplicates</summary>
+<details><summary>8. Remove duplicates</summary>
 <p>
 
-## **4. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
+## **8. Remove duplicates. Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
 `runCLUMPIFY_r1r2_array.bash` is a bash script that executes several sbatch jobs to de-duplicate and clumpify your `fq.gz` files. It does two things:
 
@@ -400,17 +413,18 @@ Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `REA
 You will need to specify the number of nodes you wish to allocate your jobs to. The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. (Ex: If you have 3 pairs of r1-r2 files, you should only use 3 nodes at most.) If you have many sets of files (likely to occur if you are processing capture data), you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition).
 
 ```bash
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runCLUMPIFY_r1r2_array.bash <indir; fast1 files> <outdir> <tempdir> <max # of nodes to use at once>
 #do not use trailing / in paths
-bash runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/YOURUSERNAME 20
+bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 20
 ```
 
 After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
 ```sh
-cd YOUR_SPECIES_DIR
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+
 
 salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
 enable_lmod
