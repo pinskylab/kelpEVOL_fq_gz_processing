@@ -23,7 +23,7 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 <details><summary>Which HPC Are You Using?</summary>
 <p>
 
-# Use Turing
+## Use Turing
 
 We encourage everybody to use `wahab.hpc.odu.edu` or `turing.hpc.odu.edu`, preferably wahab.  You can start by logging onto wahab
 
@@ -68,6 +68,8 @@ If, however, you know that you deliberately don't want to use the shared repos o
 
 <details><summary>Git Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
 <p>
+
+## Git etiquette 
 
 You must constantly be pulling and pushing changes to github with `git` or else you're going to mess up the repo.
 
