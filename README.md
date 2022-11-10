@@ -82,6 +82,7 @@ You must constantly be pulling and pushing changes to github with `git` or else 
 	# replace <ssl or cssl or lcwgs> with either ssl or cssl or lcwgs, no spaces
 	cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing
 	git pull
+	```
 
 2. When your session is done, i.e. you are about to log off, push your changes to github **EACH TIME YOU LOG OUT**
 
@@ -142,23 +143,38 @@ Scripts to run
 </details>
 
 
-<details><summary>0. Download data</summary>
+<details><summary>0. Set up directory for species if it doesn't exist</summary>
 <p>
 
-## **Download your data from the TAMUCC grid**
+## 0. Set up directory
 
-   1. **Organize your directories according to the data type that you are downloading (ssl, cssl, lcWGS, etc)**. e.g. 
-```
-/home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/gazza_minuta/raw_fq_capture
-```
-   2. **Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded.  Make sure it works: click on it and your web browser should open listing your data files.
+All types of data will share the following directories associated with data qc
+
+	```bash
+	# if it does not exist, make the directory for your species 
+	# you must replace the <> with the real val
+	mkdir <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
+	cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
+	mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired
+	```
+
+</p>
+</details>
+
+
+<details><summary>1. Download data</summary>
+<p>
+
+## **1. Download your data from the TAMUCC grid**
+
+**Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded.  Make sure it works: click on it and your web browser should open listing your data files.
 e.g. [https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture](https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture).
-   3. **Execute gridDownloader.sh**. See below.
 
-To execute gridDownloader.sh
+To execute `gridDownloader.sh`
+
 ```
 # Navigate to dir where to download files. e.g.
-cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing/<your_species>/raw_fq_capture
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 # sbatch gridDownloader.sh <outdir> <link-to-files>
 # outdir becomes "." since you have already navigated there
