@@ -652,6 +652,17 @@ sbatch ../../pire_fq_gz_processing/read_calculator.sh "." "fq_raw"
 
 Once the job has finished, inspect the two tables and revisit steps if too much data was lost.
 
+Reads lost:
+
+  * fastp1 dropped XX% of the reads
+  * XX% of reads were duplicates and were dropped by Clumpify
+  * fastp2 dropped XX% of the reads after deduplication
+  
+Reads remaining:
+
+Total reads remaining: XX%
+
+
 ---
 
 </p>
