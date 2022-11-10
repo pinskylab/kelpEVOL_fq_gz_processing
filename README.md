@@ -59,7 +59,7 @@ If, however, you know that you deliberately don't want to use the shared repos o
 </details>
 
 
-<details><summary>Git Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
+<details><summary>Regardless of HPC, **git** Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
 <p>
 
 You must constantly be pulling and pushing changes to github with git or else you're going to mess up the repo.
@@ -71,18 +71,9 @@ You must constantly be pulling and pushing changes to github with git or else yo
 	cd <yourPireDirPath>/pire_fq_gz_processing
 	git pull
 
-	# if working in pire_ssl_data_processing, then
-	cd <yourPireDirPath>/pire_ssl_data_processing
+	# replace <ssl or cssl or lcwgs> with either ssl or cssl or lcwgs, no spaces
+	cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing
 	git pull
-
-	# if working in pire_cssl_data_processing, then
-	cd <yourPireDirPath>/pire_cssl_data_processing
-	git pull
-
-	# if working in pire_lcwgs_data_processing, then
-	cd <yourPireDirPath>/pire_cssl_data_processing
-	git pull
-	```
 
 2. When your session is done, i.e. you are about to log off, push your changes to github **EACH TIME YOU LOG OUT**
 
