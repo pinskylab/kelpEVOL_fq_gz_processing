@@ -14,8 +14,16 @@ The purpose of this repo is to provide the steps for processing raw fq files for
 
 Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the the `pire_ssl_data_processing` and `pire_cssl_data_processing` and `pire_lcwgs_data_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  
 
+---
+
+</p>
+</details>
+
+
 <details><summary>Which HPC Are You Using?</summary>
 <p>
+
+# Use Turing
 
 We encourage everybody to use `wahab.hpc.odu.edu` or `turing.hpc.odu.edu`, preferably wahab.  You can start by logging onto wahab
 
@@ -52,9 +60,6 @@ If, however, you know that you deliberately don't want to use the shared repos o
 	git clone https://github.com/philippinespire/pire_cssl_data_processing.git
 	git clone https://github.com/philippinespire/pire_lcwgs_data_processing.git
 	```
-
-</p>
-</details>
 
 ---
 
@@ -102,9 +107,6 @@ You must constantly be pulling and pushing changes to github with `git` or else 
 	#Example:
 	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
 	```
-
-
-
 
 ---
 
