@@ -21,48 +21,48 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 
 2. Immediately start by pulling changes from github in the repos you are using each time you log in
 
-```bash
-cd /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing
-git pull
+	```bash
+	cd /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing
+	git pull
 
-# if working in pire_ssl_data_processing, then
-cd /home/e1garcia/shotgun_PIRE/pire_ssl_data_processing
-git pull
+	# if working in pire_ssl_data_processing, then
+	cd /home/e1garcia/shotgun_PIRE/pire_ssl_data_processing
+	git pull
 
-# if working in pire_cssl_data_processing, then
-cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing
-git pull
+	# if working in pire_cssl_data_processing, then
+	cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing
+	git pull
 
-# if working in pire_lcwgs_data_processing, then
-cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing
-git pull
-```
+	# if working in pire_lcwgs_data_processing, then
+	cd /home/e1garcia/shotgun_PIRE/pire_cssl_data_processing
+	git pull
+	```
 
 3. When your session is done, i.e. you are about to log off, push your changes to github
 
-```bash
-git pull
+	```bash
+	git pull
 
-# if there are no errors, then proceed, otherwise get help
-git add --all
+	# if there are no errors, then proceed, otherwise get help
+	git add --all
 
-# if there are no errors, then proceed, otherwise get help
-git commit -m "insert message here"
+	# if there are no errors, then proceed, otherwise get help
+	git commit -m "insert message here"
 
-# if there are no errors, then proceed, otherwise get help
-git push
-```
+	# if there are no errors, then proceed, otherwise get help
+	git push
+	```
 
 4. As you work through this tutorial it is assumed that you will be running scripts from either `pire_ssl_data_processing` or `pire_cssl_data_processing` and you will need to add the path to the `pire_fq_gz_processing` directory before the script's name in the code blocks below.
 
 
-```sh
-#add this path when running scripts
-/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
+	```sh
+	#add this path when running scripts
+	/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/<script's name>
 
-#Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
-```
+	#Example:
+	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh <script arguments>
+	```
 
 </p>
 </details>
