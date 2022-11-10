@@ -229,12 +229,6 @@ ls | wc -l
 #XX lines (1 additional line for header = XX individuals), checks out
 wc -l <NAMEOFDECODEFILE>.tsv 
 
-#run renameFQGZ.bash first to make sure new names make sense
-bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/renameFQGZ.bash NAMEOFDECODEFILE.tsv
-
-#run renameFQGZ.bash again to actually rename files
-#need to say "yes" 2X
-bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
 ```
 
 ---
@@ -246,7 +240,7 @@ bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/renameFQGZ.bash NAMEOFDEC
 <details><summary>3. Perform a renaming dry run</summary>
 <p>
 
-## **3. Rename the raw fq.gz files (<1 minute run time) and make a copy (several hours run time)**
+## **3. Perform a renaming dry run**
 
 Then, use the decode file with [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
@@ -274,6 +268,8 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 <details><summary>4. Rename the files for real</summary>
 <p>
 
+## **4. Rename the files for real (<1 minute run time) **
+
 After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
 Example of how the file names line up:
@@ -284,17 +280,36 @@ Example of how the file names line up:
 When you are ready to change names, execute the line of code below. This script will ask you twice whether you want to proceed with renaming.
 
 ```bash
-cd YOUR_SPECIES_DIR/shotgun_raw_fq
-#or raw_fq_capture if using cssl data
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
-bash renameFQGZ.bash NAMEOFDECODEFILE.tsv rename
+bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.tsv rename
 
 #you will need to say y 2X
 ```
 
+
+---
+
+</p>
+</details>
+
+
+<details><summary>5. Rename the files for real</summary>
+<p>
+
+## **5. Make a copy of the renamed files (several hours run time)**
+
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
-`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl>_data_processing/<species_name>/fq_raw_<ssl|cssl>`. Then, create your `species dir` and transfer your raw data. This will be your working copy. 
+`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw`.  
 *(can take several hours)*
+
+```bash
+mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
+
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
+
+cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
+```
 
 ---
 
