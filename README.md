@@ -39,8 +39,7 @@ There are shared repos on wahab and turing in `/home/e1garcia/shotgun_PIRE` that
 
 If, however, you know that you deliberately don't want to use the shared repos on wahab and turing in `/home/e1garcia/shotgun_PIRE`, then here is how you would get started on another hpc and realize that you will have to modify all of the paths given in these `README.md` and tutorials.
 
---- 
-**ONLY DO THESE STEPS IF YOU ARE NOT USING WAHAB OR TURING**
+**ONLY DO THE FOLLOWING STEPS 0 AND 1 IF YOU ARE NOT USING WAHAB OR TURING**
 
 0. Create a directory for your PIRE repos to live in, and cd into it
 
