@@ -61,10 +61,10 @@ If, however, you know that you deliberately don't want to use the shared repos o
 </p>
 </details>
 
-<details><summary>Regardless of HPC, **git** Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
+<details><summary>Git Your Act Together or Be Doomed to a Life of Anguish and Despair</summary>
 <p>
 
-You must constantly be pulling and pushing changes to github with git or else you're going to mess up the repo.
+You must constantly be pulling and pushing changes to github with `git` or else you're going to mess up the repo.
 
 1. Goto your PIRE working dir (`/home/e1garcia/shotgun_PIRE` on wahab) and use the `pire_fq_gz_processing` repo along with either `pire_ssl_data_processing` or `pire_cssl_data_processing` or `pire_lcwgs_data_processing`, and immediately start by pulling changes from github in the repos you are using **EACH TIME YOU LOG IN**
 
