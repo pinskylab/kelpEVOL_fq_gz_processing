@@ -2,6 +2,8 @@
 
 List of steps to take in raw fq files from shotgun and capture-shotgun
 
+testing permission
+
 ---
 
 
