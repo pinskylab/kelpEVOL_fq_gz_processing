@@ -201,7 +201,7 @@ If your download fails, go back to the web browser and check that you can see a 
 
 The decode file converts the file name that we had to use for NovoGene to the PIRE file name convention.
 
-The decode file should be formatted as follows: tab separated, where the first column is the NovoGene prefix names (the prefixes of the downloaded fq.gz files), the second column is the PIRE name prefixes (the prefixes to apply to the files), the first row contains the column headers, and the rest of the columns contain the NovoGene and PIRE file prefixes.
+The decode file should be formatted as follows: tab separated, where the first column is the NovoGene prefix names (the prefixes of the downloaded fq.gz files, `Sequence_Name`), the second column is the PIRE name prefixes (the prefixes to apply to the files, `Extraction_ID`), the first row contains the column headers, and the rest of the columns contain the NovoGene and PIRE file prefixes.
 ```bash
 Sequence_Name	Extraction_ID
 SgA0103511C	Sgr-AMvi_035-Ex1-cssl
@@ -258,7 +258,7 @@ If there is an issue with the formatting of the decode file, rename the original
 
 ```bash
 mv SequenceNameDecode.tsv SequenceNameDecode_original_depricated.tsv
-cp SequenceNameDecode_original_depricated.tsv SequenceNameDecode.tsv
+cp SequenceNameDecode_original_depricated.tsv SequenceNameDecode_fixed.tsv
 ```
 
 Then edit the `SequenceNameDecode.tsv` file to conform to the file formatting rules outlined in step 2, above.
