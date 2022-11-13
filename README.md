@@ -197,14 +197,25 @@ If your download fails, go back to the web browser and check that you can see a 
 <details><summary>2. Proofread the decode files</summary>
 <p>
 
-## **2. Proofread the decode file(s) (<1 minute run time) **
+## **2. Proofread the decode file(s) (<1 minute run time)**
 
-Make sure you check and edit the decode file(s) as necessary so that the following naming format is followed:
+The decode file converts the file name that we had to use for NovoGene to the PIRE file name convention.
+
+The decode file should be formatted as follows: tab separated, where the first column is the NovoGene prefix names (the prefixes of the downloaded fq.gz files), the second column is the PIRE name prefixes (the prefixes to apply to the files), the first row contains the column headers, and the rest of the columns contain the NovoGene and PIRE file prefixes.
+```bash
+Sequence_Name	Extraction_ID
+SgA0103511C	Sgr-AMvi_035-Ex1-cssl
+SgA0104307D	Sgr-AMvi_043-Ex1-cssl
+SgA0104610D	Sgr-AMvi_046-Ex1-cssl
+SgA0105406E	Sgr-AMvi_054-Ex1-cssl
+```
+
+Make sure you check that the following PIRE prefix naming format is followed, where there is only 1 `_` character:
 
 `PopSampleID_LibraryID` where:
 
   * `PopSampleID` = `3LetterSpeciesCode-CorA3LetterSiteCode`
-  * `LibraryID` = `IndiviudalID-Extraction-PlateAddress`  or just `IndividualID` if there is only 1 library for the individual 
+  * `LibraryID` = `IndiviudalID-Extraction-PlateAddress-LibType`  or just `IndividualID` if there is only 1 library for the individual 
 
 __Do NOT use `_` in the LibraryID. *The only `_` should be separating `PopSampleID` and `LibraryID`.__
 
@@ -212,8 +223,7 @@ Examples of compatible names:
 
   * `Sne-CTaw_051-Ex1-3F` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate
   * `Sne-CTaw_051` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
-  * `Sne-CTaw_051-Ex1-L4` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc L4 (lane 4)
-
+  * `Sne-CTaw_051-Ex1-cssl-L4` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, capture lib, loc L4 (lane 4)
 
 Here are some other QC checks on the downloaded data and the decode files:
 
@@ -239,10 +249,30 @@ wc -l <NAMEOFDECODEFILE>.tsv
 </details>
 
 
-<details><summary>3. Perform a renaming dry run</summary>
+<details><summary>3. Edit the decode file (if there is a formatting issue)</summary>
 <p>
 
-## **3. Perform a renaming dry run**
+## **3. Edit the decode file**
+
+If there is an issue with the formatting of the decode file, rename the original file, and create a new file to edit.
+
+```bash
+mv SequenceNameDecode.tsv SequenceNameDecode_original_depricated.tsv
+cp SequenceNameDecode_original_depricated.tsv SequenceNameDecode.tsv
+```
+
+Then edit the `SequenceNameDecode.tsv` file to conform to the file formatting rules outlined in step 2, above.
+
+---
+
+</p>
+</details>
+
+
+<details><summary>4. Perform a renaming dry run</summary>
+<p>
+
+## **4. Perform a renaming dry run**
 
 Then, use the decode file with [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
@@ -267,10 +297,10 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 </details>
 
 
-<details><summary>4. Rename the files for real</summary>
+<details><summary>5. Rename the files for real</summary>
 <p>
 
-## **4. Rename the files for real (<1 minute run time) **
+## **5. Rename the files for real (<1 minute run time) **
 
 After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
@@ -296,10 +326,10 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 </details>
 
 
-<details><summary>5. Make a copy of the renamed files</summary>
+<details><summary>6. Make a copy of the renamed files</summary>
 <p>
 
-## **5. Make a copy of the renamed files (several hours run time)**
+## **6. Make a copy of the renamed files (several hours run time)**
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
@@ -319,10 +349,10 @@ cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_pro
 </details>
 
 
-<details><summary>6. Check the quality of raw data</summary>
+<details><summary>7. Check the quality of raw data</summary>
 <p>
 
-## **6. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
+## **7. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
 
 FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](Multi_FASTQC.sh) script in this repo.
 
@@ -368,10 +398,10 @@ Make notes in your <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing
 </details>
 
 
-<details><summary>7. First trim</summary>
+<details><summary>8. First trim</summary>
 <p>
 
-## **7. First trim. 
+## **8. First trim. 
 
 Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
@@ -404,10 +434,10 @@ Potential issues:
 </details>
 
 
-<details><summary>8. Remove duplicates</summary>
+<details><summary>9. Remove duplicates</summary>
 <p>
 
-## **8. Remove duplicates. 
+## **9. Remove duplicates. 
 
 Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
@@ -466,10 +496,10 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 </details>
 
 
-<details><summary>9. Second trim</summary>
+<details><summary>10. Second trim</summary>
 <p>
 
-## **9. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
+## **10. Second trim. Execute `runFASTP_2.sbatch` (0.5-3 hours run time)**
 
 If you are going to assemble a genome with this data, use [runFASTP_2_ssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch). Otherwise, use [runFASTP_2_cssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary. 
 
@@ -505,10 +535,10 @@ Potential issues:
 </details>
 
 
-<details><summary>10. Decontaminate</summary>
+<details><summary>11. Decontaminate</summary>
 <p>
 
-## **10. Decontaminate files. 
+## **11. Decontaminate files. 
 
 Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
@@ -590,10 +620,10 @@ Potential issues:
 </details>
 
 
-<details><summary>11. Repair</summary>
+<details><summary>12. Repair</summary>
 <p>
 
-## **11. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
+## **12. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
 
 `runREPAIR.sbatch` does not "repair" reads but instead re-pairs them. Basically, it matches up forward (r1) and reverse (r2) reads so that the `*1.fq.gz` and `*2.fq.gz` files have reads in the same order.
 
@@ -631,10 +661,10 @@ Potential issues:
 </details>
 
 
-<details><summary>12. Calculate the percent of reads lost in each step</summary>
+<details><summary>13. Calculate the percent of reads lost in each step</summary>
 <p>
 
-## **12. Calculate the percent of reads lost in each step**
+## **13. Calculate the percent of reads lost in each step**
 
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
 
@@ -671,10 +701,10 @@ Total reads remaining: XX%
 </details>
 
 
-<details><summary>13. Clean Up</summary>
+<details><summary>14. Clean Up</summary>
 <p>
 
-## **13. Clean Up**
+## **14. Clean Up**
 
 Move any `.out` files into the `logs` dir (if you have not already done this as you went along):
 
