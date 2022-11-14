@@ -202,6 +202,7 @@ If your download fails, go back to the web browser and check that you can see a 
 The decode file converts the file name that we had to use for NovoGene to the PIRE file name convention.
 
 The decode file should be formatted as follows: tab separated, where the first column is the NovoGene prefix names (the prefixes of the downloaded fq.gz files, `Sequence_Name`), the second column is the PIRE name prefixes (the prefixes to apply to the files, `Extraction_ID`), the first row contains the column headers, and the rest of the columns contain the NovoGene and PIRE file prefixes.
+
 ```bash
 Sequence_Name	Extraction_ID
 SgA0103511C	Sgr-AMvi_035-Ex1-cssl
@@ -221,9 +222,7 @@ __Do NOT use `_` in the LibraryID. *The only `_` should be separating `PopSample
 
 Examples of compatible names:
 
-  * `Sne-CTaw_051-Ex1-3F` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate
-  * `Sne-CTaw_051` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051
-  * `Sne-CTaw_051-Ex1-cssl-L4` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, capture lib, loc L4 (lane 4)
+  * `Sne-CTaw_051-Ex1-3F-cssl-L4` = *Sphaeramia nematoptera* (Sne), contemporary (C) from Tawi-Tawi (Taw), indv 051, extraction 1, loc 3F on plate, capture lib, loc L4 (lane 4)
 
 Here are some other QC checks on the downloaded data and the decode files:
 
@@ -257,7 +256,7 @@ wc -l <NAMEOFDECODEFILE>.tsv
 If there is an issue with the formatting of the decode file, rename the original file, and create a new file to edit.
 
 ```bash
-mv SequenceNameDecode.tsv SequenceNameDecode_original_depricated.tsv
+mv SequenceNameDecode.tsv SequenceNameDecode_original_deprecated.tsv
 cp SequenceNameDecode_original_depricated.tsv SequenceNameDecode_fixed.tsv
 ```
 
@@ -329,7 +328,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 <details><summary>6. Make a copy of the renamed files</summary>
 <p>
 
-## **6. Make a copy of the renamed files (several hours run time)**
+## **6. Make a copy of the renamed files (several hours run time, but you can move onto next step while this is running)**
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
@@ -391,6 +390,11 @@ Make notes in your <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing
 		* Alb: XX%, Contemp: XX%
 	  * number of reads - 
 		* Alb: XX mil, Contemp: XX mil
+
+
+### If you run `Multi_FASTQC.sh` multiple times...
+
+you will generate multiple directories of metadata.  Please either delete the erroneous dirs or add `_deprecated` to the dir that's created.  Any metadata file with `deprecated` in its path will be ignored by the scripts in the [`process_sequencing_metadata` repo](https://github.com/philippinespire/process_sequencing_metadata), which aggregates sequencing metadata across species.
 
 ---
 
