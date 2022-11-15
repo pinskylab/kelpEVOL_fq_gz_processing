@@ -13,12 +13,12 @@ export SINGULARITY_BIND="/home/cbird,/home/e1garcia/"
 
 BAMPATH=$(echo $1 | sed "s/\/$//")
 OUTDIR=$2
-SPECIES=$3
+#SPECIES=$3
 
-if [[ -z "$4" ]]; then
+if [[ -z "$3" ]]; then
         BAMPATTERN="-RG.bam"
 else
-        BAMPATTERN=$4
+        BAMPATTERN=$3
 fi
 
 mkdir $OUTDIR
@@ -83,6 +83,6 @@ sed -i '1s/^/filename\tnumreads\tmeanreadlength\tmeandepth_wcvg\tnumpos\tnumpos_
 echo `date`
 echo $BAMPATH
 echo $OUTDIR
-echo $SPECIES
+#echo $SPECIES
 echo $BAMPATTERN
 echo $(ls $BAMPATH/*$BAMPATTERN)
