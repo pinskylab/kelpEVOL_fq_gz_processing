@@ -722,7 +722,49 @@ Be sure to update your `README.md` file so that others know what happened in you
 
 ***Congratulations!!** You have finished the pre-processing steps for your data analysis. Now move on to either the [SSL](https://github.com/philippinespire/pire_ssl_data_processing) or [CSSL](https://github.com/philippinespire/pire_cssl_data_processing) pipelines.*
 
+---
+
+</p>
+</details>
+
+<details><summary>15. Map FASTQ to Reference Genome</summary>
+<p>
+
+## **15. Map FASTQ to Reference Genome**
+
+Coming soon!
+
+---
+
 </p>
 </details>
 
 
+<details><summary>16. Filter RAW BAM Files</summary>
+<p>
+
+## **16. Filter BAM Files**
+
+Coming soon!
+
+---
+
+</p>
+</details>
+
+
+<details><summary>17. Generate Number of Mapped Reads</summary>
+<p>
+
+## **17. Generate Number of Mapped Reads**
+
+
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMappedReads 
+```
+
+---
+
+</p>
+</details>
