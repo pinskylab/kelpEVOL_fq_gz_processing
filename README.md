@@ -542,7 +542,7 @@ Potential issues:
 <details><summary>11. Decontaminate</summary>
 <p>
 
-## **11. Decontaminate files. 
+## **11. Decontaminate files.**
 
 Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
@@ -646,7 +646,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "<yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
+sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/fastqc_report.html`) and update your `README.md`.
