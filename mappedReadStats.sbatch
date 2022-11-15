@@ -11,18 +11,17 @@ module load parallel
 
 export SINGULARITY_BIND="/home/cbird,/home/e1garcia/"
 
+BAMPATH=$(echo $1 | sed "s/\/$//")
 OUTDIR=$2
 SPECIES=$3
-
-mkdir $OUTDIR
-
-BAMPATH=$(echo $1 | sed "s/\/$//")
 
 if [[ -z "$4" ]]; then
         BAMPATTERN="-RG.bam"
 else
         BAMPATTERN=$4
 fi
+
+mkdir $OUTDIR
 
 avgBP () {
         BAMFILE=$1
