@@ -48,8 +48,7 @@ posWWOCVG () {
         BAMFILE=$1
         samtools coverage $BAMFILE | \
                 cut -f3,5 | \
-                awk 'BEGIN { OFS = "\t" } {for (i=1;i<=NF;i++) a[i]+=$i} END{for (i=
-
+                awk 'BEGIN { OFS = "\t" } {for (i=1;i<=NF;i++) a[i]+=$i} END{for (i=1;i<=NF;i++) printf a[i] OFS; printf "\n"}'
 }
 export -f posWWOCVG
 
@@ -68,18 +67,15 @@ export -f posWWOCVG
 #export -f meanNumReadPerSeq
 
 ls $BAMPATH/*$BAMPATTERN | \
-        parallel --no-notice -j 20 "echo {} && samtools view -c {} && avgBP {} && av
+        parallel --no-notice -j 20 "echo {} && samtools view -c {} && avgBP {} && avgDP {} && posWWOCVG {}" | \
         paste - - - - - | \
         awk 'BEGIN { OFS = "\t" } NR>=1 {$7 = $4 * $6 / $5} 1' | \
-        awk 'BEGIN { OFS = "\t" } NR>=1 {$8 = 100 * $6 / $5} 1' > $OUTDIR/out_${SPEC
-
-
+        awk 'BEGIN { OFS = "\t" } NR>=1 {$8 = 100 * $6 / $5} 1' > $OUTDIR/out_${SPECIES}_ReadStats.tsv
 # output
-# filename numreads meanreadlength meandepth_wcvg numpos numpos_wcvg meandepth pctpo
+# filename numreads meanreadlength meandepth_wcvg numpos numpos_wcvg meandepth pctpos_wcvg
 
 # Adding a header
-sed -i '1s/^/filename\tnumreads\tmeanreadlength\tmeandepth_wcvg\tnumpos\tnumpos_wcvg
-
+sed -i '1s/^/filename\tnumreads\tmeanreadlength\tmeandepth_wcvg\tnumpos\tnumpos_wcvg\tmeandepth\tpctpos_wcvg\n/' $OUTDIR/out_${SPECIES}_ReadStats.tsv
 echo `date`
 echo $BAMPATH
 echo $OUTDIR
