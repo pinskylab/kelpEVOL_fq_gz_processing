@@ -440,100 +440,100 @@ Potential issues:
 <details><summary>9. Remove duplicates with clumpify</summary>
 <p>
 
-	<details><summary>9a. Remove duplicates</summary>
-	<p>
+<details><summary>9a. Remove duplicates</summary>
+<p>
 
-	## **9a. Remove duplicates.**
+## **9a. Remove duplicates.**
 
-	Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
+Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
-	`runCLUMPIFY_r1r2_array.bash` is a bash script that executes several sbatch jobs to de-duplicate and clumpify your `fq.gz` files. It does two things:
+`runCLUMPIFY_r1r2_array.bash` is a bash script that executes several sbatch jobs to de-duplicate and clumpify your `fq.gz` files. It does two things:
 
-	1. Removes duplicate reads.
-	2. Re-orders each `fq.gz` file so that similar sequences (reads) appear closer together. This helps with file compression and speeds up downstream steps.
+1. Removes duplicate reads.
+2. Re-orders each `fq.gz` file so that similar sequences (reads) appear closer together. This helps with file compression and speeds up downstream steps.
 
-	You will need to specify the number of nodes you wish to allocate your jobs to. The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. (Ex: If you have 3 pairs of r1-r2 files, you should only use 3 nodes at most.) If you have many sets of files (likely to occur if you are processing capture data), you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition).
+You will need to specify the number of nodes you wish to allocate your jobs to. The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. (Ex: If you have 3 pairs of r1-r2 files, you should only use 3 nodes at most.) If you have many sets of files (likely to occur if you are processing capture data), you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition).
 
-	```bash
-	cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-	#runCLUMPIFY_r1r2_array.bash <indir; fast1 files> <outdir> <tempdir> <max # of nodes to use at once>
-	#do not use trailing / in paths
-	bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 20
-	```
+#runCLUMPIFY_r1r2_array.bash <indir; fast1 files> <outdir> <tempdir> <max # of nodes to use at once>
+#do not use trailing / in paths
+bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 20
+```
 
-	---
+---
 
-	</p>
-	</details>
-
-
-	<details><summary>9b. Check duplicate removal success </summary>
-	<p>
-
-	## **9b. Check duplicate removal success**
-
-	After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
-
-	```bash
-	cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-
-	salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
-	enable_lmod
-	module load container_env mapdamage2
-
-	crun R < checkClumpify_EG.R --no-save
-	exit #to relinquish the interactive node
-
-	#if the previous line returns an error that tidyverse is missing then do the following
-	crun R
-
-	#you are now in the R environment (there should be a > rather than $), install tidyverse
-	install.packages("tidyverse") #when prompted, type "yes"
-
-	#when the install is complete, exit R with the following keystroke combo: ctrl-d (typing q() also works)
-	#type "n" when asked about saving the environment
-
-	#you are now in the shell environment and you should be able to run the checkClumpify script
-	crun R < checkClumpify_EG.R --no-save
-	```
-
-	If all files were successful, `checkClumpify_EG.R` will return "Clumpify Successfully worked on all samples". 
-
-	If some failed, the script will also let you know. Try raising "-c 20" to "-c 40" in the `runCLUMPIFY_r1r2_array.bash` and run Clumplify again.
-
-	Also look for this error *"OpenJDK 64-Bit Server VM warning:
-	INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not enough space' (errno=12)"*
-
-	If the array set up doesn't work, try running Clumpify on a Turing himem (high memory) node.
-
-	---
-
-	</p>
-	</details>
+</p>
+</details>
 
 
-	<details><summary>9c. Generate metadata on deduplicated FASTQ files </summary>
-	<p>
+<details><summary>9b. Check duplicate removal success </summary>
+<p>
 
-	## **9c. Generate metadata on deduplicated FASTQ files**
+## **9b. Check duplicate removal success**
 
-	Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
-	```bash
-	cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-	#sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
-	#do not use trailing / in paths. Example:
-	sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1_clmp" "fqc_clmp_report"   
-	```
+salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
+enable_lmod
+module load container_env mapdamage2
+
+crun R < checkClumpify_EG.R --no-save
+exit #to relinquish the interactive node
+
+#if the previous line returns an error that tidyverse is missing then do the following
+crun R
+
+#you are now in the R environment (there should be a > rather than $), install tidyverse
+install.packages("tidyverse") #when prompted, type "yes"
+
+#when the install is complete, exit R with the following keystroke combo: ctrl-d (typing q() also works)
+#type "n" when asked about saving the environment
+
+#you are now in the shell environment and you should be able to run the checkClumpify script
+crun R < checkClumpify_EG.R --no-save
+```
+
+If all files were successful, `checkClumpify_EG.R` will return "Clumpify Successfully worked on all samples". 
+
+If some failed, the script will also let you know. Try raising "-c 20" to "-c 40" in the `runCLUMPIFY_r1r2_array.bash` and run Clumplify again.
+
+Also look for this error *"OpenJDK 64-Bit Server VM warning:
+INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not enough space' (errno=12)"*
+
+If the array set up doesn't work, try running Clumpify on a Turing himem (high memory) node.
+
+---
+
+</p>
+</details>
+
+
+<details><summary>9c. Generate metadata on deduplicated FASTQ files </summary>
+<p>
+
+## **9c. Generate metadata on deduplicated FASTQ files**
+
+Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+
+#sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
+#do not use trailing / in paths. Example:
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1_clmp" "fqc_clmp_report"   
+```
 
 
 
-	---
+---
 
-	</p>
-	</details>
+</p>
+</details>
 
 ---
 
