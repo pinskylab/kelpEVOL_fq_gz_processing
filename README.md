@@ -437,8 +437,10 @@ Potential issues:
 </p>
 </details>
 
+<details><summary>9. Remove duplicates with clumpify</summary>
+<p>
 
-<details><summary>9. Remove duplicates</summary>
+<details><summary>9a. Remove duplicates</summary>
 <p>
 
 ## **9. Remove duplicates.**
@@ -533,6 +535,8 @@ sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1
 </p>
 </details>
 
+</p>
+</details>
 
 <details><summary>10. Second trim</summary>
 <p>
