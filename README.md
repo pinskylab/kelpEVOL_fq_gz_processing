@@ -609,7 +609,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 sbatch ../../pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastqc_screen_report
 ```
 
-Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastqc_screen_report.html`) and update your `README.md`.
+Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastq_screen_report.html`) and update your `README.md`.
 
 Potential issues:
 
