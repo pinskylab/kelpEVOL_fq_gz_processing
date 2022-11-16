@@ -441,7 +441,7 @@ Potential issues:
 <details><summary>9. Remove duplicates</summary>
 <p>
 
-## **9. Remove duplicates. 
+## **9. Remove duplicates.**
 
 Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runCLUMPIFY_r1r2_array.bash) (0.5-3 hours run time)**
 
@@ -459,6 +459,17 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #do not use trailing / in paths
 bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 20
 ```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>9b. Check duplicate removal success </summary>
+<p>
+
+## **9b. Check duplicate removal success**
 
 After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
@@ -494,6 +505,16 @@ INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not 
 
 If the array set up doesn't work, try running Clumpify on a Turing himem (high memory) node.
 
+---
+
+</p>
+</details>
+
+
+<details><summary>9c. Generate metadata on deduplicated FASTQ files </summary>
+<p>
+
+## **9c. Generate metadata on deduplicated FASTQ files**
 
 Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
