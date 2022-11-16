@@ -44,14 +44,15 @@ export SINGULARITY_BIND=/home/e1garcia
 
 #inDIR=$(echo $1 | sed 's/\\/$//')
 inDIR=$1
-PATTERN=$2
+REPORTNAME=$2
+PATTERN=$3
 
 #run fastqc in parallel 
 ls ${inDIR}/*${PATTERN} | parallel --no-notice -j32 "crun fastqc {}"
 
 # run multiqc with specific report and subdirectory names
-crun multiqc $inDIR -n $inDIR/fastqc_report
-
+#crun multiqc $inDIR -n $inDIR/fastqc_report
+crun multiqc -v -p -fp --data-dir --data-format tsv --filename $REPORTNAME --outdir $inDIR $inDIR
 # move fastqc files to new subdirectory
 #ls *fastqc.html | parallel -kj 32 "mv {} ../Multi_FASTQC" &&
 #ls *fastqc.zip | parallel -kj 32 "mv {} ../Multi_FASTQC"

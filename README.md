@@ -362,9 +362,9 @@ Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) 
 ```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-#sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
+#sbatch Multi_FASTQC.sh "<indir>" "<mqc report name>" "<file extension to qc>"
 #do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"   
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
 ```
 
 If you get a message about not finding `crun` then load the following containers in your current session and run `Multi_FASTQC.sh` again.
@@ -375,8 +375,9 @@ module load parallel
 module load container_env multiqc
 module load container_env fastqc
 
-#Example:
-sbatch Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_ssl_data_processing/spratelloides_gracilis/fq_raw" "fq.gz"
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"
 ```
 
 Review the `MultiQC` output (`fq_raw/fastqc_report.html`). You can push your changes to github, then copy and paste the url to the raw html on github into this site: https://htmlpreview.github.io/ .  Note that because our repo is private, there is a token attached to the link that goes stale pretty quickly. 
@@ -394,7 +395,7 @@ Make notes in your <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing
 
 ### If you run `Multi_FASTQC.sh` multiple times...
 
-you will generate multiple directories of metadata.  Please either delete the erroneous dirs or add `_deprecated` to the dir that's created.  Any metadata file with `deprecated` in its path will be ignored by the scripts in the [`process_sequencing_metadata` repo](https://github.com/philippinespire/process_sequencing_metadata), which aggregates sequencing metadata across species.
+you may generate multiple directories of metadata. However, we have now set `Multiqc_FASTQC.sh` to overwrite existing multiqc reports with the same name.  Please either delete the erroneous dirs or add `_deprecated` to the dir that's created.  Any metadata file with `deprecated` in its path will be ignored by the scripts in the [`process_sequencing_metadata` repo](https://github.com/philippinespire/process_sequencing_metadata), which aggregates sequencing metadata across species.
 
 ---
 
@@ -525,9 +526,9 @@ Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.s
 ```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-#sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
+#sbatch Multi_FASTQC.sh "<indir>" "<mqc report name>" "<file extension to qc>"
 #do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1_clmp" "fqc_clmp_report"   
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1_clmp" "fqc_clmp_report"  "fq.gz"
 ```
 
 
@@ -685,9 +686,9 @@ Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippine
 ```sh
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-#sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
+#sbatch Multi_FASTQC.sh "<indir>" "<output report name>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_rprd" "fqc_rprd_report" 
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_rprd" "fqc_rprd_report" "fq.gz"
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_rprd/fastqc_report.html`) and update your `README.md`.
