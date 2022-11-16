@@ -59,4 +59,4 @@ ls $INDIR/$FQPATTERN | \
 
 #run multiqc 
 module load multiqc
-srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report
+srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report --interactive

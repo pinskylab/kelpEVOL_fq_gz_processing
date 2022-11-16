@@ -15,6 +15,7 @@
 # execute as "sbatch grid_wget.sh <outdir> <link-to-files>
 
 module load parallel
+export SINGULARITY_BIND=/home/e1garcia  #odu
 
 # downlownd the list of lifes
 wget -P $1 $2/tamucc_files.txt

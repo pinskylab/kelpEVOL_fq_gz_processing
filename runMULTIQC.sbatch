@@ -18,4 +18,4 @@ REPORTNAME=$2
 
 # run multiqc on the fp1, fp2 and fastq screen results
 
-srun crun multiqc $DIR -n $DIR/$REPORTNAME
+srun crun multiqc $DIR -n $DIR/$REPORTNAME --interactive
