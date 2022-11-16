@@ -666,7 +666,7 @@ Potential issues:
 </details>
 
 
-<details><summary>12. Repair</summary>
+<details><summary>12. Repair FASTQ Files Messed Up by FASTQ_SCREEN</summary>
 <p>
 
 ## **12. Execute [`runREPAIR.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runREPAIR.sbatch) (<1 hour run time)**
@@ -684,11 +684,10 @@ Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippine
 
 ```sh
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-/fq_fp1_clmp_fp2_fqscrn_rprd
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_rprd" "fq.gz" 
+sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_rprd" "fqc_rprd_report" 
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_rprd/fastqc_report.html`) and update your `README.md`.
