@@ -157,7 +157,7 @@ All types of data will share the following directories associated with data qc
 # you must replace the <> with the real val
 mkdir <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
 cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
-mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired
+mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd
 ```
 
 ---
@@ -440,6 +440,8 @@ Potential issues:
 <details><summary>9. Remove duplicates with clumpify</summary>
 <p>
 
+---
+
 <details><summary>9a. Remove duplicates</summary>
 <p>
 
@@ -675,21 +677,21 @@ Potential issues:
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads>
-sbatch ../../pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_repaired 40
+sbatch ../../pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd 40
 ```
 
 Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
 ```sh
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-/fq_fp1_clmp_fp2_fqscrn_repaired
+/fq_fp1_clmp_fp2_fqscrn_rprd
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
+sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_rprd" "fq.gz" 
 ```
 
-Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/fastqc_report.html`) and update your `README.md`.
+Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_rprd/fastqc_report.html`) and update your `README.md`.
 
 Potential issues:  
   * % duplication - 
