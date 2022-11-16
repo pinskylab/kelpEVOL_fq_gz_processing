@@ -494,6 +494,19 @@ INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not 
 
 If the array set up doesn't work, try running Clumpify on a Turing himem (high memory) node.
 
+
+Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+
+#sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
+#do not use trailing / in paths. Example:
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1_clmp" "fqc_clmp_report"   
+```
+
+
+
 ---
 
 </p>
