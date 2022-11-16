@@ -360,11 +360,11 @@ Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) 
 `Multi_FASTQC.sh` should be run from the directory that holds the raw, renamed `fq.gz` files. This will be `fq_raw`. If not, rename it to fq_raw
 
 ```bash
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw" "fq.gz"   
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"   
 ```
 
 If you get a message about not finding `crun` then load the following containers in your current session and run `Multi_FASTQC.sh` again.
