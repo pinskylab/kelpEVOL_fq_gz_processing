@@ -360,11 +360,11 @@ Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) 
 `Multi_FASTQC.sh` should be run from the directory that holds the raw, renamed `fq.gz` files. This will be `fq_raw`. If not, rename it to fq_raw
 
 ```bash
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "/home/e1garcia/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw" "fq.gz"   
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"   
 ```
 
 If you get a message about not finding `crun` then load the following containers in your current session and run `Multi_FASTQC.sh` again.
@@ -542,7 +542,7 @@ Potential issues:
 <details><summary>11. Decontaminate</summary>
 <p>
 
-## **11. Decontaminate files. 
+## **11. Decontaminate files.**
 
 Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFQSCRN_6.bash) (several hours run time)**
 
@@ -646,7 +646,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<file extension>"
 #do not use trailing / in paths. Example:
-sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "<yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
+sbatch ../../pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_repaired" "fq.gz" 
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_repaired/fastqc_report.html`) and update your `README.md`.
@@ -722,7 +722,49 @@ Be sure to update your `README.md` file so that others know what happened in you
 
 ***Congratulations!!** You have finished the pre-processing steps for your data analysis. Now move on to either the [SSL](https://github.com/philippinespire/pire_ssl_data_processing) or [CSSL](https://github.com/philippinespire/pire_cssl_data_processing) pipelines.*
 
+---
+
+</p>
+</details>
+
+<details><summary>15. Map FASTQ to Reference Genome</summary>
+<p>
+
+## **15. Map FASTQ to Reference Genome**
+
+Coming soon!
+
+---
+
 </p>
 </details>
 
 
+<details><summary>16. Filter RAW BAM Files</summary>
+<p>
+
+## **16. Filter BAM Files**
+
+Coming soon!
+
+---
+
+</p>
+</details>
+
+
+<details><summary>17. Generate Number of Mapped Reads</summary>
+<p>
+
+## **17. Generate Number of Mapped Reads**
+
+
+```bash
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMappedReads 
+```
+
+---
+
+</p>
+</details>
