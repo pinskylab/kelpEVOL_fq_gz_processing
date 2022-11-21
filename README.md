@@ -803,6 +803,7 @@ Coming soon!
 
 ```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+# sbatch mappedReadStats.sbatch "-RG.bam"
 sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMappedReads 
 ```
 
