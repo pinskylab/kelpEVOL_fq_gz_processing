@@ -58,5 +58,6 @@ ls $INDIR/$FQPATTERN | \
 		--report_title "First Trim 4 De Novo" 
 
 #run multiqc 
-module load multiqc
-srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report --interactive
+#module load multiqc
+#srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report --interactive
+srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --filename 1st_fastp_report --outdir $OUTDIR $OUTDIR
