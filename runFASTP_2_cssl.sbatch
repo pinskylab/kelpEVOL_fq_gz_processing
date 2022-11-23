@@ -68,5 +68,6 @@ ls $INDIR/$FQPATTERN | \
 		--report_title "Second Trim R1R2" 
 
 # run multiqc on the fp2 results
-module load multiqc
-srun crun multiqc $OUTDIR -n $OUTDIR/2nd_fastp_report
+module load container_env multiqc
+#srun crun multiqc $OUTDIR -n $OUTDIR/2nd_fastp_report
+srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --filename 2nd_fastp_report --outdir $OUTDIR $OUTDIR
