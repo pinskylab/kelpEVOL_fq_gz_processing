@@ -774,7 +774,7 @@ Be sure to update your `README.md` file so that others know what happened in you
 
 ## **15. Map FASTQ to Reference Genome**
 
-Coming soon!
+Follow specific instructions in CSSL or LCWGS `README.md`.  Does not apply to SSL
 
 ---
 
@@ -787,7 +787,7 @@ Coming soon!
 
 ## **16. Filter BAM Files**
 
-Coming soon!
+Follow specific instructions in CSSL or LCWGS `README.md`.  Does not apply to SSL
 
 ---
 
@@ -800,6 +800,7 @@ Coming soon!
 
 ## **17. Generate Number of Mapped Reads**
 
+This is for CSSL or LCWGS libraries, not SSL. 
 
 ```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
