@@ -769,10 +769,10 @@ Be sure to update your `README.md` file so that others know what happened in you
 </p>
 </details>
 
-<details><summary>15. Map FASTQ to Reference Genome</summary>
+<details><summary>15. Map Repaired `fq.gz` to Reference Genome</summary>
 <p>
 
-## **15. Map FASTQ to Reference Genome**
+## **15. Map Repaired `fq.gz` to Reference Genome**
 
 Follow specific instructions in CSSL or LCWGS `README.md`.  Does not apply to SSL
 
