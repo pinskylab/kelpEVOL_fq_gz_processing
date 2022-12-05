@@ -241,6 +241,9 @@ ls *2.fq.gz | wc -l
 #XX lines (1 additional line for header = XX individuals), checks out
 wc -l <NAMEOFDECODEFILE>.tsv 
 
+#are ther duplicates of libraries?
+cat Hte_CaptureLibraries_SequenceNameDecode.tsv | sort | uniq | wc -l
+
 ```
 
 ---
