@@ -242,7 +242,7 @@ ls *2.fq.gz | wc -l
 wc -l <NAMEOFDECODEFILE>.tsv 
 
 #are ther duplicates of libraries?
-cat Hte_CaptureLibraries_SequenceNameDecode.tsv | sort | uniq | wc -l
+cat <NAMEOFDECODEFILE>.tsv | sort | uniq | wc -l
 
 ```
 
