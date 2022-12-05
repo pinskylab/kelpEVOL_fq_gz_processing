@@ -303,7 +303,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 <details><summary>5. Rename the files for real</summary>
 <p>
 
-## **5. Rename the files for real (<1 minute run time) **
+## **5. Rename the files for real (<1 minute run time)**
 
 After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
