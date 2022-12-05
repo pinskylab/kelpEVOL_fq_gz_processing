@@ -181,7 +181,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 # sbatch gridDownloader.sh <outdir> <link-to-files>
 # outdir becomes "." since you have already navigated there
-sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/20221011_PIRE-<your_species>-capture/
+sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/<YYYYMMDD>_PIRE-<your_species>-capture/
 ```
 
 If your download fails, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
