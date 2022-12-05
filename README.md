@@ -235,7 +235,8 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #check that you got back sequencing data for all individuals in decode file
 #XX files (2 additional files for README.md & decode.tsv = XX/2 = XX individuals (R&F)
-ls | wc -l 
+ls *1.fq.gz | wc -l 
+ls *2.fq.gz | wc -l 
 
 #XX lines (1 additional line for header = XX individuals), checks out
 wc -l <NAMEOFDECODEFILE>.tsv 
