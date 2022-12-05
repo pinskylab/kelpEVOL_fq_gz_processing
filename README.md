@@ -378,6 +378,12 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
 ```
 
+You can use the command `squeue -u <YourUserName>` to make sure that your job is running on a compute node
+
+
+<details><summary>Errors?</summary>
+<p>
+	
 If you get a message about not finding `crun` then load the following containers in your current session and run `Multi_FASTQC.sh` again.
 
 ```bash
@@ -390,6 +396,12 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"
 ```
+	
+---
+	
+</p>
+</details>
+
 
 Review the `MultiQC` output (`fq_raw/fastqc_report.html`). You can push your changes to github, then copy and paste the url to the raw html on github into this site: https://htmlpreview.github.io/ .  Note that because our repo is private, there is a token attached to the link that goes stale pretty quickly. 
 
