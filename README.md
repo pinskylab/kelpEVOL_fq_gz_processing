@@ -395,6 +395,9 @@ module load container_env fastqc
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"
+	
+# check to see that your job is running
+watch squeue -u <YourUserName>
 ```
 	
 ---
@@ -429,7 +432,7 @@ you may generate multiple directories of metadata. However, we have now set `Mul
 <details><summary>8. First trim</summary>
 <p>
 
-## **8. First trim. 
+## **8. First trim.**
 
 Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
@@ -440,6 +443,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #do not use trailing / in paths
 # note, if your dir is set up correctly, this relative path will work
 sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
+
+# check to see that your job is running
+watch squeue -u <YourUserName>
 ```
 
 Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`:
