@@ -2,9 +2,8 @@
 
 #SBATCH --job-name=clmp_r12
 #SBATCH -o clmp_r1r2_-%A_%a.out
-#SBATCH -p main
+#SBATCH -p himem
 #SBATCH --time=24:00:00
-#SBATCH -c 20
 #SBATCH --exclusive=user
 
 enable_lmod
@@ -23,10 +22,10 @@ TEMPDIR=${3}
 INDIR=${1}
 OUTDIR=${2}
 THREADS=1   #clumpify uses a ton of ram, be conservative
-GROUPS=auto   #controls how much ram is used, refer to manual
-#GROUPS=1
-RAMPERTHREAD=180g   #have had to set as high as 233g with groups=1
-#RAMPERTHREAD=233g
+#GROUPS=auto   #controls how much ram is used, refer to manual
+GROUPS=1
+#RAMPERTHREAD=180g   #have had to set as high as 233g with groups=1
+RAMPERTHREAD=233g
 
 #ulimit -u 40960
 ulimit -n 40960 
