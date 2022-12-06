@@ -181,7 +181,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 # sbatch gridDownloader.sh <outdir> <link-to-files>
 # outdir becomes "." since you have already navigated there
-sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/20221011_PIRE-<your_species>-capture/
+sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/<YYYYMMDD>_PIRE-<your_species>-capture/
 ```
 
 If your download fails, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
@@ -235,10 +235,14 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #check that you got back sequencing data for all individuals in decode file
 #XX files (2 additional files for README.md & decode.tsv = XX/2 = XX individuals (R&F)
-ls | wc -l 
+ls *1.fq.gz | wc -l 
+ls *2.fq.gz | wc -l 
 
 #XX lines (1 additional line for header = XX individuals), checks out
 wc -l <NAMEOFDECODEFILE>.tsv 
+
+#are ther duplicates of libraries?
+cat <NAMEOFDECODEFILE>.tsv | sort | uniq | wc -l
 
 ```
 
@@ -299,7 +303,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 <details><summary>5. Rename the files for real</summary>
 <p>
 
-## **5. Rename the files for real (<1 minute run time) **
+## **5. Rename the files for real (<1 minute run time)**
 
 After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
@@ -333,13 +337,20 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
 *(can take several hours)*
+	
+Because this can take a long time, we are going to use the `screen` command.  `screen` opens up a new terminal automatically.  You can exit that terminal by typing `ctrl-a` and then `d` to detach and return to your terminal.  Running a command inside of `screen` ensures that it runs to completion and will not end when you log out.  Using `screen` also frees up your terminal to goto the next step.  After detaching, you can run screen -ls to see the list of screen terminals that are currently running.
 
 ```bash
 mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
 
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
-cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
+screen cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
+
+# `ctrl-a`  and then `d` to detach from the `screen` terminal
+
+# look at your screen jobs running
+screen -ls
 ```
 
 ---
@@ -367,6 +378,12 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
 ```
 
+You can use the command `squeue -u <YourUserName>` to make sure that your job is running on a compute node
+
+
+<details><summary>Errors?</summary>
+<p>
+	
 If you get a message about not finding `crun` then load the following containers in your current session and run `Multi_FASTQC.sh` again.
 
 ```bash
@@ -378,7 +395,16 @@ module load container_env fastqc
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"
+	
+# check to see that your job is running
+watch squeue -u <YourUserName>
 ```
+	
+---
+	
+</p>
+</details>
+
 
 Review the `MultiQC` output (`fq_raw/fastqc_report.html`). You can push your changes to github, then copy and paste the url to the raw html on github into this site: https://htmlpreview.github.io/ .  Note that because our repo is private, there is a token attached to the link that goes stale pretty quickly. 
 
@@ -406,7 +432,7 @@ you may generate multiple directories of metadata. However, we have now set `Mul
 <details><summary>8. First trim</summary>
 <p>
 
-## **8. First trim. 
+## **8. First trim.**
 
 Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
@@ -417,6 +443,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #do not use trailing / in paths
 # note, if your dir is set up correctly, this relative path will work
 sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
+
+# check to see that your job is running
+watch squeue -u <YourUserName>
 ```
 
 Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`:
