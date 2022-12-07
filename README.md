@@ -376,6 +376,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #sbatch Multi_FASTQC.sh "<indir>" "<mqc report name>" "<file extension to qc>"
 #do not use trailing / in paths. Example:
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
+
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 You can use the command `squeue -u <YourUserName>` to make sure that your job is running on a compute node
@@ -444,8 +447,8 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 # note, if your dir is set up correctly, this relative path will work
 sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
 
-# check to see that your job is running
-watch squeue -u <YourUserName>
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`:
@@ -492,6 +495,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #runCLUMPIFY_r1r2_array.bash <indir; fast1 files> <outdir> <tempdir> <max # of nodes to use at once>
 #do not use trailing / in paths
 bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 20
+
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 ---
@@ -558,6 +564,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #sbatch Multi_FASTQC.sh "<indir>" "<mqc report name>" "<file extension to qc>"
 #do not use trailing / in paths. Example:
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_fp1_clmp" "fqc_clmp_report"  "fq.gz"
+
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 
@@ -584,10 +593,11 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runFASTP_2.sbatch <indir; clumpified files> <outdir>
 #do not use trailing / in paths
-sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
+# if lcwgs, run cssl script
+sbatch ../../pire_fq_gz_processing/runFASTP_2_<ssl or cssl>.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
 
-#for SSL: runFASTP_2_ssl.sbatch
-#for CSSL: runFASTP_2_cssl.sbatch
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 Review the results with the `FastQC` output (`fq_fp1_clmp_fp2/2nd_fastp_report.html`) and update your `README.md`.
@@ -630,6 +640,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes running simultaneously>
 #do not use trailing / in paths
 bash ../../pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
+
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 Once done, confirm that all files were successfully completed.
@@ -703,21 +716,27 @@ Potential issues:
 
 `runREPAIR.sbatch` does not "repair" reads but instead re-pairs them. Basically, it matches up forward (r1) and reverse (r2) reads so that the `*1.fq.gz` and `*2.fq.gz` files have reads in the same order.
 
-```sh
+```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads>
 sbatch ../../pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd 40
+
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
-```sh
+```bash
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<output report name>" "<file extension>"
 #do not use trailing / in paths. Example:
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "./fq_fp1_clmp_fp2_fqscrn_rprd" "fqc_rprd_report" "fq.gz"
+
+# check to be sure the job is running
+watch squeue -u <YOURUSERNAME>
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn_rprd/fastqc_report.html`) and update your `README.md`.
