@@ -287,7 +287,7 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 Because this can take a long time, we are going to use the `screen` command.  `screen` opens up a new terminal automatically.  You can exit that terminal by typing `ctrl-a` and then `d` to detach and return to your terminal.  Running a command inside of `screen` ensures that it runs to completion and will not end when you log out.  Using `screen` also frees up your terminal to goto the next step.  After detaching, you can run screen -ls to see the list of screen terminals that are currently running.
 
 ```bash
-mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/
+mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>
 mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
 
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
