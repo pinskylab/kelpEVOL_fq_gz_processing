@@ -385,6 +385,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #do not use trailing / in paths. Example:
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
 
+# here's how you can add SLURM options and arguments to the command above to receive an email when the job is done
+#sbatch --mail-user=jdoe@odu.edu --mail-type=END /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
+
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
 ```
