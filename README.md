@@ -785,6 +785,8 @@ Potential issues:
 <details><summary>13. Calculate the percent of reads lost in each step</summary>
 <p>
 
+This is now accomplished in another way using the process_sequencing_metadata repo. Move onto the next step	
+
 <!-- 
 	
 ## **13. Calculate the percent of reads lost in each step**
