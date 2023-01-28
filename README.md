@@ -275,10 +275,41 @@ Then edit the `SequenceNameDecode.tsv` file to conform to the file formatting ru
 </details>
 
 
-<details><summary>4. Perform a renaming dry run</summary>
+<details><summary>4. Make a copy of the fq_raw files prior to renaming</summary>
 <p>
 
-## **4. Perform a renaming dry run**
+## **4. Make a copy of the `fq_raw` files prior to renaming (several hours run time, but you can move onto next step while this is running)**
+
+If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
+`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
+*(can take several hours)*
+	
+Because this can take a long time, we are going to use the `screen` command.  `screen` opens up a new terminal automatically.  You can exit that terminal by typing `ctrl-a` and then `d` to detach and return to your terminal.  Running a command inside of `screen` ensures that it runs to completion and will not end when you log out.  Using `screen` also frees up your terminal to goto the next step.  After detaching, you can run screen -ls to see the list of screen terminals that are currently running.
+
+```bash
+mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
+
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
+
+screen cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
+
+# `ctrl-a`  and then `d` to detach from the `screen` terminal
+
+# look at your screen jobs running
+screen -ls
+```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>5. Perform a renaming dry run</summary>
+<p>
+
+## **5. Perform a renaming dry run**
 
 Then, use the decode file with [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) to rename your raw `fq.gz` files. If you make a mistake here, it could be catastrophic for downstream analyses. This is why we ***STRONGLY recommend*** you use this pre-written bash script to automate the renaming process. [`renameFQGZ.bash`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/renameFQGZ.bash) allows you to view what the files will be named before renaming them and also stores the original and new file names in files that could be used to restore the original file names.
 
@@ -304,10 +335,10 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 </details>
 
 
-<details><summary>5. Rename the files for real</summary>
+<details><summary>6. Rename the files for real</summary>
 <p>
 
-## **5. Rename the files for real (<1 minute run time)**
+## **6. Rename the files for real (<1 minute run time)**
 
 After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
@@ -327,37 +358,6 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 #you will need to say y 2X
 ```
 
-
----
-
-</p>
-</details>
-
-
-<details><summary>6. Make a copy of the renamed files</summary>
-<p>
-
-## **6. Make a copy of the renamed files (several hours run time, but you can move onto next step while this is running)**
-
-If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
-`/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
-*(can take several hours)*
-	
-Because this can take a long time, we are going to use the `screen` command.  `screen` opens up a new terminal automatically.  You can exit that terminal by typing `ctrl-a` and then `d` to detach and return to your terminal.  Running a command inside of `screen` ensures that it runs to completion and will not end when you log out.  Using `screen` also frees up your terminal to goto the next step.  After detaching, you can run screen -ls to see the list of screen terminals that are currently running.
-
-```bash
-mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
-
-# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
-
-screen cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
-
-# `ctrl-a`  and then `d` to detach from the `screen` terminal
-
-# look at your screen jobs running
-screen -ls
-```
 
 ---
 
