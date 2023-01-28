@@ -53,13 +53,13 @@ sed -i 's/$/\//' decode_sedlist.txt
 echo "editing newFileNames.txt..."
 sed -i -f decode_sedlist.txt newFileNames.txt
 
+echo "preview of orig and new R1 file names..."
+parallel --no-notice -k --link "echo {1}1.fq.gz {2}1.fq.gz" :::: origFileNames.txt :::: newFileNames.txt
+
+echo "preview of orig and new R2 file names..."
+parallel --no-notice -k --link "echo {1}2.fq.gz {2}2.fq.gz" :::: origFileNames.txt :::: newFileNames.txt
+
 if [[ $MODE == rename ]]; then
-        echo "preview of orig and new R1 file names..."
-        parallel --no-notice -k --link "echo {1}1.fq.gz {2}1.fq.gz" :::: origFileNames.txt :::: newFileNames.txt
-
-        echo "preview of orig and new R2 file names..."
-        parallel --no-notice -k --link "echo {1}2.fq.gz {2}2.fq.gz" :::: origFileNames.txt :::: newFileNames.txt
-
         echo; echo "Last chance to back out. If the original and new file names look ok, then proceed."
         read -p "Are you sure you want to rename the files? " -n 1 -r
         if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -73,11 +73,4 @@ if [[ $MODE == rename ]]; then
                 echo "rename aborted, exiting..."
                 exit 1
         fi
-
-else
-        echo "preview of orig and new R1 file names..."
-        parallel --no-notice -k --link "echo {1}1.fq.gz {2}1.fq.gz" :::: origFileNames.txt :::: newFileNames.txt
-
-        echo "preview of orig and new R2 file names..."
-        parallel --no-notice -k --link "echo {1}2.fq.gz {2}2.fq.gz" :::: origFileNames.txt :::: newFileNames.txt
 fi
