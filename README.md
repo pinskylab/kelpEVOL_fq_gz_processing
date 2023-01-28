@@ -785,6 +785,7 @@ Potential issues:
 <details><summary>13. Calculate the percent of reads lost in each step</summary>
 <p>
 
+<!-- 
 ## **13. Calculate the percent of reads lost in each step**
 
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
@@ -822,6 +823,7 @@ Total reads remaining: XX%
 </p>
 </details>
 
+-->
 
 <details><summary>14. Clean Up</summary>
 <p>
