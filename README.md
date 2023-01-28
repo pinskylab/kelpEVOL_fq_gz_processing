@@ -369,7 +369,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 <details><summary>7. Check the quality of raw data</summary>
 <p>
 
-## **7. Check the quality of your data. Run `fastqc` (1-2 hours run time)**
+## **7. Check the quality of your data. Run `fastqc` (1-2 hours run time, but you can move onto the next step before this completes)**
 
 FastQC and then MultiQC can be run using the [Multi_FASTQC.sh](Multi_FASTQC.sh) script in this repo.
 
