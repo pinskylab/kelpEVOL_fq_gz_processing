@@ -155,6 +155,7 @@ All types of data will share the following directories associated with data qc
 ```bash
 # if it does not exist, make the directory for your species 
 # you must replace the <> with the real val
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 mkdir <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
 cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
 mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd
@@ -177,6 +178,7 @@ e.g. [https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture](https://gri
 
 ```bash
 # Navigate to dir to download files into, e.g.
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 # sbatch gridDownloader.sh <outdir> <link-to-files>
@@ -231,6 +233,7 @@ salloc
 bash
 
 # Navigate to dir with downloaded files, e.g.
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 #check that you got back sequencing data for all individuals in decode file
@@ -283,6 +286,7 @@ Run `renameFQGZ.bash` to view the original and new file names and create `tsv` f
 
 ```bash
 # Navigate to dir with downloaded files, e.g.
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.tsv 
@@ -315,6 +319,7 @@ Example of how the file names line up:
 When you are ready to change names, execute the line of code below. This script will ask you twice whether you want to proceed with renaming.
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.tsv rename
@@ -343,6 +348,7 @@ Because this can take a long time, we are going to use the `screen` command.  `s
 ```bash
 mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
 
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
 screen cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>/fq_raw
@@ -371,6 +377,7 @@ Execute `Multi_FASTQC.sh` while providing, in quotations and in this order, (1) 
 `Multi_FASTQC.sh` should be run from the directory that holds the raw, renamed `fq.gz` files. This will be `fq_raw`. If not, rename it to fq_raw
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<mqc report name>" "<file extension to qc>"
@@ -395,6 +402,7 @@ module load parallel
 module load container_env multiqc
 module load container_env fastqc
 
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"
@@ -439,7 +447,8 @@ you may generate multiple directories of metadata. However, we have now set `Mul
 
 Execute [`runFASTP_1st_trim.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_1st_trim.sbatch) (0.5-3 hours run time)**
 
-```sh
+```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runFASTP_1st_trim.sbatch <indir> <outdir>
@@ -490,6 +499,7 @@ Execute [`runCLUMPIFY_r1r2_array.bash`](https://github.com/philippinespire/pire_
 You will need to specify the number of nodes you wish to allocate your jobs to. The max # of nodes to use at once should not exceed the number of pairs of r1-r2 files to be processed. (Ex: If you have 3 pairs of r1-r2 files, you should only use 3 nodes at most.) If you have many sets of files (likely to occur if you are processing capture data), you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition).
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runCLUMPIFY_r1r2_array.bash <indir; fast1 files> <outdir> <tempdir> <max # of nodes to use at once>
@@ -514,6 +524,7 @@ watch squeue -u <YOURUSERNAME>
 After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
@@ -559,6 +570,7 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<mqc report name>" "<file extension to qc>"
@@ -589,6 +601,7 @@ watch squeue -u <YOURUSERNAME>
 If you are going to assemble a genome with this data, use [runFASTP_2_ssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch). Otherwise, use [runFASTP_2_cssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary. 
 
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runFASTP_2.sbatch <indir; clumpified files> <outdir>
@@ -635,6 +648,7 @@ Like with Clumpify, `runFQSCRN_6.bash` is a bash script that executes several sb
   * ***This can take up to several days depending on the size of your dataset. Plan accordingly!***
 
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes running simultaneously>
@@ -648,6 +662,7 @@ watch squeue -u <YOURUSERNAME>
 Once done, confirm that all files were successfully completed.
 
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #FastQ Screen generates 5 files (*tagged.fastq.gz, *tagged_filter.fastq.gz, *screen.txt, *screen.png, *screen.html) for each input fq.gz file
@@ -677,6 +692,7 @@ If you see missing indiviudals or categories in the FastQC output, there was lik
 Run the files that failed again.
 
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
@@ -687,6 +703,7 @@ bash ../../pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp
 Once `FastQ Screen` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runMULTIQC.sbatch <indir; fqscreen files> <report name>
@@ -717,6 +734,7 @@ Potential issues:
 `runREPAIR.sbatch` does not "repair" reads but instead re-pairs them. Basically, it matches up forward (r1) and reverse (r2) reads so that the `*1.fq.gz` and `*2.fq.gz` files have reads in the same order.
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads>
@@ -729,6 +747,7 @@ watch squeue -u <YOURUSERNAME>
 Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch Multi_FASTQC.sh "<indir>" "<output report name>" "<file extension>"
@@ -766,6 +785,7 @@ Potential issues:
   2. `readsRemaining_table.tsv` which reports the step-specific percentage of reads that remain and the final cumulative percentage of reads that remain.
  
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #read_calculator_ssl.sh "<path to species home dir>" "<Path to dir with raw files>"
@@ -803,6 +823,7 @@ Total reads remaining: XX%
 Move any `.out` files into the `logs` dir (if you have not already done this as you went along):
 
 ```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 mv *out logs/
@@ -851,6 +872,7 @@ Follow specific instructions in CSSL or LCWGS `README.md`.  Does not apply to SS
 This is for CSSL or LCWGS libraries, not SSL. 
 
 ```bash
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 # sbatch mappedReadStats.sbatch "-RG.bam"
 sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMappedReads 
