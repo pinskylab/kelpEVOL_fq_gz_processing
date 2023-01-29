@@ -462,7 +462,7 @@ sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1
 
 # here's how you can add SLURM options and arguments to the command above to receive an email when the job is done
 # replace jdoe@odu.edu with your email address
-#sbatch --mail-user=jdoe@odu.edu --mail-type=END sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
+#sbatch --mail-user=jdoe@odu.edu --mail-type=END ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
 	
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
