@@ -385,6 +385,9 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #do not use trailing / in paths. Example:
 sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
 
+# here's how you can add SLURM options and arguments to the command above to receive an email when the job is done
+#sbatch --mail-user=jdoe@odu.edu --mail-type=END /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/Multi_FASTQC.sh "fq_raw" "fqc_raw_report"  "fq.gz"  
+
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
 ```
@@ -457,6 +460,10 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 # note, if your dir is set up correctly, this relative path will work
 sbatch ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
 
+# here's how you can add SLURM options and arguments to the command above to receive an email when the job is done
+# replace jdoe@odu.edu with your email address
+#sbatch --mail-user=jdoe@odu.edu --mail-type=END ../../pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
+	
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
 ```
@@ -532,7 +539,7 @@ salloc #because R is interactive and takes a decent amount of memory, we want to
 enable_lmod
 module load container_env mapdamage2
 
-crun R < checkClumpify_EG.R --no-save
+crun R < <yourPireDirPath>/pire_fq_gq_processing/checkClumpify_EG.R --no-save
 exit #to relinquish the interactive node
 
 #if the previous line returns an error that tidyverse is missing then do the following
@@ -778,6 +785,10 @@ Potential issues:
 <details><summary>13. Calculate the percent of reads lost in each step</summary>
 <p>
 
+This is now accomplished in another way using the process_sequencing_metadata repo. Move onto the next step	
+
+<!-- 
+	
 ## **13. Calculate the percent of reads lost in each step**
 
 `read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
@@ -809,11 +820,13 @@ Reads remaining:
 
 Total reads remaining: XX%
 
+-->
 
 ---
 
 </p>
 </details>
+
 
 
 <details><summary>14. Clean Up</summary>
