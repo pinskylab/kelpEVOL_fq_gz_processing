@@ -278,7 +278,7 @@ Then edit the `SequenceNameDecode.tsv` file to conform to the file formatting ru
 <details><summary>4. Make a copy of the fq_raw files prior to renaming</summary>
 <p>
 
-## **4. Make a copy of the `fq_raw` files prior to renaming (several hours run time, but you can move onto next step while this is running)**
+## **4. Make a copy of the `fq_raw` files prior to renaming (several hours run time, don't proceed to next step until this is done)**
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
