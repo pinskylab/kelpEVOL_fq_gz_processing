@@ -3,7 +3,6 @@
 #SBATCH --job-name=clmp_r12
 #SBATCH -o clmp_r1r2_-%A_%a.out
 #SBATCH -p main
-#SBATCH --time=24:00:00
 #SBATCH -c 20
 #SBATCH --exclusive=user
 

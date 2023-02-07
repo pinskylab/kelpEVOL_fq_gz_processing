@@ -42,7 +42,7 @@ ls ${SPDIR}/fq_fp1/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} |
 ls ${SPDIR}/fq_fp1_clmp/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/clm.temp
 ls ${SPDIR}/fq_fp1_clmp_fp2/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fp2.temp
 ls ${SPDIR}/fq_fp1_clmp_fp2_fqscrn/*tagged_filter.fastq.gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/fqscrn.temp
-ls ${SPDIR}/fq_fp1_clmp_fp2_fqscrn_repaired/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/repr.temp
+ls ${SPDIR}/fq_fp1_clmp_fp2_fqscrn_rprd/*gz | parallel --no-notice -kj${PARALLELISM} "zgrep '^@' {} | wc -l" > ${SPDIR}/preprocess_read_change/repr.temp
 
 cd ${SPDIR}/preprocess_read_change
 

@@ -20,4 +20,4 @@ REPORTNAME=$2
 
 # run multiqc on the fp1, fp2 and fastq screen results
 
-srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --filename $REPORTNAME --outdir $DIR $DIR
+srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename $REPORTNAME --outdir $DIR $DIR
