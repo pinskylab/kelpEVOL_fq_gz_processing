@@ -321,6 +321,10 @@ Run `renameFQGZ.bash` to view the original and new file names and create `tsv` f
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>/fq_raw
 
+# log into a compute node interactively so this goes faster
+salloc
+
+# once you have the compute node, procede
 bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.tsv 
 ```
 
