@@ -52,7 +52,7 @@ ls ${inDIR}/*${PATTERN} | parallel --no-notice -j32 "crun fastqc {}"
 
 # run multiqc with specific report and subdirectory names
 #crun multiqc $inDIR -n $inDIR/fastqc_report
-crun multiqc -v -p -ip -f --data-dir --data-format tsv --filename $REPORTNAME --outdir $inDIR $inDIR
+crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename $REPORTNAME --outdir $inDIR $inDIR
 # move fastqc files to new subdirectory
 #ls *fastqc.html | parallel -kj 32 "mv {} ../Multi_FASTQC" &&
 #ls *fastqc.zip | parallel -kj 32 "mv {} ../Multi_FASTQC"
