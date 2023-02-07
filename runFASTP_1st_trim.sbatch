@@ -60,4 +60,4 @@ ls $INDIR/$FQPATTERN | \
 #run multiqc 
 module load container_env multiqc
 #srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report --interactive
-srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --filename 1st_fastp_report --outdir $OUTDIR $OUTDIR
+srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename 1st_fastp_report --outdir $OUTDIR $OUTDIR
