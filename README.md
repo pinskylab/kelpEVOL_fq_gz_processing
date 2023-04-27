@@ -175,6 +175,7 @@ mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_cl
 **Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded.  Make sure it works: click on it and your web browser should open listing your data files.
 e.g. [https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture](https://gridftp.tamucc.edu/genomics/20221011_PIRE-Gmi-capture).
 
+Check that you can see a file named "tamucc_files.txt" along with the decode and fq files. This script will not work without this file. Click on the "tamucc_files.txt" to see its contents. If this has only 1 column with the file names (i.e. it was created with a simple ls), this script will download the files but will not be able to check the size of files before and after download. Yet, you can visually check the size of files before (in the web browser) and after (in the HPC). If "tamucc_files.txt" has 9 columns (i.e. it was created with a ls -ltrh), this will download the files and will automatically check the size of files before and after download. If you have many files and your "tamucc_files.txt" has only 1 column, it might be worth asking Sharon or someone at TAMUCC to recreate it with an ls -ltrh.
 
 ```bash
 # Navigate to dir to download files into, e.g.
