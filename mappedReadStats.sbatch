@@ -21,7 +21,7 @@ else
         BAMPATTERN=$3
 fi
 
-mkdir $OUTDIR
+mkdir -p $OUTDIR
 
 avgBP () {
         BAMFILE=$1

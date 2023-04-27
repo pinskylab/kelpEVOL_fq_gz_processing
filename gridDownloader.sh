@@ -8,6 +8,7 @@
 #SBATCH -p main
 
 # this script download files (meant for fq.gz files) from TAMUCC "whebshare/grid"
+# contact: Eric e1garcia@odu.edu
 
 # EXECUTE
 # First, locate the grid parent directory (which is just a website link) where the files will be downloaded from. Usually Sharon will post this in the species slack channel.
@@ -17,21 +18,29 @@
 module load parallel
 export SINGULARITY_BIND=/home/e1garcia  #odu
 
-# downlownd the list of lifes
-wget -P $1 $2/tamucc_files.txt
+# User defined variables
+OUTDIR=$1
+LINK=$(echo $2 | sed 's/\/$//')
 
+# downlownd the list of lifes
+wget -P $OUTDIR $LINK/tamucc_files.txt
+NCOL=$(cat tamucc_files.txt | tail -n1 | awk '{print NF}')
+
+
+if [[ $NCOL -eq 9 ]]
+then 
 # use that list to download all files in parallel.
-cat $1/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj40 wget -c -P $1 $2/{}
+cat $OUTDIR/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
 echo -e "\nFirst download completed.\nDownloading again in case partial downloads\n" 
 
 # Second download to check for partial downloads
-cat $1/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj40 wget -c -P $1 $2/{}
+cat $OUTDIR/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
 echo -e "\nSecond download completed" 
 
 # Checking sizes of files from source and lpwd
 echo -e "Comparing file sizes from source and lpwd with (grep -vf)"
 
-cd $1
+cd $OUTDIR
 cat tamucc_files.txt | grep '[zv]$' | tr -s " " | cut -d " " -f5,9 > tamucc_gzfiles
 ls -lh *[zv] | tr -s " " | cut -d " " -f5,9 > odu_gzfiles
 
@@ -47,4 +56,20 @@ else
 fi
 
 echo -e "\nIf your download did not work at all, click on the link to the files and visually check in your browser that there is a file named tamucc_files.txt or contact Eric e1garcia@odu.edu"
+
+elif [[ $NCOL -eq 1 ]] 
+then
+# use that list to download all files in parallel.
+cat $OUTDIR/tamucc_files.txt | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
+echo -e "\nFirst download completed.\nDownloading again in case partial downloads\n" 
+
+# Second download to check for partial downloads
+cat $OUTDIR/tamucc_files.txt | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
+echo -e "\nSecond download completed" 
+
+# Checking sizes of files from source and lpwd
+echo -e "The tamucc_files.txt does not have file size information (it was created with a simple ls) so this script cannot compare the size of files after download. Please visually compare the size of downloaded files with what is posted in the web browser from the http link\nIf you have a lot of files, it might be worth asking Sharon or someone at TAMUCC to recreate the tamucc_files.txt with an ls -ltrh, in which case this script will automatically check the size of files before and after download"
+
+echo -e "\nIf your download did not work at all, click on the link to the files and visually check in your browser that there is a file named tamucc_files.txt"
+fi
 
