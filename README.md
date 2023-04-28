@@ -474,7 +474,7 @@ watch squeue -u <YOURUSERNAME>
 ```
 
 Review the `FastQC` output (`fq_fp1/1st_fastp_report.html`) and update your `README.md`:
-
+```
 Potential issues:  
   * % duplication - 
     * Alb: XX%, Contemp: XX%
@@ -486,7 +486,7 @@ Potential issues:
     * Alb: XX%, Contemp: XX%
   * number of reads - 
     * Alb: XX mil, Contemp: XX mil
-
+```
 ---
 
 </p>
