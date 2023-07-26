@@ -20,9 +20,17 @@ INDIR=$1   			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp
 OUTDIR=$2  			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp_fp2
 
 if [[ -z "$3" ]]; then
+	MINLEN=140
+	nBP_FRONT_TRIM=0
+else 
+	MINLEN=$3
+fi
+	
+if [[ -z "$4" ]]; then
 	nBP_FRONT_TRIM=0
 else
-	nBP_FRONT_TRIM=$3
+	MINLEN=MINLEN-$nBP_FRONT_TRIM
+	nBP_FRONT_TRIM=$4
 fi
 
 FQPATTERN=*r1.fq.gz  		#determines files to be trimmed
@@ -31,7 +39,7 @@ FWDEXT=r1.fq.gz
 REVEXT=r2.fq.gz
 THREADS=20 			#1/2 of total threads avail
 
-MINLEN=$((140-$nBP_FRONT_TRIM))
+#MINLEN=$((140-$nBP_FRONT_TRIM))
 
 mkdir $OUTDIR $OUTDIR/failed
 
