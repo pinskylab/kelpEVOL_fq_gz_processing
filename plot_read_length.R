@@ -1,5 +1,5 @@
 #### Plot Read Length Distribution ####
-## Take the output of read-length_counter.sh and visualize in a barplot.
+## Take the output of read_length_counter.sh and visualize in a barplot.
 ## Kevin Labrador
 #######################################
 
@@ -20,6 +20,7 @@ pacman::p_load (
 
 #### USER DEFINED VARIABLES ####
 
+# Change input and output file names
 inFilePath <- "./read-length-distribution_fp1.txt"
 outFilePath <- "./barplot_read-length-distribution.png"
 
@@ -48,7 +49,7 @@ df <-
             col="black") +
    facet_grid(read~library_id) +
    guides (fill = "none") +
-   xlim (100, 151) +
+  # xlim (100, 151) +
    theme_bw() +
    theme (axis.text.x = element_text(angle=45,
                                      hjust=1, 
@@ -59,8 +60,8 @@ df <-
 # Save output
 ggsave (p1,
         filename = outFilePath,
-        width = 7,
-        height = 5,
+        width = 10,
+        height = 7,
         units = "in"
 )
 
