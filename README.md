@@ -614,13 +614,17 @@ watch squeue -u <YOURUSERNAME>
 If you are going to assemble a genome with this data, use [runFASTP_2_ssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_ssl.sbatch). Otherwise, use [runFASTP_2_cssl.sbatch](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runFASTP_2_cssl.sbatch).  Modify the script name in the code blocks below as necessary. 
 
 ```sh
-# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+# move to your species dir
+cd /home/e1garcia/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-#sbatch runFASTP_2.sbatch <indir; clumpified files> <outdir>
+#sbatch runFASTP_2.sbatch <indir> <outdir>
 #do not use trailing / in paths
-# if lcwgs, run cssl script
-sbatch ../../pire_fq_gz_processing/runFASTP_2_<ssl or cssl>.sbatch fq_fp1_clmp fq_fp1_clmp_fp2
+
+# if lcwgs or cssl run this line
+sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 33
+
+# otherwise if ssl run this line
+sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 140
 
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
@@ -640,6 +644,28 @@ Potential issues:
   * number of reads - 
     * Alb: XX mil, Contemp: XX mil
 
+If you loose too many reads in this step when running the `runFASTP_2.sbatch` script, you can decrease the stringency of the Minimum Sequence Length filter. In this example we set it very low, to 33.
+
+```bash
+# remove reads less than 33 bp 
+sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2_33 33
+```
+
+To decide on the right cutoff, you could run the following script to generate counts of read lengths in every fq.gz file in a dir.  I would run the most lenient Length filter for the fastp2 trim of 33 first
+
+```bash
+# generate read length counts from fp2
+bash read_length_counter.bash -n 1000 fq_fp1_clmp_fp2 > fq_fp1_clmp_fp2/read_length_counts.tsv
+
+# generate read length counts from fp2_33
+bash read_length_counter.bash -n 1000 fq_fp1_clmp_fp2_33 > fq_fp1_clmp_fp2_33/read_length_counts.tsv
+
+# generate read length counts from fp1
+bash read_length_counter.bash -n 1000 fq_fp1_clmp_fp1 > fq_fp1/read_length_counts.tsv
+
+```
+
+Download the read length data and use the following R script in this repo to make histograms `plot_read_length.R`
 
 ---
 
