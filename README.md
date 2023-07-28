@@ -187,7 +187,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/<YYYYMMDD>_PIRE-<your_species>-capture/
 ```
 
-**Chek your download** Look at the bottom of the Wget*out file. `gridDownloader.sh` will write this message `No size mismatch in files was detected` if no issues were found, or `Files with different sizes detected. Offending file(s) printed in files_wDiff_sizes. Please check files_wDiff_sizes and compare tamucc_files.txt with current downloaded data` if the script detected issues. The script automatically will restart the download of the files in `files_wDiff_sizes` but you should compare the size of these files visually in the web browser and your downloads.
+**Chek your download** Look at the bottom of the Wget*out file. `gridDownloader.sh` will write this message *"No size mismatch in files was detected"* if no issues were found, or *"Files with different sizes detected. Offending file(s) printed in files_wDiff_sizes. Please check files_wDiff_sizes and compare tamucc_files.txt with current downloaded data"* if the script detected issues. The script automatically will restart the download of the files in `files_wDiff_sizes` but you should compare the size of these files visually in the web browser and your downloads.
 
 If your download fails completely, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
 
