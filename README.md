@@ -207,7 +207,7 @@ Even though gridDownloader.sh checks the size of your files, the formatting of t
 * Identify files with alternate zip files (a normal format is "Blocked GNU Zip Format") and list them in the file `files_w_alternative_zip_format.txt`, and
 * Identify files where one or more sequences don't have a proper fastq format (4 lines per sequence) and list them in the file `files_w_bad_fastq_format.txt`
 
-You might want to redownload and/or check the format issues with the identified files. More details log of checkFQ.sh
+You might want to redownload and/or check the format issues with the identified files. More details in the log of checkFQ.sh
 
 Execute `checkFQ.sh` 
 ```sh
