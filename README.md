@@ -199,7 +199,7 @@ If your download fails completely, go back to the web browser and check that you
 
 If everything looks normal (all files were downloaded and no different sizes detected), move to step B.
 
-**B) Check the zip and fastq formats of your files**
+**B) Check the zip and fastq formats of your files with `checkFQ.sh`**
 
 Even though gridDownloader.sh checks the size of your files, the formatting of these can still have issues.
 
