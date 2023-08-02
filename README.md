@@ -187,11 +187,34 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/<YYYYMMDD>_PIRE-<your_species>-capture/
 ```
 
-**Chek your download** Look at the bottom of the Wget*out file. `gridDownloader.sh` will write this message *"No size mismatch in files was detected"* if no issues were found, or *"Files with different sizes detected. Offending file(s) printed in files_wDiff_sizes. Please check files_wDiff_sizes and compare tamucc_files.txt with current downloaded data"* if the script detected issues. The script automatically will restart the download of the files in `files_wDiff_sizes` but you should compare the size of these files visually in the web browser and your downloads.
+### Chek your download
+
+**A) Check the log of `gridDownloader.sh`**
+
+Look at the bottom of the Wget*out file. `gridDownloader.sh` will write this message *"No size mismatch in files was detected"* if no issues were found, or *"Files with different sizes detected. Offending file(s) printed in files_wDiff_sizes. Please check files_wDiff_sizes and compare tamucc_files.txt with current downloaded data"* if the script detected issues. The script automatically will restart the download of the files in `files_wDiff_sizes` but you should compare the size of these files visually in the web browser and your downloads.
 
 If your download fails completely, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
 
 `*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual. Every individual should have one of each
+
+If everything looks normal (all files were downloaded and no different sizes detected), move to step B.
+
+**B) Check the zip and fastq formats of your files**
+
+Even though gridDownloader.sh checks the size of your files, the formatting of these can still have issues.
+
+`checkFQ.sh` will:
+* Identify files with alternate zip files (a normal format is "Blocked GNU Zip Format") and list them in the file `files_w_alternative_zip_format.txt`, and
+* Identify files where one or more sequences don't have a proper fastq format (4 lines per sequence) and list them in the file `files_w_bad_fastq_format.txt`
+
+You might want to redownload and/or check the format issues with the identified files. More details log of checkFQ.sh
+
+Execute `checkFQ.sh` 
+```sh
+# sbatch checkFQ.sh <dir with fq.gz files>
+sbatch <yourPireDirPath>/pire_fq_gz_processing/checkFQ.sh /home/e1garcia/shotgun_PIRE/pire_<lcwgs|cssl|ssl>_data_procssing/fq_raw/
+```
+Check the log and files_w_* to make sure no issues were found
 
 ---
 

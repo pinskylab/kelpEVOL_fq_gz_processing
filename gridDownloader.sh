@@ -30,11 +30,11 @@ NCOL=$(cat tamucc_files.txt | tail -n1 | awk '{print NF}')
 if [[ $NCOL -eq 9 ]]
 then 
 # use that list to download all files in parallel.
-cat $OUTDIR/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
+cat $OUTDIR/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj20 wget -c -P $OUTDIR $LINK/{}
 echo -e "\nFirst download completed.\n\nDownloading again in case partial downloads\n" 
 
 # Second download to check for partial downloads
-cat $OUTDIR/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
+cat $OUTDIR/tamucc_files.txt | grep '^[-d]' | tr -s " " | cut -d " " -f9 | parallel --no-notice -kj20 wget -c -P $OUTDIR $LINK/{}
 echo -e "\nSecond download completed" 
 
 # Checking sizes of files from source and lpwd
@@ -60,11 +60,11 @@ echo -e "\nIf your download did not work at all, click on the link to the files 
 elif [[ $NCOL -eq 1 ]] 
 then
 # use that list to download all files in parallel.
-cat $OUTDIR/tamucc_files.txt | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
+cat $OUTDIR/tamucc_files.txt | parallel --no-notice -kj20 wget -c -P $OUTDIR $LINK/{}
 echo -e "\nFirst download completed.\n\nDownloading again in case partial downloads\n" 
 
 # Second download to check for partial downloads
-cat $OUTDIR/tamucc_files.txt | parallel --no-notice -kj40 wget -c -P $OUTDIR $LINK/{}
+cat $OUTDIR/tamucc_files.txt | parallel --no-notice -kj20 wget -c -P $OUTDIR $LINK/{}
 echo -e "\nSecond download completed" 
 
 # Checking sizes of files from source and lpwd
