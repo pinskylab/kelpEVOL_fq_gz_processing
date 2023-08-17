@@ -488,7 +488,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #sbatch runFASTP_1st_trim.sbatch <indir> <outdir>
 #do not use trailing / in paths
 # note, if your dir is set up correctly, this relative path will work
-sbatch /home/e1garcia/pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFASTP_1st_trim.sbatch fq_raw fq_fp1 
 
 # here's how you can add SLURM options and arguments to the command above to receive an email when the job is done
 # replace jdoe@odu.edu with your email address
