@@ -540,7 +540,7 @@ You will need to specify the number of nodes you wish to allocate your jobs to. 
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-#runCLUMPIFY_r1r2_array.bash <indir; fast1 files> <outdir> <tempdir> <max # of nodes to use at once>
+#runCLUMPIFY_r1r2_array.bash <indir with fp1 files> <outdir> <tempdir> <max # of nodes to use at once>
 #do not use trailing / in paths
 bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 20
 
@@ -554,7 +554,102 @@ watch squeue -u <YOURUSERNAME>
 </details>
 
 
-<details><summary>9b. Check duplicate removal success </summary>
+<details><summary>9b. Addressing memory errors </summary>
+<p>
+
+If you check your slurm out and clumpify failed, then it is highly likely that it ran out of memory, temp disk space, or storage disk space.
+
+---
+
+### Addressing Temp Disk Space Issues
+
+To address your temp disk space, use the following command to view the files and dirs in the dir you assigned to be the temp dir (`ls` probably wont work well)
+
+```bash
+# wahab
+TEMPDIR=/scratch/<YOURUSERNAME>
+
+# turing
+TEMPDIR=/scratch-lustre/<YOURUSERNAME>
+
+find $TEMPDIR -name "*"
+```
+
+Files can accumulate in your scratch dir if either (1) you put them there on purpose, or (2) clumpify, spades, or some other program errors out before completion.  
+
+If you have a lot of files from clumpify, then you can delete them as follows:
+
+```bash
+# wahab
+TEMPDIR=/scratch/<YOURUSERNAME>
+
+# turing
+TEMPDIR=/scratch-lustre/<YOURUSERNAME>
+
+find $TEMPDIR -name "*clumpify*temp*" -exec rm -rf {} \;
+```
+
+If you have a lot of files or dirs from another program, such as spades, then you can delete them as follows by modifying the `-name` pattern, and adjusting the command to apply to the files and dirs. In this case, we add `-rf` to remove dirs:
+
+```bash
+# wahab
+TEMPDIR=/scratch/<YOURUSERNAME>
+
+# turing
+TEMPDIR=/scratch-lustre/<YOURUSERNAME>
+
+find $TEMPDIR -name "*spades*" -exec rm -rf {} \;
+```
+
+Repeat as necessary to clean up your scratch drive and try running clumpify again.  
+
+If you keep running out of temp disk space, then you can try decreasing the number of jobs for the slurm array to run at once.  It might be that running 20 jobs at the same time will fill up your temp dir (1TB) before the jobs finish and delete their temp files.  In this example, we change the number of jobs to run simultaneously to 1
+
+```bash
+bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 1
+```
+
+Also, everytime clumpify fails, it's a good idea to check for leftover files in the scratch drive and remove them. 
+
+---
+
+### Addressing disk space issues
+
+Contact your PI, and let them know that the disk is full.  Remember, you get a limited allocation of space and we are mainly using the dir of Eric Garcia, which has much more space allotted, but it does fill up from time to time.
+
+---
+
+### Addressing Memory (RAM) Issues
+
+If you are running out of memory (RAM), there can be two ways this presents.  The first is a very quick fail, where java never gets started.  This can be controlled by the amount of memory made available to java in the script. The second way a memory error could present is a delayed fail, where eventually java doesn't have access to enough memory. This happens because you ran out of memory on the node.  Here we introduce an alternate clumpify script which gives more control over parameters affecting ram usage.  If adjusting the settings below doesn't work, try using the turing himem queue
+
+`runCLUMPIFY_r1r2_array2.bash <indir with fp1 files> <outdir> <tempdir> <max # of jobs to run at once> <threads per job> <amount of ram given to each job in java> <name of queue, i.e. the SBATCH -p argument>`
+
+```
+# wahab 'main' queue example
+# "1" job run at a time, being very conservative here, you might be able to increase
+# there are "40" threads on a wahab main node, so each job gets a whole node
+# There are 384gb of ram on a wahab main node, so each job is given "233g" of that node
+
+bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array2.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 1 40 233g main
+```
+
+```
+# turing 'himem' queue example
+# "1" job run at a time, being very conservative here, you might be able to increase
+# there are "32" threads on a wahab main node, so each job gets a whole node
+# There are 512-7XXgb of ram on a wahab main node, so each job is given "460g" of that node, you might try adjusting this up or down
+
+bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array2.bash fq_fp1 fq_fp1_clmp /scratch-lustre/<YOURUSERNAME> 1 32 460g himem
+```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>9c. Check duplicate removal success </summary>
 <p>
 
 ## **9b. Check duplicate removal success**
