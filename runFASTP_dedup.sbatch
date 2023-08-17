@@ -11,8 +11,8 @@
 
 enable_lmod
 
-################ change container, need fastp v22 or newer ############################
-module load container_env pire_genome_assembly/2021.07.01
+################ changed container, needed fastp v22 or newer ############################
+module load container_env fastp/0.23.4
 #########################################################################################
 
 # this code is requires if the input files don't live within your own parent directory
