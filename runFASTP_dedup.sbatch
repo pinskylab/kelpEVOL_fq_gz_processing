@@ -44,23 +44,15 @@ ls $INDIR/$FQPATTERN | \
 		--failed_out $OUTDIR/failed/{}fail.fq.gz \
 		-h $OUTDIR/{}fastp.html \
 		-j $OUTDIR/{}fastp.json \
-		--qualified_quality_phred 20 \
-		--unqualified_percent_limit 40 \
-		--length_required 33 \
-		--low_complexity_filter \
-		--complexity_threshold 30 \
-		--detect_adapter_for_pe \
-		--adapter_sequence=AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
-		--adapter_sequence_r2=AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
-		--cut_tail \
-		--cut_tail_window_size 1 \
-		--cut_tail_mean_quality 20 \
-		--trim_poly_g \
-		--poly_g_min_len 10 \
-		--trim_poly_x \
-		--report_title "First Trim 4 De Novo" 
+		--dedup
+		--dup_calc_accuracy 6
+		--disable_adapter_trimming
+		--disable_trim_poly_g
+		--disable_quality_filtering
+		--disable_length_filtering
+		--report_title "fp_Ddup" 
 
 #run multiqc 
 module load container_env multiqc
-#srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report --interactive
-srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename 1st_fastp_report --outdir $OUTDIR $OUTDIR
+#srun crun multiqc $OUTDIR -n $OUTDIR/fp_Ddup_report --interactive
+srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename fp_Ddup_report --outdir $OUTDIR $OUTDIR
