@@ -55,6 +55,7 @@ crun clumpify.sh \
 	overwrite=t \
 	usetmpdir=t \
 	tmpdir=$TEMPDIR \
+	deletetmp=t \
 	dedupe=t \
 	addcount=t \
 	subs=2 \
