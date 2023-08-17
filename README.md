@@ -652,7 +652,7 @@ bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array2.bash fq_fp1 fq_fp1_clmp
 <details><summary>9c. Check duplicate removal success </summary>
 <p>
 
-## **9b. Check duplicate removal success**
+## **9c. Check duplicate removal success**
 
 After completion, run [`checkClumpify_EG.R`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/checkClumpify_EG.R) to see if any files failed.
 
@@ -698,7 +698,7 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 <details><summary>9c. Generate metadata on deduplicated FASTQ files </summary>
 <p>
 
-## **9c. Generate metadata on deduplicated FASTQ files**
+## **9d. Generate metadata on deduplicated FASTQ files**
 
 Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
