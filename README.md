@@ -695,7 +695,7 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 </details>
 
 
-<details><summary>9c. Generate metadata on deduplicated FASTQ files </summary>
+<details><summary>9d. Generate metadata on deduplicated FASTQ files </summary>
 <p>
 
 ## **9d. Generate metadata on deduplicated FASTQ files**
