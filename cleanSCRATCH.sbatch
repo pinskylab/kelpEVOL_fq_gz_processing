@@ -18,6 +18,7 @@ PATTERN=$2                #example= "*clumpify*temp*"
 THREADS=20
 
 
+# find ${TMPDIR} -name ${PATTERN} -exec rm {} \;
 
 # find ${TMPDIR} -name ${PATTERN} -print0 | xargs -0 -P $THREADS rm 
 
