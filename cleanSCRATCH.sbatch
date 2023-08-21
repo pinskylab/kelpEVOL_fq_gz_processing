@@ -22,7 +22,7 @@ THREADS=20
 # find ${TMPDIR} -name ${PATTERN} -print0 | xargs -0 -P $THREADS rm 
 
 mkdir empty_dir_cleanscratch
-rsync -a --delete --include ${PATTERN} --exclude '*' --dry-run empty_dir_cleanscratch/ ${TMPDIR}
+rsync -a --delete --include ${PATTERN} --exclude '*' empty_dir_cleanscratch/ ${TMPDIR}
 rm -rf empty_dir_cleanscratch
 
 
