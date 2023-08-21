@@ -580,13 +580,13 @@ Files can accumulate in your scratch dir if either (1) you put them there on pur
 If you have a lot of files from clumpify, then you can delete them as follows:
 
 ```bash
-# wahab
-TEMPDIR=/scratch/<YOURUSERNAME>
+# on wahab
+cleanSCRATCH.sbatch /scratch/<YOURUSERNAME> "*clumpify*temp*"
+```
 
-# turing
-TEMPDIR=/scratch-lustre/<YOURUSERNAME>
-
-find $TEMPDIR -name "*clumpify*temp*" -exec rm -rf {} \;
+```bash
+# on turning
+cleanSCRATCH.sbatch /scratch-lustre/<YOURUSERNAME> "*clumpify*temp*"
 ```
 
 If you have a lot of files or dirs from another program, such as spades, then you can delete them as follows by modifying the `-name` pattern, and adjusting the command to apply to the files and dirs. In this case, we add `-rf` to remove dirs:
