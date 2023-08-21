@@ -588,6 +588,7 @@ cleanSCRATCH.sbatch /scratch/<YOURUSERNAME> "*clumpify*temp*"
 # on turning
 cleanSCRATCH.sbatch /scratch-lustre/<YOURUSERNAME> "*clumpify*temp*"
 ```
+DO NOT RUN THIS SCRIPT AT THE SAME TIME AS CLUMPIFY.  You should only run this after clumpify is done. You must wait for this script to complete before running clumpify again.
 
 If you have a lot of files or dirs from another program, such as spades, then you can delete them as follows by modifying the `-name` pattern, and adjusting the command to apply to the files and dirs. In this case, we add `-rf` to remove dirs:
 
@@ -700,9 +701,15 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 
 ## **9d. Clean the Scratch Drive**
 
-Clumpify gums up your scratch drive with a lot of temporary files.  You must delete them or else you'll run out of space.
+Clumpify gums up your scratch drive with a lot of temporary files.  You must delete them or else you'll run out of space.  
 
-`cleanSCRATCH.sbatch <Directory Path> <Pattern>`
+`cleanSCRATCH.sbatch <Directory Path> "<Pattern>"`
+
+Replace <Directory Path> with the path to the directory with files you want to delete. 
+
+Replace <Pattern> with a pattern that will match all of the files you want to delete.
+
+DO NOT RUN THIS SCRIPT AT THE SAME TIME AS CLUMPIFY.  You should only run this after clumpify is done.  As long as clumpify has completed, after running this script, you can move onto the next step without waiting for this to finish.
 
 
 ```bash
