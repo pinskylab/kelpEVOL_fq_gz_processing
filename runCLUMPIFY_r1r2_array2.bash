@@ -28,4 +28,3 @@ all_samples=(${all_samples})
 
 sbatch --array=0-$((${#all_samples[@]}-1))%${nodes} -p $queue -c ${threads} ${SCRIPTPATH}/runCLUMPIFY_r1r2_array2.sbatch ${INDIR} ${OUTDIR} ${TMPDIR} ${FQPATTERN} ${ramPerThread}
 
-find ${TMPDIR} -name '*clumpify*temp*' -exec rm {} \;
