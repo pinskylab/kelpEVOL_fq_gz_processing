@@ -695,10 +695,36 @@ If the array set up doesn't work, try running Clumpify on a Turing himem (high m
 </details>
 
 
-<details><summary>9d. Generate metadata on deduplicated FASTQ files </summary>
+<details><summary>9d. Clean the Scratch Drive </summary>
 <p>
 
-## **9d. Generate metadata on deduplicated FASTQ files**
+## **9d. Clean the Scratch Drive**
+
+Clumpify gums up your scratch drive with a lot of temporary files.  You must delete them or else you'll run out of space.
+
+`cleanSCRATCH.sbatch <Directory Path> <Pattern>`
+
+
+```bash
+# on wahab
+cleanSCRATCH.sbatch /scratch/<YOURUSERNAME> "*clumpify*temp*"
+```
+
+```bash
+# on turning
+cleanSCRATCH.sbatch /scratch-lustre/<YOURUSERNAME> "*clumpify*temp*"
+```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>9e. Generate metadata on deduplicated FASTQ files </summary>
+<p>
+
+## **9e. Generate metadata on deduplicated FASTQ files**
 
 Once `CLUMPIFY` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
