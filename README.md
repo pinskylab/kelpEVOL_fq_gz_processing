@@ -902,10 +902,20 @@ If there's no apparent reaason for the failures, then you can make a list of the
 
 ```bash
 # replace JOBID with the actual jobid
-grep 'No reads in' slurm-fqscrn.JOBID*out
+grep 'No reads in' slurm-fqscrn.JOBID*out |  sed -e 's/^.*No reads in //' -e 's/, skipping.*$//' > fqscrn_files_to_rerun.txt
+
+bash
+
+indir="fq_fp1_clmp_fp2"
+outdir="fq_fp1_clmp_fp2_fqscrn"
+nodes=1
+
+while read -r fqfile; do
+  sbatch --wrap="bash ../../pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
+done < fqscrn_files_to_rerun.txt
 ```
 
-Run the files that failed again.
+Or run the files that failed again one by one
 
 ```sh
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
