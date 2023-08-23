@@ -774,10 +774,10 @@ cd /home/e1garcia/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genu
 #do not use trailing / in paths
 
 # if lcwgs or cssl run this line
-sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 33
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 33
 
 # otherwise if ssl run this line
-sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 140
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2 140
 
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
@@ -801,7 +801,7 @@ If you loose too many reads in this step when running the `runFASTP_2.sbatch` sc
 
 ```bash
 # remove reads less than 33 bp 
-sbatch ../../pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2_33 33
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFASTP_2.sbatch fq_fp1_clmp fq_fp1_clmp_fp2_33 33
 ```
 
 To decide on the right cutoff, you could run the following script to generate counts of read lengths in every fq.gz file in a dir.  I would run the most lenient Length filter for the fastp2 trim of 33 first
@@ -845,7 +845,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes running simultaneously>
 #do not use trailing / in paths
-bash ../../pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
+bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
 
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
@@ -911,7 +911,7 @@ outdir="fq_fp1_clmp_fp2_fqscrn"
 nodes=1
 
 while read -r fqfile; do
-  sbatch --wrap="bash ../../pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
+  sbatch --wrap="bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
 done < fqscrn_files_to_rerun.txt
 ```
 
@@ -923,7 +923,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
 #do not use trailing / in paths. Example:
-bash ../../pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
+bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ```
 
 Once `FastQ Screen` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
@@ -934,7 +934,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #sbatch runMULTIQC.sbatch <indir; fqscreen files> <report name>
 #do not use trailing / in paths
-sbatch ../../pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastq_screen_report
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastq_screen_report
 ```
 
 Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastq_screen_report.html`) and update your `README.md`.
