@@ -930,8 +930,11 @@ xt
 If there's no apparent reaason for the failures, then you can make a list of the failed files and then run them again
 
 ```bash
-# replace JOBID with the actual jobid
-grep 'No reads in' slurm-fqscrn.JOBID*out |  sed -e 's/^.*No reads in //' -e 's/, skipping.*$//' > fqscrn_files_to_rerun.txt
+# replace JOBID with the actual jobid, this is for files returned by "No reads"
+grep 'No reads in' slurm-fqscrn.JOBID*out |  sed -e 's/^.*No reads in //' -e 's/, skipping.*$//' > fqscrn_files_to_rerun_noreads.txt
+
+# this is for the files returned by "FATAL"
+grep -B50 'FATAL' slurm-fqscrn.*out | grep 'PATTERN' | sed 's/^slurm.*=//' > fqscrn_files_to_rerun_fatal.txt
 
 bash
 
@@ -941,7 +944,11 @@ nodes=1
 
 while read -r fqfile; do
   sbatch --wrap="bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
-done < fqscrn_files_to_rerun.txt
+done < fqscrn_files_to_rerun_noreads.txt
+
+while read -r fqfile; do
+  sbatch --wrap="bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
+done < fqscrn_files_to_rerun_fatal.txt
 ```
 
 Or run the files that failed again one by one
