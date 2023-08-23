@@ -858,12 +858,17 @@ Once done, confirm that all files were successfully completed.
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #FastQ Screen generates 5 files (*tagged.fastq.gz, *tagged_filter.fastq.gz, *screen.txt, *screen.png, *screen.html) for each input fq.gz file
-#check that all 5 files were created for each file: 
-ls fq_fp1_clmp_fp2_fqscrn/*tagged.fastq.gz | wc -l
-ls fq_fp1_clmp_fp2_fqscrn/*tagged_filter.fastq.gz | wc -l 
-ls fq_fp1_clmp_fp2_fqscrn/*screen.txt | wc -l
-ls fq_fp1_clmp_fp2_fqscrn/*screen.png | wc -l
-ls fq_fp1_clmp_fp2_fqscrn/*screen.html | wc -l
+#check that all 5 files were created for each fqgz file: 
+ls fq_fp1_clmp_fp2_fqscrn/*r1.tagged.fastq.gz | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r2.tagged.fastq.gz | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r1.tagged_filter.fastq.gz | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r2.tagged_filter.fastq.gz | wc -l 
+ls fq_fp1_clmp_fp2_fqscrn/*r1_screen.txt | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r2_screen.txt | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r1_screen.png | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r2_screen.png | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r1_screen.html | wc -l
+ls fq_fp1_clmp_fp2_fqscrn/*r2_screen.html | wc -l
 
 #for each, you should have the same number as the number of input files (number of fq.gz files)
 
