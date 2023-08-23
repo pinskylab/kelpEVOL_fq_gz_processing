@@ -887,6 +887,30 @@ grep 'error' slurm-fqscrn.JOBID*out
 grep 'No reads in' slurm-fqscrn.JOBID*out
 ```
 
+
+If the numbers of files all match then `FastQ Screen` has finished running and there are no issues. Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+
+```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+
+#sbatch runMULTIQC.sbatch <indir; fqscreen files> <report name>
+#do not use trailing / in paths
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastq_screen_report
+```
+
+Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastq_screen_report.html`) and update your `README.md`.
+
+Potential issues:
+
+  * one hit, one genome, no ID - 
+    * Alb: XX%, Contemp: XX%
+  * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
+    * Alb: XX%, Contemp: XX%
+
+
+
+
 If you see missing indiviudals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
 
 You can run `sacct` to see if there is a correlation between the jobs that failed and the amount of ram or disk space used
