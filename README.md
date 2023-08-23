@@ -875,8 +875,8 @@ ls $fqsrDIR/*r2_screen.html | wc -l
 
 # for each, you should have the same number as the number of input files (number of fq.gz files)
 fqsrDIR2=fq_fp1_clmp_fp2
-ls $fqsrDIR2/*r1.tagged.fastq.gz | wc -l
-ls $fqsrDIR2/*r2.tagged.fastq.gz | wc -l
+ls $fqsrDIR2/*r1.fq.gz | wc -l
+ls $fqsrDIR2/*r2.fq.gz | wc -l
 
 #you should also check for errors in the *out files:
 #this will return any out files that had a problem
