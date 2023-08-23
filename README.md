@@ -887,15 +887,23 @@ grep 'error' slurm-fqscrn.JOBID*out
 grep 'No reads in' slurm-fqscrn.JOBID*out
 ```
 
+If you see missing indiviudals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
+
 You can run `sacct` to see if there is a correlation between the jobs that failed and the amount of ram or disk space used
 
 ```bash
 # replace JOBID with your actual job ID
 sacct -j JOBID --long --units "G" > fqscrn_sacct_JOBID.txt
-less -S fqscrn_sacct_JOBID.txt
+less -S fqscrn_sacct_JOBID.txt | sed -e 's/^.*No reads in //' -e 's/, skipping.*$//' > fqscrn_files_to_rerun.t
+xt
 ```
 
-If you see missing indiviudals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
+If there's no apparent reaason for the failures, then you can make a list of the failed files and then run them again
+
+```bash
+# replace JOBID with the actual jobid
+grep 'No reads in' slurm-fqscrn.JOBID*out
+```
 
 Run the files that failed again.
 
