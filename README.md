@@ -714,12 +714,12 @@ DO NOT RUN THIS SCRIPT AT THE SAME TIME AS CLUMPIFY.  You should only run this a
 
 ```bash
 # on wahab
-cleanSCRATCH.sbatch /scratch/<YOURUSERNAME> "*clumpify*temp*"
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/cleanSCRATCH.sbatch /scratch/<YOURUSERNAME> "*clumpify*temp*"
 ```
 
 ```bash
-# on turning
-cleanSCRATCH.sbatch /scratch-lustre/<YOURUSERNAME> "*clumpify*temp*"
+# on turing
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/cleanSCRATCH.sbatch /scratch-lustre/<YOURUSERNAME> "*clumpify*temp*"
 ```
 
 ---
