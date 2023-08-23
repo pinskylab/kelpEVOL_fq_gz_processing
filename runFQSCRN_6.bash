@@ -20,6 +20,7 @@ JOBID=$(sbatch --array=0-$((${#all_samples[@]}-1))%${NUMNODES} \
        --partition main \
        -t 96:00:00 \
        /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.sbatch ${INDIR} ${OUTDIR} ${FQPATTERN})
+       
 NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
 
 
