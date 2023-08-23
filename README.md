@@ -953,6 +953,14 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
 ```
 
+If you are having to run several times, you can identify the files that successfully completed like this _as long as you name each list of files to rerun with a different name_
+
+```bash
+FILE1=fqscrn_files_to_rerun.txt
+FILE2=fqscrn_files_to_rerun_take2.txt
+grep -Fvxf $FILE2 $FILE1
+```
+
 Once `FastQ Screen` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
