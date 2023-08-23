@@ -884,7 +884,7 @@ ls $fqsrDIR2/*r2.fq.gz | wc -l
 #do all out files at once
 grep 'error' slurm-fqscrn.*out
 grep 'No reads in' slurm-fqscrn.*out
-grep 'FATAL' slurm-fqscrn.*out
+grep 'FATAL' slurm-fqscrn.*out   # unknown userid is from a bad node, use sacct to find node id and report to your PI who will report to the hpc administrator
 
 #or check individuals files <replace JOBID with your actual job ID>
 grep 'error' slurm-fqscrn.JOBID*out
