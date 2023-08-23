@@ -21,6 +21,5 @@ JOBID=$(sbatch --array=0-$((${#all_samples[@]}-1))%${NUMNODES} \
        -t 96:00:00 \
        /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.sbatch ${INDIR} ${OUTDIR} ${FQPATTERN})
        
-NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
-
-
+# NUMBER1=$(echo ${JOBID} | sed 's/[^0-9]*//g')
+# sbatch --dependency=afterok:${NUMBER1} /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch $OUTDIR fqscrn_mqc
