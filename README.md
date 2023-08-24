@@ -892,6 +892,13 @@ grep 'No reads in' slurm-fqscrn.JOBID*out
 grep 'FATAL' slurm-fqscrn.JOBID*out
 ```
 
+# you can also look at the outfiles to see if there are any unzipped files with the word temp, which means that the job didn't finish and needs to be rerun
+
+```bash
+bash # only need to run this if you are not in bash already, by default wahab is using zsh
+fqsrDIR=fq_fp1_clmp_fp2_fqscrn
+ls $fqscrnDIR/*temp*
+```
 
 If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
@@ -930,13 +937,20 @@ xt
 If there's no apparent reaason for the failures, then you can make a list of the failed files and then run them again
 
 ```bash
+bash # only need to run this if you are not in bash already, by default wahab is using zsh
+
 # replace JOBID with the actual jobid, this is for files returned by "No reads"
 grep 'No reads in' slurm-fqscrn.JOBID*out |  sed -e 's/^.*No reads in //' -e 's/, skipping.*$//' > fqscrn_files_to_rerun_noreads.txt
 
 # this is for the files returned by "FATAL"
 grep -B50 'FATAL' slurm-fqscrn.*out | grep 'PATTERN' | sed 's/^slurm.*=//' > fqscrn_files_to_rerun_fatal.txt
 
-bash
+# this is for the files in the outdir that have `temp` in the name
+fqsrDIR=fq_fp1_clmp_fp2_fqscrn
+ls $fqscrnDIR/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
+
+# concat files with rerun file names and deduplicate
+cat fqscrn_files_to_rerun_noreads.txt fqscrn_files_to_rerun_fatal.txt fqscrn_files_to_rerun_temp.txt | sort | unique > fqscrn_files_to_rerun.txt
 
 indir="fq_fp1_clmp_fp2"
 outdir="fq_fp1_clmp_fp2_fqscrn"
@@ -944,11 +958,7 @@ nodes=1
 
 while read -r fqfile; do
   sbatch --wrap="bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
-done < fqscrn_files_to_rerun_noreads.txt
-
-while read -r fqfile; do
-  sbatch --wrap="bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
-done < fqscrn_files_to_rerun_fatal.txt
+done < fqscrn_files_to_rerun.txt
 ```
 
 Or run the files that failed again one by one
