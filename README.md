@@ -897,7 +897,7 @@ grep 'FATAL' slurm-fqscrn.JOBID*out
 ```bash
 bash # only need to run this if you are not in bash already, by default wahab is using zsh
 fqsrDIR=fq_fp1_clmp_fp2_fqscrn
-ls $fqscrnDIR/*temp*
+ls $fqsrDIR/*temp*
 ```
 
 If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
@@ -947,7 +947,7 @@ grep -B50 'FATAL' slurm-fqscrn.*out | grep 'PATTERN' | sed 's/^slurm.*=//' > fqs
 
 # this is for the files in the outdir that have `temp` in the name
 fqsrDIR=fq_fp1_clmp_fp2_fqscrn
-ls $fqscrnDIR/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
+ls $fqsrDIR/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
 
 # concat files with rerun file names and deduplicate
 cat fqscrn_files_to_rerun_noreads.txt fqscrn_files_to_rerun_fatal.txt fqscrn_files_to_rerun_temp.txt | sort | unique > fqscrn_files_to_rerun.txt
