@@ -835,9 +835,6 @@ Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_proce
 
 `FastQ Screen` works to identify and remove contamination by mapping the reads in our `fq.gz` files to a set of bacterial, protist, virus, fungi, human, etc. genome assemblies that we previously downloaded. If any of the reads in any of the `fq.gz` files map (or "hit") to one or more of these assemblies they are removed from the `fq.gz` file. 
 
-</p>
-</details>
-
 
 <details><summary>11a. Run fastq_screen</summary>
 <p>
@@ -933,55 +930,6 @@ ls $outdir/*temp*
 
 </p>
 </details>
-
-
-<details><summary>11b.  Move fqcrn files </summary>
-<p>
-	
-If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Use `screen mv` to move the files back to your species dir.
-
-```bash
-outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
-fqscrndir=fq_fp1_clmp_fp2_fqscrn
-mkdir $fqscrndir
-screen mv $outdir $fqcrndir
-# to leave screen: ctrl-a d  
-```
-
----
-
-</p>
-</details>
-
-
-<details><summary>11e.  Run MultiQC</summary>
-<p>
-	
-Once the files have finished moving, Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
-
-```sh
-# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-
-#sbatch runMULTIQC.sbatch <indir; fqscreen files> <report name>
-#do not use trailing / in paths
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastq_screen_report
-```
-
-Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastq_screen_report.html`) and update your `README.md`.
-
-Potential issues:
-
-  * one hit, one genome, no ID - 
-    * Alb: XX%, Contemp: XX%
-  * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
-    * Alb: XX%, Contemp: XX%
-
----
-
-</p>
-</details>
-
 
 <details><summary>11c.  Diagnose Errors </summary>
 <p>
@@ -1094,6 +1042,50 @@ Potential issues:
     * Alb: XX%, Contemp: XX%
   * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
     * Alb: XX%, Contemp: XX%
+
+
+<details><summary>11b.  Move fqcrn files </summary>
+<p>
+	
+If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Use `screen mv` to move the files back to your species dir.
+
+```bash
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+fqscrndir=fq_fp1_clmp_fp2_fqscrn
+mkdir $fqscrndir
+screen mv $outdir $fqcrndir
+# to leave screen: ctrl-a d  
+```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>11e.  Run MultiQC</summary>
+<p>
+	
+Once the files have finished moving, Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+
+```sh
+# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+
+#sbatch runMULTIQC.sbatch <indir; fqscreen files> <report name>
+#do not use trailing / in paths
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMULTIQC.sbatch fq_fp1_clmp_fp2_fqscrn fastq_screen_report
+```
+
+Review the results with the `MultiQC` output (`fq_fp1_clmp_fp2_fqscrn/fastq_screen_report.html`) and update your `README.md`.
+
+Potential issues:
+
+  * one hit, one genome, no ID - 
+    * Alb: XX%, Contemp: XX%
+  * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
+    * Alb: XX%, Contemp: XX%
+
 
 ---
 
