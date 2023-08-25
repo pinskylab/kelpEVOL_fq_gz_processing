@@ -1043,6 +1043,10 @@ Potential issues:
   * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
     * Alb: XX%, Contemp: XX%
 
+---
+
+</p>
+</details>
 
 <details><summary>11b.  Move fqcrn files </summary>
 <p>
