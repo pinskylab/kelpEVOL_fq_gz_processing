@@ -835,6 +835,13 @@ Execute [`runFQSCRN_6.bash`](https://github.com/philippinespire/pire_fq_gz_proce
 
 `FastQ Screen` works to identify and remove contamination by mapping the reads in our `fq.gz` files to a set of bacterial, protist, virus, fungi, human, etc. genome assemblies that we previously downloaded. If any of the reads in any of the `fq.gz` files map (or "hit") to one or more of these assemblies they are removed from the `fq.gz` file. 
 
+</p>
+</details>
+
+
+<details><summary>11a. Run fastq_screen</summary>
+<p>
+	
 Like with Clumpify, `runFQSCRN_6.bash` is a bash script that executes several sbatch jobs. You will need to specify the number of nodes you wish to allocate your jobs to. Try running 1 node per `fq.gz` file if possible. (Ex: If you have 3 pairs of r1-r2 files, you should only use 6 nodes maximum (1 per file)). If you have many `fq.gz` files (likely to occur if you are processing capture data), you might also limit the nodes to the current number of idle nodes to avoid waiting on the queue (run `sinfo` to find out # of nodes idle in the main partition).
   * ***NOTE: You are executing the bash not the sbatch script.***
   * ***This can take up to several days depending on the size of your dataset. Plan accordingly!***
@@ -862,6 +869,15 @@ bash $fqScrnPATH $indir $outdir $nodes
 watch squeue -u <YOURUSERNAME>
 ```
 
+---
+
+</p>
+</details>
+
+
+<details><summary>11b.  Check for Errors</summary>
+<p>
+	
 Once done, confirm that all files were successfully completed.
 
 ```sh
@@ -915,6 +931,13 @@ ls $outdir/*temp*
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>11b.  Move fqcrn files </summary>
+<p>
+	
 If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Use `screen mv` to move the files back to your species dir.
 
 ```bash
@@ -925,6 +948,15 @@ screen mv $outdir $fqcrndir
 # to leave screen: ctrl-a d  
 ```
 
+---
+
+</p>
+</details>
+
+
+<details><summary>11e.  Run MultiQC</summary>
+<p>
+	
 Once the files have finished moving, Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
@@ -947,6 +979,13 @@ Potential issues:
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>11c.  Diagnose Errors </summary>
+<p>
+
 If you see missing indiviudals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
 
 You can run `sacct` to see if there is a correlation between the jobs that failed and the amount of ram or disk space used
@@ -957,6 +996,15 @@ sacct -j JOBID --long --units "G" > fqscrn_sacct_JOBID.txt
 less -S fqscrn_sacct_JOBID.txt | sed -e 's/^.*No reads in //' -e 's/, skipping.*$//' > fqscrn_files_to_rerun.t
 xt
 ```
+
+---
+
+</p>
+</details>
+
+
+<details><summary>11d.  Rerun Files That Failed</summary>
+<p>
 
 If there's no apparent reaason for the failures, then you can make a list of the failed files and then run them again
 
@@ -1001,6 +1049,13 @@ grep -Fvxf $FILE2 $FILE1
 
 ---
 
+</p>
+</details>
+
+
+<details><summary>11e.  Move output files </summary>
+<p>
+
 If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Use `screen mv` to move the files back to your species dir.
 
 ```bash
@@ -1011,6 +1066,15 @@ screen mv $outdir $fqcrndir
 # to leave screen: ctrl-a d  
 ```
 
+---
+
+</p>
+</details>
+
+
+<details><summary>11f.  Run MultiQC</summary>
+<p>
+	
 When the files have finished moving run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
@@ -1030,6 +1094,11 @@ Potential issues:
     * Alb: XX%, Contemp: XX%
   * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
     * Alb: XX%, Contemp: XX%
+
+---
+
+</p>
+</details>
 
 ---
 
