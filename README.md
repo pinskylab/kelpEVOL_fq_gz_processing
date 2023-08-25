@@ -845,9 +845,20 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes running simultaneously>
 #do not use trailing / in paths
-bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 20
+
+bash # only run this if your aren't already in bash
+
+fqScrnPATH=/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash
+indir=fq_fp1_clmp_fp2
+
+# many errors occur if you don't use your scratch drive for the out dir
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+nodes=20
+
+bash $fqScrnPATH $indir $outdir $nodes
 
 # check to be sure the job is running
+
 watch squeue -u <YOURUSERNAME>
 ```
 
@@ -860,23 +871,25 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 #FastQ Screen generates 5 files (*tagged.fastq.gz, *tagged_filter.fastq.gz, *screen.txt, *screen.png, *screen.html) for each input fq.gz file
 
 # check that all 5 files were created for each fqgz file:
+
 bash # only need to run this if you are not in bash already, by default wahab is using zsh
-fqsrDIR=fq_fp1_clmp_fp2_fqscrn
-ls $fqsrDIR/*r1.tagged.fastq.gz | wc -l
-ls $fqsrDIR/*r2.tagged.fastq.gz | wc -l
-ls $fqsrDIR/*r1.tagged_filter.fastq.gz | wc -l
-ls $fqsrDIR/*r2.tagged_filter.fastq.gz | wc -l 
-ls $fqsrDIR/*r1_screen.txt | wc -l
-ls $fqsrDIR/*r2_screen.txt | wc -l
-ls $fqsrDIR/*r1_screen.png | wc -l
-ls $fqsrDIR/*r2_screen.png | wc -l
-ls $fqsrDIR/*r1_screen.html | wc -l
-ls $fqsrDIR/*r2_screen.html | wc -l
+indir=fq_fp1_clmp_fp2
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+
+ls $outdir/*r1.tagged.fastq.gz | wc -l
+ls $outdir/*r2.tagged.fastq.gz | wc -l
+ls $outdir/*r1.tagged_filter.fastq.gz | wc -l
+ls $outdir/*r2.tagged_filter.fastq.gz | wc -l 
+ls $outdir/*r1_screen.txt | wc -l
+ls $outdir/*r2_screen.txt | wc -l
+ls $outdir/*r1_screen.png | wc -l
+ls $outdir/*r2_screen.png | wc -l
+ls $outdir/*r1_screen.html | wc -l
+ls $outdir/*r2_screen.html | wc -l
 
 # for each, you should have the same number as the number of input files (number of fq.gz files)
-fqsrDIR2=fq_fp1_clmp_fp2
-ls $fqsrDIR2/*r1.fq.gz | wc -l
-ls $fqsrDIR2/*r2.fq.gz | wc -l
+ls $indir/*r1.fq.gz | wc -l
+ls $indir/*r2.fq.gz | wc -l
 
 #you should also check for errors in the *out files:
 #this will return any out files that had a problem
@@ -896,11 +909,23 @@ grep 'FATAL' slurm-fqscrn.JOBID*out
 
 ```bash
 bash # only need to run this if you are not in bash already, by default wahab is using zsh
-fqsrDIR=fq_fp1_clmp_fp2_fqscrn
-ls $fqsrDIR/*temp*
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+ls $outdir/*temp*
 ```
 
-If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+---
+
+If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Use `screen mv` to move the files back to your species dir.
+
+```bash
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+fqscrndir=fq_fp1_clmp_fp2_fqscrn
+mkdir $fqscrndir
+screen mv $outdir $fqcrndir
+# to leave screen: ctrl-a d  
+```
+
+Once the files have finished moving, Run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
@@ -920,8 +945,7 @@ Potential issues:
   * no one hit, one genome to any potential contaminators (bacteria, virus, human, etc) - 
     * Alb: XX%, Contemp: XX%
 
-
-
+---
 
 If you see missing indiviudals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
 
@@ -946,30 +970,20 @@ grep 'No reads in' slurm-fqscrn.JOBID*out |  sed -e 's/^.*No reads in //' -e 's/
 grep -B50 'FATAL' slurm-fqscrn.*out | grep 'PATTERN' | sed 's/^slurm.*=//' > fqscrn_files_to_rerun_fatal.txt
 
 # this is for the files in the outdir that have `temp` in the name
-fqsrDIR=fq_fp1_clmp_fp2_fqscrn
-ls $fqsrDIR/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+ls $outdir/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
 
 # concat files with rerun file names and deduplicate
 cat fqscrn_files_to_rerun_noreads.txt fqscrn_files_to_rerun_fatal.txt fqscrn_files_to_rerun_temp.txt | sort | unique > fqscrn_files_to_rerun.txt
 
 indir="fq_fp1_clmp_fp2"
-outdir="fq_fp1_clmp_fp2_fqscrn"
+outdir="/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn"
 nodes=1
+rerun_file=fqscrn_files_to_rerun.txt
 
 while read -r fqfile; do
   sbatch --wrap="bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash $indir $outdir $nodes $fqfile"
-done < fqscrn_files_to_rerun.txt
-```
-
-Or run the files that failed again one by one
-
-```sh
-# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-
-#runFQSCRN_6.bash <indir; fp2 files> <outdir> <number of nodes to run simultaneously> <fq file pattern to process>
-#do not use trailing / in paths. Example:
-bash /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runFQSCRN_6.bash fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn 1 LlA01010*r1.fq.gz
+done < $rerun_file
 ```
 
 If you are having to run several times, you can identify the files that successfully completed like this _as long as you name each list of files to rerun with a different name_
@@ -980,7 +994,19 @@ FILE2=fqscrn_files_to_rerun_take2.txt
 grep -Fvxf $FILE2 $FILE1
 ```
 
-Once `FastQ Screen` has finished running and there are no issues, run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
+---
+
+If the numbers of files all match and there are no errors then `FastQ Screen` has finished running and there are no issues. Use `screen mv` to move the files back to your species dir.
+
+```bash
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+fqscrndir=fq_fp1_clmp_fp2_fqscrn
+mkdir $fqscrndir
+screen mv $outdir $fqcrndir
+# to leave screen: ctrl-a d  
+```
+
+When the files have finished moving run [`runMULTIQC.sbatch`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/runMULTIQC.sbatch) to get the MultiQC output.
 
 ```sh
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
