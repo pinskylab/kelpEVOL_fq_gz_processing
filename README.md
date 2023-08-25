@@ -973,6 +973,11 @@ grep -B50 'FATAL' slurm-fqscrn.*out | grep 'PATTERN' | sed 's/^slurm.*=//' > fqs
 outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
 ls $outdir/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
 
+# check the file contents and compare to the dir, then rm all the temp files
+cat fqscrn_files_to_rerun_temp
+ls $outdir/*temp*
+rm $outdir/*temp* 
+
 # concat files with rerun file names and deduplicate
 cat fqscrn_files_to_rerun_noreads.txt fqscrn_files_to_rerun_fatal.txt fqscrn_files_to_rerun_temp.txt | sort | unique > fqscrn_files_to_rerun.txt
 
