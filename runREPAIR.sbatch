@@ -5,6 +5,7 @@
 #SBATCH --time=00:00:00
 # cpu =40 for wahab and 32 for turing
 #SBATCH --cpus-per-task=40
+#SBATCH --exclusive=user
 
 enable_lmod
 module load container_env pire_genome_assembly/2021.07.01

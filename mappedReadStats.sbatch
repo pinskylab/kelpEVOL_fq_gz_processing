@@ -3,7 +3,7 @@
 #SBATCH --job-name=Samtools
 #SBATCH -o mappedReadStats_-%j.out
 #SBATCH --time=00:00:00
-#SBATCH --cpus-per-task=40
+#SBATCH --cpus-per-task=32
 
 enable_lmod
 module load container_env samtools
