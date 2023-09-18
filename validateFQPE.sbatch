@@ -21,6 +21,8 @@ fileEXTENSIONS=($(ls $dirPATH/$fqPATTERN | sed 's/.*\([\._][rR]*[12]\.fa*s*t*q\.
 if [ ${#fileEXTENSIONS[@]} -gt 2 ]; then
   echo "Error: Too many file extensions found: ${fileEXTENSIONS[*]}" >&2
   exit 1
+else
+  echo "File extensions found: ${fileEXTENSIONS[*]}"
 fi
 
 ls $dirPATH/$fqPATTERN | \
