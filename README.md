@@ -1066,7 +1066,7 @@ Potential issues:
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 #runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads>
-sbatch ../../pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd 40
+sbatch home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd 40
 
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
