@@ -33,4 +33,5 @@ crun parallel --no-notice -j $THREADS \
         out1=$OUTDIR/{}repr.R1.fq.gz \
         out2=$OUTDIR/{}repr.R2.fq.gz \
         outs=$OUTDIR/orphans/{}repr.orph.fq \
+        overwrite=t \
         repair
