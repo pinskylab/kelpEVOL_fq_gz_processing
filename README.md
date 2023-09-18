@@ -1093,6 +1093,8 @@ fqPATTERN="*fq.gz"
 sbatch $SCRIPT $DIR $fqPATTERN
 ```
 
+Examine the SLURM `out` file and `$DIR/fqValidationReport.txt` to determine if all of the fqgz files are valid.
+
 Once the FQ files have been validated, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
 ```bash
