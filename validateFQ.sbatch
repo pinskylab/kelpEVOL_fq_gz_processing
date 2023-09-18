@@ -14,7 +14,7 @@ export SINGULARITY_BIND=/home/e1garcia
 dirPATH=$1
 fqPATTERN=$2
 
-#: ${dirPATH:="."}
+: ${dirPATH:="."}
 
 ls $dirPATH/$fqPATTERN | \
   parallel --no-notice -k crun.fastq_utils "fastq_info {}" > $dirPATH/fqValidationReport.txt
