@@ -17,7 +17,7 @@ fqPATTERN=$2
 #: ${dirPATH:="."}
 
 ls $dirPATH/$fqPATTERN | \
-  parallel --no-notice crun.fastq_utils -k "fastq_info {}" > $dirPATH/fqValidationReport.txt
+  parallel --no-notice -k crun.fastq_utils "fastq_info {}" > $dirPATH/fqValidationReport.txt
 
 echo
 echo Number of fq files evaluated: $(ls $dirPATH/$fqPATTERN | wc -l)
