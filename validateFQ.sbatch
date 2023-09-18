@@ -14,9 +14,8 @@ export SINGULARITY_BIND=/home/e1garcia
 fqPATTERN=$1
 
 ls $fqPATTERN | \
-  parallel --no-notice crun.fastq_utils "fastq_info {} > {}.validation"
+  parallel --no-notice crun.fastq_utils -k "fastq_info {}" > fqValidation.txt
 
 echo
-echo Number of fq files: $(ls $fqPATTERN | wc -l)
-echo Number of fq files checked: $(ls *validation | wc -l)
-echo Number of fq files validated: $(grep "^OK$" *validation)
+echo Number of fq files evaluated: $(ls $fqPATTERN | wc -l)
+echo Number of fq files validated: $(grep -c "^OK$" fqValidation.txt)
