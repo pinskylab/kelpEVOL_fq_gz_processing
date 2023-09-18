@@ -26,3 +26,6 @@ ls $dirPATH/$fqPATTERN | \
 echo
 echo Number of fq files evaluated: $(ls $dirPATH/$fqPATTERN | wc -l)
 echo Number of fq files validated: $(grep -c "^OK$" $dirPATH/fqValidationReport.txt)
+echo
+echo Errors Reported:
+grep "^ERROR" $dirPATH/fqValidationReport.txt
