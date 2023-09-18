@@ -16,10 +16,10 @@ fqPATTERN=$2
 
 : ${dirPATH:="."}
 
-fileEXTENSIONS=($(ls $dirPATH/$fqPATTERN | sed 's/.*\(\.[rR]*[12]\.fa*s*t*q\.gz\)/\1/g' | sort | uniq))
+fileEXTENSIONS=($(ls $dirPATH/$fqPATTERN | sed 's/.*\([\._][rR]*[12]\.fa*s*t*q\.gz\)/\1/g' | sort | uniq))
 
 ls $dirPATH/$fqPATTERN | \
-  sed 's/\.[rR]*[12]\.fa*s*t*q\.gz//g' | \
+  sed 's/[\._][rR]*[12]\.fa*s*t*q\.gz//g' | \
   uniq | \
   parallel --no-notice -k crun.fastq_utils "fastq_info {}${fileEXTENSIONS[0]} {}${fileEXTENSIONS[0]}" &> $dirPATH/fqValidationReport.txt
 
