@@ -1076,8 +1076,8 @@ Potential issues:
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
 cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
-#runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads>
-sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd 40
+#runREPAIR.sbatch <indir; fqscreen files> <outdir> <threads/8>
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd 5
 
 # check to be sure the job is running
 watch squeue -u <YOURUSERNAME>
