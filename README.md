@@ -1083,7 +1083,17 @@ sbatch home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runREPAIR.sbatch fq_fp1_
 watch squeue -u <YOURUSERNAME>
 ```
 
-Once the job has finished, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
+Once the job has finished, confirm that the paired end fq.gz files are complete and formatted correctly
+
+```bash
+bash # only run bash if you are not already in bash
+SCRIPT=/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/validateFQPE.sbatch
+DIR=fq_fp1_clmp_fp2_fqscrn_rprd
+fqPATTERN="*fq.gz"
+sbatch $SCRIPT $DIR $fqPATTERN
+```
+
+Once the FQ files have been validated, run [`Multi_FASTQC.sh`](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/Multi_FASTQC.sh) separately.
 
 ```bash
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
