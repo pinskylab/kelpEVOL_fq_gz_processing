@@ -30,6 +30,11 @@ ls $dirPATH/$fqPATTERN | \
   uniq | \
   parallel --no-notice -k crun.fastq_utils "fastq_info {}${fileEXTENSIONS[0]} {}${fileEXTENSIONS[1]}" &> $dirPATH/fqValidationReport.txt
 
+echo PAIRED END FASTQ VALIDATION REPORT
+echo
+echo Directory: $dirPATH
+echo File Pattern: $fqPATTERN
+echo File extensions found: ${fileEXTENSIONS[*]}
 echo
 echo Number of fq files evaluated: $(ls $dirPATH/$fqPATTERN | wc -l)
 echo Number of fq files validated: $(grep -c "^OK$" $dirPATH/fqValidationReport.txt)
