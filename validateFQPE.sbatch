@@ -21,7 +21,7 @@ fileEXTENSIONS=($(ls $dirPATH/$fqPATTERN | sed 's/.*\([\._][rR]*[12]\.fa*s*t*q\.
 ls $dirPATH/$fqPATTERN | \
   sed 's/[\._][rR]*[12]\.fa*s*t*q\.gz//g' | \
   uniq | \
-  parallel --no-notice -k crun.fastq_utils "fastq_info {}${fileEXTENSIONS[0]} {}${fileEXTENSIONS[0]}" &> $dirPATH/fqValidationReport.txt
+  parallel --no-notice -k crun.fastq_utils "fastq_info {}${fileEXTENSIONS[0]} {}${fileEXTENSIONS[1]}" &> $dirPATH/fqValidationReport.txt
 
 echo
 echo Number of fq files evaluated: $(ls $dirPATH/$fqPATTERN | wc -l)
