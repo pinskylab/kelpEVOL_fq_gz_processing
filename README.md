@@ -874,8 +874,19 @@ watch squeue -u <YOURUSERNAME>
 
 <details><summary>11b.  Check for Errors</summary>
 <p>
-	
-Once done, confirm that all files were successfully completed.
+
+Once done, confirm that the `filter.fastq.gz` files are complete and correctly formatted
+
+```bash
+outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
+sbatch /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/validateFQ.sbatch $outdir "*filter.fastq.gz"
+
+# when complete check the *.out file
+# when complete check the $outdir/fqValidateReport.txt file
+less -S $outdir/fqValidationReport.txt file
+```
+
+While the fastq file validation is running, confirm that all files were successfully completed.
 
 ```sh
 # on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
