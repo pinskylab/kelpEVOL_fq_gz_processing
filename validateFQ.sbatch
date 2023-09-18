@@ -12,10 +12,11 @@ module load container_env fastq_utils
 export SINGULARITY_BIND=/home/e1garcia
 
 fqPATTERN=$1
+dirPATH=$2
 
-ls $fqPATTERN | \
-  parallel --no-notice crun.fastq_utils -k "fastq_info {}" > fqValidation.txt
+ls $dirPATH/$fqPATTERN | \
+  parallel --no-notice crun.fastq_utils -k "fastq_info {}" > $dirPATH/fqValidationReport.txt
 
 echo
-echo Number of fq files evaluated: $(ls $fqPATTERN | wc -l)
-echo Number of fq files validated: $(grep -c "^OK$" fqValidation.txt)
+echo Number of fq files evaluated: $(ls $dirPATH/$fqPATTERN | wc -l)
+echo Number of fq files validated: $(grep -c "^OK$" $dirPATH/fqValidationReport.txt)
