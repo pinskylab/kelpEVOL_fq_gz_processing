@@ -17,7 +17,7 @@ export SINGULARITY_BIND=/home/e1garcia
 
 INDIR=$1   #/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp_fp2_fqscrnBt2
 OUTDIR=$2    #/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp_fp2_fqscrnBt2_repaired
-THREADS=$3    #40
+THREADS=$3    #repair.sh will spawn approxmately 8 threads per every one of these, so total threads/8 = this value
 EXTENSION=.tagged_filter.fastq.gz
 
 mkdir $OUTDIR $OUTDIR/orphans
