@@ -11,8 +11,10 @@ enable_lmod
 module load container_env fastq_utils
 export SINGULARITY_BIND=/home/e1garcia
 
-fqPATTERN=$1
-dirPATH=$2
+dirPATH=$1
+fqPATTERN=$2
+
+: ${dirPATH:="."}
 
 ls $dirPATH/$fqPATTERN | \
   parallel --no-notice crun.fastq_utils -k "fastq_info {}" > $dirPATH/fqValidationReport.txt
