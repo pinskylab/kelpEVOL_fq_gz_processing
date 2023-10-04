@@ -195,11 +195,23 @@ Look at the bottom of the Wget*out file. `gridDownloader.sh` will write this mes
 
 If your download fails completely, go back to the web browser and check that you can see a file named "tamucc_files.txt" along with the decode and fq files. 
 
-`*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual. Every individual should have one of each
+**B) Validate the `fq.gz` files**
 
-If everything looks normal (all files were downloaded and no different sizes detected), move to step B.
+`*1.fq.gz` files contain the forward reads and `*2.fq.gz` files contain the reverse reads for an individual. Every individual should have one of each.  You can, confirm that the paired end fq.gz files are complete and formatted correctly by running the following script:
 
-**B) Check the zip and fastq formats of your files with `checkFQ.sh`**
+```bash
+bash # only run bash if you are not already in bash
+SCRIPT=/home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/validateFQPE.sbatch
+DIR=fq_fp1_clmp_fp2_fqscrn_rprd
+fqPATTERN="*fq.gz"
+sbatch $SCRIPT $DIR $fqPATTERN
+```
+
+Examine the SLURM `out` file and `$DIR/fqValidationReport.txt` to determine if all of the fqgz files are valid.
+
+If there are problems, redownload the files with issues.
+
+**C) Check the zip and fastq formats of your files with `checkFQ.sh`**
 
 Even though gridDownloader.sh checks the size of your files, the formatting of these can still have issues.
 
@@ -215,6 +227,10 @@ Execute `checkFQ.sh`
 sbatch <yourPireDirPath>/pire_fq_gz_processing/checkFQ.sh /home/e1garcia/shotgun_PIRE/pire_<lcwgs|cssl|ssl>_data_procssing/fq_raw/
 ```
 Check the log and files_w_* to make sure no issues were found
+
+If there are problems, redownload the files with issues.
+
+If everything looks normal (all files were downloaded and no different sizes detected), move to next step.
 
 ---
 
