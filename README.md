@@ -681,7 +681,7 @@ salloc #because R is interactive and takes a decent amount of memory, we want to
 enable_lmod
 module load container_env mapdamage2
 
-crun R < <yourPireDirPath>/pire_fq_gq_processing/checkClumpify_EG.R --no-save
+crun R < <yourPireDirPath>/pire_fq_gz_processing/checkClumpify_EG.R --no-save
 exit #to relinquish the interactive node
 
 #if the previous line returns an error that tidyverse is missing then do the following
