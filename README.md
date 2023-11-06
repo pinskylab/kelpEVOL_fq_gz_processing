@@ -1037,7 +1037,7 @@ If the numbers of files all match and there are no errors then `FastQ Screen` ha
 outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
 fqscrndir=fq_fp1_clmp_fp2_fqscrn
 mkdir $fqscrndir
-screen mv $outdir $fqcrndir
+screen mv $outdir $fqscrndir
 # to leave screen: ctrl-a d  
 ```
 
