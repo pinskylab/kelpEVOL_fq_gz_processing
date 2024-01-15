@@ -1,6 +1,6 @@
 # Pre-Processing PIRE Data
 
-List of steps to take in raw fq files from shotgun and capture-shotgun
+List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs. 
 
 testing permission
 
@@ -25,7 +25,7 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 <details><summary>Which HPC Are You Using?</summary>
 <p>
 
-## Use Turing
+## Use Wahab
 
 We encourage everybody to use `wahab.hpc.odu.edu` or `turing.hpc.odu.edu`, preferably wahab.  You can start by logging onto wahab
 
