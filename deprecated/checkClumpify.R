@@ -5,7 +5,7 @@ library(tidyverse)
 
 setwd(target_dir)
 
-failed_out_files <- list.files(pattern = 'clmp_r') %>%
+failed_out_files <- list.files(pattern = 'clmp_') %>%
   tibble(out_files = .) %>%
   mutate(successful = map_lgl(out_files, ~read_lines(.x) %>%
                                 str_detect("Done!") %>%

@@ -1,6 +1,6 @@
 # Pre-Processing PIRE Data
 
-List of steps to take in raw fq files from shotgun and capture-shotgun
+List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs. 
 
 testing permission
 
@@ -25,7 +25,7 @@ Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`.
 <details><summary>Which HPC Are You Using?</summary>
 <p>
 
-## Use Turing
+## Use Wahab
 
 We encourage everybody to use `wahab.hpc.odu.edu` or `turing.hpc.odu.edu`, preferably wahab.  You can start by logging onto wahab
 
@@ -681,7 +681,7 @@ salloc #because R is interactive and takes a decent amount of memory, we want to
 enable_lmod
 module load container_env mapdamage2
 
-crun R < <yourPireDirPath>/pire_fq_gq_processing/checkClumpify_EG.R --no-save
+crun R < <yourPireDirPath>/pire_fq_gz_processing/checkClumpify_EG.R --no-save
 exit #to relinquish the interactive node
 
 #if the previous line returns an error that tidyverse is missing then do the following
@@ -1037,7 +1037,7 @@ If the numbers of files all match and there are no errors then `FastQ Screen` ha
 outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
 fqscrndir=fq_fp1_clmp_fp2_fqscrn
 mkdir $fqscrndir
-screen mv $outdir $fqcrndir
+screen mv $outdir $fqscrndir
 # to leave screen: ctrl-a d  
 ```
 
