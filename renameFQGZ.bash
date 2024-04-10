@@ -46,7 +46,8 @@ ls *_1.fq.gz | \
 
 echo "writing newFileNames.txt..."
 sed 's/_.*_L[1-9]_/./1' origFileNames.txt > newFileNames.txt
-sed $'s/\t/\//' $1 > decode_sedlist.txt
+#sed $'s/\t/\//' $1 > decode_sedlist.txt	# Eric commented this line and added the one below to accomodate when original names have an extra "_[12]" which makes sed fail in the sed -i -f command below
+paste <(cut -f1 $1 | sed 's/_.*//') <(cut -f2 $1) | sed 's/\t/\//' > decode_sedlist.txt
 sed -i 's/^/s\//' decode_sedlist.txt
 sed -i 's/$/\//' decode_sedlist.txt
 
