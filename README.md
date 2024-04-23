@@ -1204,7 +1204,7 @@ mv *out logs/
 
 Be sure to update your `README.md` file so that others know what happened in your directory. Ideally, somebody should be able to replicate what you did exactly.
 
-***Congratulations!!** You have finished the pre-processing steps for your data analysis. Now move on to either the [SSL](https://github.com/philippinespire/pire_ssl_data_processing) or [CSSL](https://github.com/philippinespire/pire_cssl_data_processing) pipelines.*
+***Congratulations!!** You have finished the pre-processing steps for your data analysis. Now move on to either the [SSL](https://github.com/philippinespire/pire_ssl_data_processing), [CSSL](https://github.com/philippinespire/pire_cssl_data_processing), or [lcWGS](https://github.com/philippinespire/pire_lcwgs_data_processing) pipelines.*
 
 ---
 
