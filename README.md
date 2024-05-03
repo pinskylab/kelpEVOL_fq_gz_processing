@@ -317,10 +317,12 @@ Then edit the `SequenceNameDecode.tsv` file to conform to the file formatting ru
 </details>
 
 
-<details><summary>4. Make a copy of the fq_raw files prior to renaming</summary>
+<details><summary>4. Optional/deprecated: make a copy of the fq_raw files prior to renaming</summary>
 <p>
 
 ## **4. Make a copy of the `fq_raw` files prior to renaming (several hours run time, don't proceed to next step until this is done)**
+
+NOTE: Previously, we had backed up all raw files on the /RC directory. As of spring 2024 we now have the /archive directory for essentially limitless storage, and all files downloaded from TAMUCC should already be backed up in /archive/carpenterlab/pire/downloads. As such, the backup step should no longer be necessary - just leave a copy of the raw files in /downloads.
 
 If you haven't done so, create a copy of your raw files unmodified in the longterm Carpenter RC dir
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
@@ -342,6 +344,8 @@ screen cp ./* /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_d
 # look at your screen jobs running
 screen -ls
 ```
+
+
 
 ---
 
@@ -679,7 +683,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
 enable_lmod
-module load container_env mapdamage2
+module load container_env mapdamage2  
 
 crun R < <yourPireDirPath>/pire_fq_gz_processing/checkClumpify_EG.R --no-save
 exit #to relinquish the interactive node
@@ -695,6 +699,15 @@ install.packages("tidyverse") #when prompted, type "yes"
 
 #you are now in the shell environment and you should be able to run the checkClumpify script
 crun R < checkClumpify_EG.R --no-save
+
+# note that the version of R in the mapdamage2 container has not been working for some users recently (as of 5/2024) - instead you may have to use:
+
+module load container_env R/4.3
+
+# and then run the R command with:
+
+crun.R R < checkClumpify_EG.R --no-save
+
 ```
 
 If all files were successful, `checkClumpify_EG.R` will return "Clumpify Successfully worked on all samples". 
