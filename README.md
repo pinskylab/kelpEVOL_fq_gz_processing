@@ -162,6 +162,16 @@ You can then go to your working directory in Wahab (home directory or /archive/c
 git clone {new repo url}
 ```
 
+Get a .gitignore file from another PIRE species repo and copy it here, then push this file to github.
+
+```
+cp ../pire_taeniamia_zosterophora_lcwgs/.gitignore .
+git pull
+git add .gitignore
+git commit -m "add gitignore"
+git push
+```
+
 Now that you have a species folder, create a folder to hold the results of the particular sequencing run you are working on. For test lane data, this will be called `1st_sequencing_run`; for full sequencing data or resequencing this will be `2nd_sequencing_run`/`3rd_sequencing_run`/etc.
 
 ```
