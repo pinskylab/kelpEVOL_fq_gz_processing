@@ -150,7 +150,12 @@ Scripts to run
 
 ## 0. Set up directory
 
-All types of data will share the following directories associated with data qc
+All types of data will share the following directories associated with data qc.
+
+<details><summary>0. Deprecated: working in e1garcia </summary>
+<p>
+
+Note that forprevious iterations of the pipeline we were working in Eric Garcia's home directory to circumvent space issues and we were compiling all species into a single lcwgs or cssl rep - we are now working either in our own personal home directories or in /archive and creating a different repo for each species. Previous procedure for setting up a species directory is here.
 
 ```bash
 # if it does not exist, make the directory for your species 
@@ -160,6 +165,10 @@ mkdir <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_speci
 cd <yourPireDirPath>/pire_<ssl or cssl or lcwgs>_data_processing/<genus_species>
 mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_clmp_fp2_fqscrn_rprd
 ```
+---
+
+</p>
+</details>
 
 ---
 
