@@ -152,6 +152,23 @@ Scripts to run
 
 All types of data will share the following directories associated with data qc.
 
+Check whether the species you are working on has a repository set up already - if so it can be found in /archive/carpenterlab/pire. If your particular combination of species and data type does not yet have a repository in Github, your first step is to set up a new repo in GitHub within the PIRE project (https://github.com/philippinespire).
+
+Go to the PIRE project main page and use the green "New" button to create a new repo. Give the repo a name (standard convention = "pire_{your species name}_{data type - lcwgs (most likely) or cssl}" and a description.
+
+You can then go to your working directory in Wahab (home directory or /archive/carpenterlab/pire) and clone the new repo with:
+
+```
+git clone {new repo url}
+```
+
+Now that you have a species folder, create a folder to hold the results of the particular sequencing run you are working on. For test lane data, this will be called `1st_sequencing_run`; for full sequencing data or resequencing this will be `2nd_sequencing_run`/`3rd_sequencing_run`/etc.
+
+```
+cd {species directory}
+mkdir {nth_sequencing_run}
+```
+
 <details><summary>0. Deprecated: working in e1garcia </summary>
 <p>
 
@@ -176,9 +193,21 @@ mkdir fq_raw fq_fp1 fq_fp1_clmp fq_fp1_clmp_fp2 fq_fp1_clmp_fp2_fqscrn fq_fp1_cl
 </details>
 
 
-<details><summary>1. Download data</summary>
+<details><summary>1. Get your raw data</summary>
 <p>
 
+The raw data should already be on Wahab in /archive/carpenterlab/pire/downloads/{your_species}.
+
+Go to your species directory and copy the whole directory containing the raw data files.
+
+```
+cd {species directory}
+rsync -r /archive/carpenterlab/pire/downloads/{your_species}/{nth_sequencing_run}/fq_raw {nth_sequencing_run}
+```
+
+<details><summary>0. Deprecated: downloading data from the TAMUCC grid </summary>
+<p>
+	
 ## **1. Download your data from the TAMUCC grid**
 
 **Locate the link to the files**. This is provided by Sharon at the species slack channel once the data is ready to be downloaded.  Make sure it works: click on it and your web browser should open listing your data files.
@@ -246,6 +275,10 @@ If everything looks normal (all files were downloaded and no different sizes det
 </p>
 </details>
 
+---
+
+</p>
+</details>
 
 <details><summary>2. Proofread the decode files</summary>
 <p>
