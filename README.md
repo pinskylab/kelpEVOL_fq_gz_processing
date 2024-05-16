@@ -1062,7 +1062,7 @@ outdir=/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn
 ls $outdir/*temp* | sed 's/^nowga.*\///' | sed 's/_temp_subset\.fastq//' > fqscrn_files_to_rerun_temp.txt
 
 # check the file contents and compare to the dir, then rm all the temp files
-cat fqscrn_files_to_rerun_temp
+cat fqscrn_files_to_rerun_temp.txt
 ls $outdir/*temp*
 rm $outdir/*temp* 
 
