@@ -735,7 +735,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 
 salloc #because R is interactive and takes a decent amount of memory, we want to grab an interactive node to run this
 enable_lmod
-module load container_env mapdamage2  
+module load container_env R/4.3 
 
 crun R < <yourPireDirPath>/pire_fq_gz_processing/checkClumpify_EG.R --no-save
 exit #to relinquish the interactive node
@@ -751,14 +751,6 @@ install.packages("tidyverse") #when prompted, type "yes"
 
 #you are now in the shell environment and you should be able to run the checkClumpify script
 crun R < checkClumpify_EG.R --no-save
-
-# note that the version of R in the mapdamage2 container has not been working for some users recently (as of 5/2024) - instead you may have to use:
-
-module load container_env R/4.3
-
-# and then run the R command with:
-
-crun.R R < checkClumpify_EG.R --no-save
 
 ```
 
