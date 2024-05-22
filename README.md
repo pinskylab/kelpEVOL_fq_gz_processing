@@ -1059,7 +1059,7 @@ ls $outdir/*temp*
 rm $outdir/*temp* 
 
 # concat files with rerun file names and deduplicate
-cat fqscrn_files_to_rerun_noreads.txt fqscrn_files_to_rerun_fatal.txt fqscrn_files_to_rerun_temp.txt | sort | unique > fqscrn_files_to_rerun.txt
+cat fqscrn_files_to_rerun_noreads.txt fqscrn_files_to_rerun_fatal.txt fqscrn_files_to_rerun_temp.txt | sort | uniq > fqscrn_files_to_rerun.txt
 
 indir="fq_fp1_clmp_fp2"
 outdir="/scratch/<YOURUSERNAME>/fq_fp1_clmp_fp2_fqscrn"
