@@ -763,6 +763,16 @@ INFO: os::commit_memory(0x00007fc08c000000, 204010946560, 0) failed; error='Not 
 
 If the array set up doesn't work, try running Clumpify on a Turing himem (high memory) node.
 
+If only one or a few individuals failed then you can copy the fq.gz files for those individuals from the fq_fp1 folder to a new folder and rerun those:
+
+```
+mkdir fq_fp1_clmp_rpt
+
+cp fq_fp1/[files that failed] fq_fp1_clmp_rpt
+
+bash [pathtoPIREscripts]/runCLUMPIFY_r1r2_array.bash fq_fp1_clmp_repeat fq_fp1_clmp /scratch/<YOURUSERNAME> 20
+```
+
 ---
 
 </p>
