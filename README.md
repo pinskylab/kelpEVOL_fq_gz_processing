@@ -1322,3 +1322,38 @@ sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMa
 
 </p>
 </details>
+
+
+
+<details><summary>18. Extract mitochondrial genomes from read data [OPTIONAL}</summary>
+<p>
+
+## **18. Extract mitochondrial genomes from read data [OPTIONAL]**
+
+If there are potential cryptic species in your lcwgs or cssl data you may want try to extract mitochondrial genes from the read data to get an idea of species IDs. You can use MitoZ to do so.
+
+Copy the runMitoZ bash and sbatch scripts to your sequencing project directory (1st_sequencing_run or 2nd_sequencing_run).
+
+```
+cp /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/runMitoZ* [your_sequencing_directory]
+```
+
+Execute the runMitoZ script. By default it will use the files in fq_fp1_clmp_fp2. Use the full path to this folder (e.g. /home/hpc-0356/pire_zenarchopterus_dispar_lcwgs/1st_sequencing_run/fq_fp1_clmp_fp2).
+
+```
+bash runMitoZ_array.bash /home/hpc-0356/pire_zenarchopterus_dispar_lcwgs/1st_sequencing_run/fq_fp1_clmp_fp2 32
+```
+
+When the script has finished running for all samples, move to your fq_fp1_clmp_fp2 directory and run the process_MitoZ_outputs.sh script.
+
+```
+cd fq_fp1_clmp_fp2
+sh process_mitoZ_outsputs.sh
+```
+
+Once this has run you can examine the MitoZ_success.txt and MitoZ_failure_lowdepth.txt outputs files to see which individuals worked or did not work. The recovered COI sequences can be found in MitoZ_output.fasta.
+
+---
+
+</p>
+</details>
