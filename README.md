@@ -1349,7 +1349,7 @@ When the script has finished running for all samples, move to your fq_fp1_clmp_f
 ```
 cd fq_fp1_clmp_fp2
 
-cp /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/rocess_MitoZ_outputs.sh .
+cp /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/process_MitoZ_outputs.sh .
 
 sh process_mitoZ_outsputs.sh
 ```
