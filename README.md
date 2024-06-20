@@ -1351,7 +1351,7 @@ cd fq_fp1_clmp_fp2
 
 cp /home/e1garcia/shotgun_PIRE/pire_fq_gz_processing/process_MitoZ_outputs.sh .
 
-sh process_mitoZ_outsputs.sh
+sh process_MitoZ_outsputs.sh
 ```
 
 Once this has run you can examine the MitoZ_success.txt and MitoZ_failure_lowdepth.txt outputs files to see which individuals worked or did not work. The recovered COI sequences can be found in MitoZ_output.fasta.
