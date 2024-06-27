@@ -19,7 +19,7 @@ fqPATTERN=$2
 ls $dirPATH/$fqPATTERN | \
   parallel --no-notice -k crun.fastq_utils "fastq_info {}" &> $dirPATH/fqValidationReport.txt
 
-echo FASTQ VALIDATION REPORT (Paired Ends Not Tested)
+echo FASTQ VALIDATION REPORT -Paired Ends Not Tested
 echo
 echo Directory: $dirPATH
 echo File Pattern: $fqPATTERN
