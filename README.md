@@ -1325,7 +1325,7 @@ sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMa
 
 
 
-<details><summary>18. Extract mitochondrial genomes from read data [OPTIONAL}</summary>
+<details><summary>18. Extract mitochondrial genomes from read data [OPTIONAL]</summary>
 <p>
 
 ## **18. Extract mitochondrial genomes from read data [OPTIONAL]**
