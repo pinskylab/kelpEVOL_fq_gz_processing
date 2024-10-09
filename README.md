@@ -14,7 +14,7 @@ testing permission
 
 The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing).
 
-Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the the `pire_ssl_data_processing` and `pire_cssl_data_processing` and `pire_lcwgs_data_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  
+Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the `pire_ssl_data_processing` and `pire_cssl_data_processing` and `pire_lcwgs_data_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  
 
 ---
 
@@ -182,7 +182,7 @@ mkdir {nth_sequencing_run}
 <details><summary>0. Deprecated: working in e1garcia </summary>
 <p>
 
-Note that forprevious iterations of the pipeline we were working in Eric Garcia's home directory to circumvent space issues and we were compiling all species into a single lcwgs or cssl rep - we are now working either in our own personal home directories or in /archive and creating a different repo for each species. Previous procedure for setting up a species directory is here.
+Note that for previous iterations of the pipeline we were working in Eric Garcia's home directory to circumvent space issues and we were compiling all species into a single lcwgs or cssl rep - we are now working either in our own personal home directories or in /archive and creating a different repo for each species. Previous procedure for setting up a species directory is here.
 
 ```bash
 # if it does not exist, make the directory for your species 
@@ -235,7 +235,7 @@ cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
 sbatch <yourPireDirPath>/pire_fq_gz_processing/gridDownloader.sh . https://gridftp.tamucc.edu/genomics/<YYYYMMDD>_PIRE-<your_species>-capture/
 ```
 
-### Chek your download
+### Check your download
 
 **A) Check the log of `gridDownloader.sh`**
 
@@ -338,7 +338,7 @@ ls *2.fq.gz | wc -l
 #XX lines (1 additional line for header = XX individuals), checks out
 wc -l <NAMEOFDECODEFILE>.tsv 
 
-#are ther duplicates of libraries?
+#are there duplicates of libraries?
 cat <NAMEOFDECODEFILE>.tsv | sort | uniq | wc -l
 
 ```
@@ -380,7 +380,7 @@ If you haven't done so, create a copy of your raw files unmodified in the longte
 `/RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<species_name>/fq_raw`.  
 *(can take several hours)*
 	
-Because this can take a long time, we are going to use the `screen` command.  `screen` opens up a new terminal automatically.  You can exit that terminal by typing `ctrl-a` and then `d` to detach and return to your terminal.  Running a command inside of `screen` ensures that it runs to completion and will not end when you log out.  Using `screen` also frees up your terminal to goto the next step.  After detaching, you can run screen -ls to see the list of screen terminals that are currently running.
+Because this can take a long time, we are going to use the `screen` command.  `screen` opens up a new terminal automatically.  You can exit that terminal by typing `ctrl-a` and then `d` to detach and return to your terminal.  Running a command inside of `screen` ensures that it runs to completion and will not end when you log out.  Using `screen` also frees up your terminal to go to the next step.  After detaching, you can run screen -ls to see the list of screen terminals that are currently running.
 
 ```bash
 mkdir /RC/group/rc_carpenterlab_ngs/shotgun_PIRE/pire_<ssl|cssl|lcwgs>_data_processing/<species_name>
@@ -443,7 +443,7 @@ bash <yourPireDirPath>/pire_fq_gz_processing/renameFQGZ.bash <NAMEOFDECODEFILE>.
 
 ## **6. Rename the files for real (<1 minute run time)**
 
-After you are satisfied that the orginal and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
+After you are satisfied that the original and new file names are correct, then you can change the names. To check and make sure that the names match up, you are mostly looking at the individual and population numbers in the new and old names, and that the `-` and `_` in the new names are correct (e.g. no underscores where there should be a dash, etc.). If you have to make changes, you can open up the `NAMEOFDECODEFILE.tsv` to do so, **but be very careful!!**
 
 Example of how the file names line up:
 
@@ -635,7 +635,7 @@ If you check your slurm out and clumpify failed, then it is highly likely that i
 
 ### Addressing Temp Disk Space Issues
 
-To address your temp disk space, use the following command to view the files and dirs in the dir you assigned to be the temp dir (`ls` probably wont work well)
+To address your temp disk space, use the following command to view the files and dirs in the dir you assigned to be the temp dir (`ls` probably won't work well)
 
 ```bash
 # wahab
@@ -682,7 +682,7 @@ If you keep running out of temp disk space, then you can try decreasing the numb
 bash ../../pire_fq_gz_processing/runCLUMPIFY_r1r2_array.bash fq_fp1 fq_fp1_clmp /scratch/<YOURUSERNAME> 1
 ```
 
-Also, everytime clumpify fails, it's a good idea to check for leftover files in the scratch drive and remove them. 
+Also, every time clumpify fails, it's a good idea to check for leftover files in the scratch drive and remove them. 
 
 ---
 
@@ -880,7 +880,7 @@ Potential issues:
   * number of reads - 
     * Alb: XX mil, Contemp: XX mil
 
-If you loose too many reads in this step when running the `runFASTP_2.sbatch` script, you can decrease the stringency of the Minimum Sequence Length filter. In this example we set it very low, to 33.
+If you lose too many reads in this step when running the `runFASTP_2.sbatch` script, you can decrease the stringency of the Minimum Sequence Length filter. In this example we set it very low, to 33.
 
 ```bash
 # remove reads less than 33 bp 
@@ -1012,7 +1012,7 @@ grep 'No reads in' slurm-fqscrn.JOBID*out
 grep 'FATAL' slurm-fqscrn.JOBID*out
 ```
 
-# you can also look at the outfiles to see if there are any unzipped files with the word temp, which means that the job didn't finish and needs to be rerun
+You can also look at the outfiles to see if there are any unzipped files with the word temp, which means that the job didn't finish and needs to be rerun
 
 ```bash
 bash # only need to run this if you are not in bash already, by default wahab is using zsh
@@ -1028,7 +1028,7 @@ ls $outdir/*temp*
 <details><summary>11c.  Diagnose Errors </summary>
 <p>
 
-If you see missing indiviudals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
+If you see missing individuals or categories in the FastQC output, there was likely a RAM error. The "error" search term may not catch it.
 
 You can run `sacct` to see if there is a correlation between the jobs that failed and the amount of ram or disk space used
 
@@ -1048,7 +1048,7 @@ xt
 <details><summary>11d.  Rerun Files That Failed</summary>
 <p>
 
-If there's no apparent reaason for the failures, then you can make a list of the failed files and then run them again
+If there's no apparent reason for the failures, then you can make a list of the failed files and then run them again
 
 ```bash
 bash # only need to run this if you are not in bash already, by default wahab is using zsh
