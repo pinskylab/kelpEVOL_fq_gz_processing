@@ -1,8 +1,6 @@
 # Pre-Processing PIRE Data
 
-List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs. 
-
-testing permission
+List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs datasets. 
 
 ---
 
@@ -12,9 +10,9 @@ testing permission
 
 ## Before You Start, Read This
 
-The purpose of this repo is to provide the steps for processing raw fq files for both [Shotgun Sequencing Libraries - SSL data](https://github.com/philippinespire/pire_ssl_data_processing) for probe development and the [Capture Shotgun Sequencing Libraries- CSSL data](https://github.com/philippinespire/pire_cssl_data_processing).
+The purpose of this repo is to provide the steps for processing raw fq files for [Shotgun Sequencing Libraries - SSL Pipeline](https://github.com/philippinespire/pire_ssl_data_processing) for the [lcWGS Shotgun Sequencing Libraries - lcWGS Pipeline](https://github.com/philippinespire/pire_lcwgs_data_processing/tree/main) or for probe development and the [Capture Shotgun Sequencing Libraries- CSSL Pipeline](https://github.com/philippinespire/pire_cssl_data_processing).
 
-Scripts with `ssl` in the name are designed for shotgun data, including `lcwgs`. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the `pire_ssl_data_processing` and `pire_cssl_data_processing` and `pire_lcwgs_data_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  
+Scripts with `ssl` in the name are designed for shotgun data, including the `ssl` and `lcwgs` pipelines. Scripts with `cssl` in the name are designed for capture-shotgun data. Scripts with no suffix in the name can be used for both types of data. Both the `pire_ssl_data_processing` and `pire_cssl_data_processing` and `pire_lcwgs_data_processing` repos assume that the `pire_fq_gz_processing` repo is in the same directory as they are.  
 
 ---
 
