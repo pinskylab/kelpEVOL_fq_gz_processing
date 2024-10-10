@@ -5,7 +5,7 @@ List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs d
 ---
 
 
-<details><summary>Before You Start, Read This</summary>
+<details><summary>Before You Start, **Read This**</summary>
 <p>
 
 ## Before You Start, Read This
