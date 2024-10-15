@@ -1209,25 +1209,29 @@ Potential issues:
 <details><summary>13. Calculate the percent of reads lost in each step</summary>
 <p>
 
+## **13. Calculate the percent of reads lost in each step**
+
 For PIRE projects this is now accomplished in using the [process_sequencing_metadata repo](https://github.com/philippinespire/process_sequencing_metadata/tree/main)
 
-For a quick summary of read stats across step follow the these instructions (PIRE projects do not skip the above step):	
+For a quick summary of read stats across steps follow the these instructions (PIRE projects do not skip the step above):	
 
-[read_calculator.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator.sh) counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
+[read_calculator.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator.sh) counts the number of reads before and after each step in the pre-process of ssl, cssl, or lcwgs data and creates the dir `preprocess_read_change` with the following 2 tables:
 
   1. `readLoss_table.tsv` which reports the step-specific percentage of reads lost and the final cumulative percentage of reads lost.
   2. `readsRemaining_table.tsv` which reports the step-specific percentage of reads that remain and the final cumulative percentage of reads that remain.
  
 ```sh
-# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-
-#read_calculator_ssl.sh "<path to species home dir>" "<Path to dir with raw files>"
-#do not use trailing / in paths.
+# 1.- Move to you species/project dir
+# 2.- Execute with:
+# sbatch path_to_script/read_calculator.sh "<path to species/project home dir>"
+# do not use trailing / in paths.
 
 # SSL Example:
-sbatch ../../pire_fq_gz_processing/read_calculator.sh "." "fq_raw"
 
+cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
+# on wahab: replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
+
+sbatch ../../pire_fq_gz_processing/read_calculator.sh "."
 ```
 
 Once the job has finished, inspect the two tables and revisit relevant pre-processing steps if too much data was lost.
