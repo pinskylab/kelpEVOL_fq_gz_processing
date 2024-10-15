@@ -1209,13 +1209,11 @@ Potential issues:
 <details><summary>13. Calculate the percent of reads lost in each step</summary>
 <p>
 
-This is now accomplished in another way using the process_sequencing_metadata repo. Move onto the next step	
+For PIRE projects this is now accomplished in using the [process_sequencing_metadata repo](https://github.com/philippinespire/process_sequencing_metadata/tree/main)
 
-<!-- 
-	
-## **13. Calculate the percent of reads lost in each step**
+For a quick summary of read stats across step follow the these instructions (PIRE projects do not skip the above step):	
 
-`read_calculator_ssl.sh` counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
+[read_calculator.sh](https://github.com/philippinespire/pire_fq_gz_processing/blob/main/read_calculator.sh) counts the number of reads before and after each step in the pre-process of ssl (or cssl) data and creates the dir `preprocess_read_change` with the following 2 tables:
 
   1. `readLoss_table.tsv` which reports the step-specific percentage of reads lost and the final cumulative percentage of reads lost.
   2. `readsRemaining_table.tsv` which reports the step-specific percentage of reads that remain and the final cumulative percentage of reads that remain.
@@ -1232,8 +1230,10 @@ sbatch ../../pire_fq_gz_processing/read_calculator.sh "." "fq_raw"
 
 ```
 
-Once the job has finished, inspect the two tables and revisit steps if too much data was lost.
+Once the job has finished, inspect the two tables and revisit relevant pre-processing steps if too much data was lost.
 
+From these tables, you can include read stats in your projects such as:
+```
 Reads lost:
 
   * fastp1 dropped XX% of the reads
@@ -1243,9 +1243,7 @@ Reads lost:
 Reads remaining:
 
 Total reads remaining: XX%
-
--->
-
+```
 ---
 
 </p>
@@ -1276,57 +1274,10 @@ Be sure to update your `README.md` file so that others know what happened in you
 </p>
 </details>
 
-<details><summary>15. Map Repaired `fq.gz` to Reference Genome</summary>
+<details><summary>15. Extract mitochondrial genomes from read data [OPTIONAL]</summary>
 <p>
 
-## **15. Map Repaired `fq.gz` to Reference Genome**
-
-Follow specific instructions in CSSL or LCWGS `README.md`.  Does not apply to SSL
-
----
-
-</p>
-</details>
-
-
-<details><summary>16. Filter RAW BAM Files</summary>
-<p>
-
-## **16. Filter BAM Files**
-
-Follow specific instructions in CSSL or LCWGS `README.md`.  Does not apply to SSL
-
----
-
-</p>
-</details>
-
-
-<details><summary>17. Generate Number of Mapped Reads</summary>
-<p>
-
-## **17. Generate Number of Mapped Reads**
-
-This is for CSSL or LCWGS libraries, not SSL. 
-
-```bash
-# on wahab replace <yourPireDirPath> with /home/e1garcia/shotgun_PIRE
-cd <yourPireDirPath>/pire_<ssl-or-cssl-or-lcwgs>_data_processing/<genus_species>
-# sbatch mappedReadStats.sbatch "-RG.bam"
-sbatch ../../pire_fq_gz_processing/mappedReadStats.sbatch mkBAM mkBAM/coverageMappedReads 
-```
-
----
-
-</p>
-</details>
-
-
-
-<details><summary>18. Extract mitochondrial genomes from read data [OPTIONAL]</summary>
-<p>
-
-## **18. Extract mitochondrial genomes from read data [OPTIONAL]**
+## **15. Extract mitochondrial genomes from read data [OPTIONAL]**
 
 If there are potential cryptic species in your lcwgs or cssl data you may want try to extract mitochondrial genes from the read data to get an idea of species IDs. You can use MitoZ to do so.
 
