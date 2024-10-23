@@ -1,29 +1,29 @@
 cff-version: 1.2.0
 message: "If you use this pipeline, please cite it as below."
 authors:
-  - family-names: Baldisimo
-    given-names: Jemelyn
-    orcid: https://orcid.org/0000-0002-3615-025X
   - family-names: Bird
-    given-names: Christopher
-    orcid: TBD
-  - family-names: Clark
-    given-names: Rene
-    orcid: https://orcid.org/0000-0002-9874-8863
+    given-names: Christopher E.
+    orcid: https://orcid.org/0000-0003-0228-3318
   - family-names: Garcia
     given-names: Eric
     orcid: https://orcid.org/0000-0002-1334-3753
-  - family-names: Malabag
-    given-names: Marial
-    orcid: TBD
   - family-names: Reid
     given-names: Brendan
     orcid: https://orcid.org/0000-0003-4063-3956
-  - family-names: Weeks
-    given-names: Laurel
-    orcid: TBD
-title: "Philippines PIRE CSSL Analysis Pipeline"
+  - family-names: Clark
+    given-names: Rene
+    orcid: https://orcid.org/0000-0002-9874-8863
+  - family-names: Labrador
+    given-names: Kevin
+    orcid: TBD    
+  - family-names: Pinsky
+    given-names: Malin
+    orcid: https://orcid.org/0000-0002-8523-8952
+ - family-names: Carpenter
+    given-names: Kent E.
+    orcid: https://orcid.org/0000-0003-3618-1811
+title: "Philippines PIRE fq gz Analysis Pipeline"
 version: 0.1
 doi: TBD
 date-released: TBD
-url: "https://github.com/philippinespire/pire_cssl_data_processing"
+url: "https://github.com/philippinespire/pire_fq_gz_processing"
