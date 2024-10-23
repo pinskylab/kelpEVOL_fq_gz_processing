@@ -8,19 +8,19 @@ authors:
     given-names: Eric
     orcid: https://orcid.org/0000-0002-1334-3753
   - family-names: Reid
-    given-names: Brendan
+    given-names: Brendan N
     orcid: https://orcid.org/0000-0003-4063-3956
   - family-names: Clark
-    given-names: Rene
+    given-names: Rene D
     orcid: https://orcid.org/0000-0002-9874-8863
   - family-names: Labrador
     given-names: Kevin
     orcid: TBD
   - family-names: Pinsky
-    given-names: Malin
+    given-names: Malin L
     orcid: https://orcid.org/0000-0002-8523-8952
   - family-names: Carpenter
-    given-names: Kent
+    given-names: Kent E
     orcid: https://orcid.org/0000-0003-3618-1811
 title: "Philippines PIRE CSSL Analysis Pipeline"
 version: 0.1
