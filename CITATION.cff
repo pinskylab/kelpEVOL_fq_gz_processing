@@ -1,9 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this pipeline, please cite it as below."
 authors:
-  - family-names: Baldisimo
-    given-names: Jemelyn
-    orcid: https://orcid.org/0000-0002-3615-025X
+  - family-names: Bird
+    given-names: Christopher
+    orcid: https://orcid.org/0000-0003-0228-3318
   - family-names: Bird
     given-names: Christopher
     orcid: TBD
