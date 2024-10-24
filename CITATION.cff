@@ -1,9 +1,29 @@
-cff-version: 1.1.0
-message: "If you use this software, please cite it as below."
+cff-version: 1.2.0
+message: "If you use this pipeline, please cite it as below."
 authors:
-- family-names: Bird
-  given-names: Christopher E
-orcid: https://orcid.org/0000-0003-0228-3318
+  - family-names: Bird
+    given-names: Christopher E
+    orcid: https://orcid.org/0000-0003-0228-3318
+  - family-names: Garcia
+    given-names: Eric
+    orcid: https://orcid.org/0000-0002-1334-3753
+  - family-names: Reid
+    given-names: Brendan N
+    orcid: https://orcid.org/0000-0003-4063-3956
+  - family-names: Clark
+    given-names: Rene D
+    orcid: https://orcid.org/0000-0002-9874-8863
+  - family-names: Labrador
+    given-names: Kevin L
+    orcid: https://orcid.org/0000-0002-3309-8062
+  - family-names: Pinsky
+    given-names: Malin L
+    orcid: https://orcid.org/0000-0002-8523-8952
+  - family-names: Carpenter
+    given-names: Kent E
+    orcid: https://orcid.org/0000-0003-3618-1811
 title: "Philippines PIRE FQ GZ Analysis Pipeline"
-version: v1.0.0
-date-released: 2024-10-24
+version: "1.0.0"
+date-released: "2024-10-24"
+url: "https://github.com/philippinespire/pire_fq_gz_processing"
+doi: 10.5281/zenodo.13988543
