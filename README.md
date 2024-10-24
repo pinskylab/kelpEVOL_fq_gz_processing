@@ -6,7 +6,8 @@ List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs d
 
 ## Software Versions
 
-* Version 1.0.0
+* Philippines PIRE FQ GZ Analysis Pipeline (Version 1.0.0)
+   [![DOI](https://zenodo.org/badge/391182280.svg)](https://doi.org/10.5281/zenodo.13988542)
 
 The current release (v1.0.0) has been tested in [Wahab and Turing](https://www.odu.edu/information-technology-services/research-computing/compute), the two main HPC clusters of [Old Dominion University](https://www.odu.edu)
 
