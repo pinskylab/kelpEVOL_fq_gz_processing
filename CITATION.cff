@@ -14,7 +14,7 @@ authors:
     given-names: Rene D
     orcid: https://orcid.org/0000-0002-9874-8863
   - family-names: Labrador
-    given-names: Kevin
+    given-names: Kevin L
     orcid: TBD
   - family-names: Pinsky
     given-names: Malin L
@@ -23,7 +23,5 @@ authors:
     given-names: Kent E
     orcid: https://orcid.org/0000-0003-3618-1811
 title: "Philippines PIRE FQ GZ Analysis Pipeline"
-version: 0.1
-doi: TBD
-date-released: TBD
+version: 1.0.0
 url: "https://github.com/philippinespire/pire_fq_gz_processing"
