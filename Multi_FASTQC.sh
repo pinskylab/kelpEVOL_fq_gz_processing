@@ -2,13 +2,16 @@
 
 #SBATCH --job-name=Multi_fastqc
 #SBATCH -o Multi_fastqc-%j.out
-#SBATCH -p main
-#SBATCH -c 32
+#SBATCH --cpus-per-task=32
+#SBATCH --time=01:00:00
+#SBATCH --mem=100G
+#SBATCH --partition=lab-mpinsky
+#SBATCH --account=pi-mpinsky
 
 ############# Multi_FASTQC.sh ###################
 ## runs FASTQC and MultiQC reports in parallel ##
 ##   contact: Eric Garcia, e1garcia@odu.edu    ##
-##  ceb updated this 2022-06-02                ##
+##  mic updated this 2025-01-24 for UCSC hb    ##
 #################################################
 
 ## Requirements: parallel, fastqc, and multiqc in current session 
@@ -27,18 +30,19 @@
 # 1.- Set the above slurm settings (#SBATCH) according to your system 
 # 2.- Load parallel, fastqc and multiqc according to your system. Example:
 
-enable_lmod
+module purge
 module load parallel
 module load container_env multiqc
 module load container_env fastqc
-export SINGULARITY_BIND=/home/e1garcia
+module list 
+export SINGULARITY_BIND=/home/e1garcia # change this line! 
 
 # 3.- Execute the script
 # in the command line, type "sbatch", the name of the script <Multi_FASTQC.sh>, the suffix identifying the files to be analyzed in quotations. The last can be file extensions or any other shared file identifier at the end of the files' names, and the full path to the directory containing the files to be processed
 # example: <sbatch Multi_FASTQC.sh ".fq.gz" "home/e1garcia/shotgun/Tzo/shotgun_raw_fq/">
 
 # Alternately, the suffix can be replaced by any regex expression that correctly identifies the files to be processed.
-# If such regex does not occur at the end of file names, you'll need to remove the wild card " * " in the first fastqc statement in line 50
+# If such regex does not occur at the end of file names, you'll need to remove the wild card " * " in the first fastqc statement in line 55
 
 # Multi_FASTQC.sh has been tested in "fq", "fq.gz" and "bam" files.
 
