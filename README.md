@@ -1,5 +1,7 @@
 # Pre-Processing PIRE Data
 
+*** currently updating to run on UCSC Hummingbird cluster for kelp genomics projects **** 
+
 List of steps to take in raw fq files from shotgun, capture-shotgun, and lcwgs datasets. 
 
 ---
