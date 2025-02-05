@@ -1,7 +1,7 @@
-#!/bin/bash -l
+#!/bin/bash
 
 #SBATCH --job-name=Multi_fastqc
-#SBATCH -o Multi_fastqc-%j.out
+#SBATCH -o /hb/home/miclark/kelpEVOL_fq_gz_processing/logs/Multi_fastqc-%j.out
 #SBATCH --cpus-per-task=2 # originally 32, changing to 2 for testing
 #SBATCH --time=01:00:00
 #SBATCH --mem=10G # originally 100, changing to 10 for testing
@@ -26,12 +26,12 @@
 # For MultiQC options use <multiqc --help> or visit  https://multiqc.info/
 
 ## Script Usage:
-# 1.- Set the above slurm settings (#SBATCH) according to your system 
+# 1.- Set the above slurm settings (#SBATCH) according to your system. Change the filepath where the outfile is generated.  
 # 2.- Load parallel, fastqc and multiqc according to your system. Example:
 # 
 
 module load parallel/20200122
-module load multiqc/1.27
+# module load multiqc/1.27
 module load fastqc/0.12.1
 module list 
 
@@ -53,6 +53,10 @@ PATTERN=$3
 #run fastqc in parallel 
 ls ${inDIR}/*${PATTERN} | parallel --no-notice -j2 "fastqc {}" # change number after "j" to the number of cpus requested
 
+# load multiqc 
+module unload fastqc/0.12.1
+module load multiqc/1.27
+
 # run multiqc with specific report and subdirectory names
 # removed crun functionality for hummingbird
 multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename $REPORTNAME --outdir $inDIR $inDIR
@@ -60,4 +64,4 @@ multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3
 # move fastqc files to new subdirectory
 #ls *fastqc.html | parallel -kj 32 "mv {} ../Multi_FASTQC" &&
 #ls *fastqc.zip | parallel -kj 32 "mv {} ../Multi_FASTQC"
-mv *out ${inDIR}/logs # change to match log dir where you want your log files to live
+#mv *out ${inDIR}/logs # change to match log dir where you want your log files to live
