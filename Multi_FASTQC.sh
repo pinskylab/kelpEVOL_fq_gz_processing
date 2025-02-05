@@ -4,7 +4,7 @@
 #SBATCH -o Multi_fastqc-%j.out
 #SBATCH --cpus-per-task=2 # originally 32, changing to 2 for testing
 #SBATCH --time=01:00:00
-#SBATCH --mem=100G
+#SBATCH --mem=10G # originally 100, changing to 10 for testing
 #SBATCH --partition=128x24
 
 ############# Multi_FASTQC.sh ###################
@@ -28,6 +28,7 @@
 ## Script Usage:
 # 1.- Set the above slurm settings (#SBATCH) according to your system 
 # 2.- Load parallel, fastqc and multiqc according to your system. Example:
+# 
 
 module load parallel/20200122
 module load multiqc/1.27
@@ -35,8 +36,9 @@ module load fastqc/0.12.1
 module list 
 
 # 3.- Execute the script
-# in the command line, type "sbatch", the name of the script <Multi_FASTQC.sh>, the FULL path to these the files to be processed and the suffix identifying the files to be analyzed in quotations. The last can be file extensions or any other shared file identifier at the end of the files' names, and the full path to the directory containing the files to be processed
-# example: <sbatch Multi_FASTQC.sh "home/e1garcia/shotgun/Tzo/shotgun_raw_fq/" ".fq.gz">
+# in the command line, type "sbatch", the name of the script <Multi_FASTQC.sh>, the FULL path to the files to be processed, the desired name for the multiQC report and the suffix identifying the files to be analyzed in quotations. The last can be file extensions or any other shared file identifier at the end of the files' names, and the full path to the directory containing the files to be processed
+# example: <sbatch Multi_FASTQC.sh "indir" "mqc report name" "file extension to qc">
+
 
 # Alternately, the suffix can be replaced by any regex expression that correctly identifies the files to be processed.
 # If such regex does not occur at the end of file names, you'll need to remove the wild card " * " in the first fastqc statement in line 55
@@ -49,12 +51,13 @@ REPORTNAME=$2
 PATTERN=$3
 
 #run fastqc in parallel 
-ls ${inDIR}/*${PATTERN} | parallel --no-notice -j32 "crun fastqc {}"
+ls ${inDIR}/*${PATTERN} | parallel --no-notice -j2 "fastqc {}" # change number after "j" to the number of cpus requested
 
 # run multiqc with specific report and subdirectory names
-#crun multiqc $inDIR -n $inDIR/fastqc_report
-crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename $REPORTNAME --outdir $inDIR $inDIR
+# removed crun functionality for hummingbird
+multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename $REPORTNAME --outdir $inDIR $inDIR
+
 # move fastqc files to new subdirectory
 #ls *fastqc.html | parallel -kj 32 "mv {} ../Multi_FASTQC" &&
 #ls *fastqc.zip | parallel -kj 32 "mv {} ../Multi_FASTQC"
-mv *out ../logs
+mv *out ${inDIR}/logs # change to match log dir where you want your log files to live
