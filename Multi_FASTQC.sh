@@ -10,7 +10,7 @@
 ############# Multi_FASTQC.sh ###################
 ## runs FASTQC and MultiQC reports in parallel ##
 ##   contact: Eric Garcia, e1garcia@odu.edu    ##
-##  mic updated this 2025-01-24 for UCSC hb    ##
+##  mic updated this 2025-02-05 for UCSC hb    ##
 #################################################
 
 ## Requirements: parallel, fastqc, and multiqc in current session 

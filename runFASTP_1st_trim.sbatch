@@ -1,36 +1,44 @@
-#!/bin/bash -l
+#!/bin/bash
+
+#SBATCH --job-name=fastp
+#SBATCH -o /hb/home/miclark/kelpEVOL_fq_gz_processing/logs/Multi_fastqc-%j.out
+#SBATCH --cpus-per-task=2 # originally 40, changing to 2 for testing 
+#SBATCH --time=01:00:00 # originally 00:00:00,
+#SBATCH --mem=10G # originally not specified, using 10 for testing 
+#SBATCH --partition=128x24
+
+######## runFASTP_1st_trim.sbatch  ##############
+## runs FASTP to do read trimming              ##
+##  mic updated this 2025-02-05 for UCSC hb    ##
+#################################################
 
 # this script will do all trimming, except 5'
 # no merging of overlapping reads
 # this is first step in prepping reads for de novo assembly
 
-#SBATCH --job-name=fastp
-#SBATCH -o fastp_1st_-%j.out
-#SBATCH --time=00:00:00
-#SBATCH --cpus-per-task=40
+module load parallel/20200122
+module load fastp/0.23.2
 
-enable_lmod
-module load container_env pire_genome_assembly/2021.07.01
-
+### pending deletion
 # this code is requires if the input files don't live within your own parent directory
 # modify "e1garcia" to the user ID where the files are located
-export SINGULARITY_BIND=/home/e1garcia
-
+# export SINGULARITY_BIND=/home/e1garcia
+###
 
 INDIR=$1                 #example= /home/e1garcia/shotgun_PIRE/Lle/fq_raw
 OUTDIR=$2                #example= /home/e1garcia/shotgun_PIRE/fq_fp1
-FQPATTERN=*.fq.gz        #determines files to be trimmed
-EXTPATTERN=[12]\.fq\.gz  # pattern match to fq extensions
+FQPATTERN=*.fastq.gz        #determines files to be trimmed, change to match your files, fq.gz, fastq.gz etc. 
+EXTPATTERN=[12]\.fastq\.gz  # pattern match to fq extensions
 FWDEXT=1.fq.gz
 REVEXT=2.fq.gz
-THREADS=20 #1/2 of total threads avail
+THREADS=2 #1/2 of total threads avail; originally 20 
 
 mkdir $OUTDIR $OUTDIR/failed
 
 ls $INDIR/$FQPATTERN | \
 	sed -e "s/$EXTPATTERN//" -e 's/.*\///g' | \
 	uniq | \
-	crun parallel --no-notice -j $THREADS \
+	parallel --no-notice -j $THREADS \
 	fastp \
 		--in1 $INDIR/{}$FWDEXT \
 		--in2 $INDIR/{}$REVEXT \
@@ -58,6 +66,6 @@ ls $INDIR/$FQPATTERN | \
 		--report_title "First Trim 4 De Novo" 
 
 #run multiqc 
-module load container_env multiqc
+module load multiqc
 #srun crun multiqc $OUTDIR -n $OUTDIR/1st_fastp_report --interactive
-srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename 1st_fastp_report --outdir $OUTDIR $OUTDIR
+multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename 1st_fastp_report --outdir $OUTDIR $OUTDIR
