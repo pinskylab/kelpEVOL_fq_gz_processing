@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=fastp
-#SBATCH -o /hb/home/miclark/kelpEVOL_fq_gz_processing/logs/Multi_fastqc-%j.out
+#SBATCH -o /hb/home/miclark/kelpEVOL_fq_gz_processing/logs/fastp_1stTrim-%j.out
 #SBATCH --cpus-per-task=2 # originally 40, changing to 2 for testing 
 #SBATCH --time=01:00:00 # originally 00:00:00,
 #SBATCH --mem=10G # originally not specified, using 10 for testing 
@@ -27,8 +27,8 @@ module load fastp/0.23.2
 
 INDIR=$1                 #example= /home/e1garcia/shotgun_PIRE/Lle/fq_raw
 OUTDIR=$2                #example= /home/e1garcia/shotgun_PIRE/fq_fp1
-FQPATTERN=*.fastq.gz        #determines files to be trimmed, change to match your files, fq.gz, fastq.gz etc. 
-EXTPATTERN=[12]\.fastq\.gz  # pattern match to fq extensions
+FQPATTERN=*.fq.gz        #determines files to be trimmed, change to match your files, fq.gz, fastq.gz etc. 
+EXTPATTERN=[12]\.fq\.gz  # pattern match to fq extensions
 FWDEXT=1.fq.gz
 REVEXT=2.fq.gz
 THREADS=2 #1/2 of total threads avail; originally 20 
