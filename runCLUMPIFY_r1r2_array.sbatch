@@ -1,39 +1,26 @@
-#!/bin/bash -l
+#!/bin/bash
 
-#SBATCH --job-name=clmp_r12
-#SBATCH -o clmp_r1r2_-%A_%a.out
-#SBATCH -p main
-#SBATCH -c 20
-#SBATCH --exclusive=user
+# Called by runCLUMPIFY_r1r2_array.bash, which starts an array job. 
 
-enable_lmod
-module load container_env pire_genome_assembly
-#module load java/1.8
-#module load bbmap/38.90
-#module load parallel
+# load modules 
+module load java/8u151
 
-export SINGULARITY_BIND=/home/e1garcia
 
-#TEMPDIR=/scratch-lustre/cbird
-#INDIR=/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1
-#OUTDIR=/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp
-FQPATTERN=${4}
-TEMPDIR=${3}
-INDIR=${1}
-OUTDIR=${2}
+#FQPATTERN=${4}
+#TEMPDIR=${3}
+#INDIR=${1}
+#OUTDIR=${2}
 THREADS=1   #clumpify uses a ton of ram, be conservative
 GROUPS=auto   #controls how much ram is used, refer to manual
-#GROUPS=1
-RAMPERTHREAD=180g   #have had to set as high as 233g with groups=1
-#RAMPERTHREAD=233g
+RAMPERTHREAD=233g   #have had to set as high as 233g with groups=1, was originally 180g
 
-#ulimit -u 40960
 ulimit -n 40960 
-#ulimit -s unlimited
 
 ulimit -a
 
 mkdir -p $OUTDIR
+
+echo $SLURM_NODELIST
 
 all_samples=$(ls $INDIR/$FQPATTERN | \
 	sed -e 's/r1\.fq\.gz//' -e 's/.*\///g')
@@ -46,19 +33,28 @@ echo ${sample_name}
 #systemctl status  $PPID  | head -1 | awk '{print $2}' | xargs systemctl show -p TasksMax
 #cat /proc/sys/kernel/threads-max
 
-crun clumpify.sh \
-	in=$INDIR/${sample_name}r1.fq.gz \
-	in2=$INDIR/${sample_name}r2.fq.gz \
-	out=$OUTDIR/${sample_name}clmp.r1.fq.gz \
-	out2=$OUTDIR/${sample_name}clmp.r2.fq.gz \
-	groups=$GROUPS \
+/hb/software/apps/bbtools/gnu-39.01/clumpify.sh \
+	in=${INDIR}/${sample_name}r1.fq.gz \
+	in2=${INDIR}/${sample_name}r2.fq.gz \
+	out=${OUTDIR}/${sample_name}clmp.r1.fq.gz \
+	out2=${OUTDIR}/${sample_name}clmp.r2.fq.gz \
+	groups=auto \
+	lowcomplexity=t \
 	overwrite=t \
 	usetmpdir=t \
-	tmpdir=$TEMPDIR \
+	tmpdir=${TEMPDIR} \
 	deletetemp=t \
 	dedupe=t \
 	addcount=t \
 	subs=2 \
 	containment=t \
 	consensus=f \
-	-Xmx$RAMPERTHREAD
+	-Xmx=480g
+
+#print some environment variables to stdout for records
+echo ----------------------------------------------------------------------------------------
+echo PRINTING SUBSET OF ENVIRONMENT VARIABLES:
+(set -o posix ; set | grep -v ^_ | grep -v ^EB | grep -v ^BASH | grep -v PATH | grep -v LS_COLORS)
+
+echo ----------------------------------------------------------------------------------------
+

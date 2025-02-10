@@ -51,7 +51,7 @@ ls $INDIR/$FQPATTERN | \
 		-j $OUTDIR/{}fastp.json \
 		--qualified_quality_phred 20 \
 		--unqualified_percent_limit 40 \
-		--length_required 33 \
+		--length_required 15 \
 		--low_complexity_filter \
 		--complexity_threshold 30 \
 		--detect_adapter_for_pe \
