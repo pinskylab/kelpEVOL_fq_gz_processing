@@ -1,18 +1,29 @@
-#!/bin/bash -l
+#!/bin/bash
 
 # this script will do sliding window and left 5' trimming on paired end and orphan files
 # no merging of overlapping reads
 # this is third step in prepping reads for de novo assembly
 
 #SBATCH --job-name=fastp
-#SBATCH -o fastp_2nd_-%j.out
-#SBATCH --time=00:00:00
-#SBATCH --cpus-per-task=40
+#SBATCH -o /hb/home/miclark/kelpEVOL_fq_gz_processing/logs/fastp_2nd-%j.out
+#SBATCH --cpus-per-task=2 # originally 40, changing to 2 for testing
+#SBATCH --time=01:00:00 # originally 00:00:00,
+#SBATCH --mem=10G # originally not specified, using 10 for testing
+#SBATCH --partition=lab-mpinsky
+#SBATCH --qos=pi-mpinsky
+#SBATCH --account=pi-mpinsky
 
-enable_lmod
-module load container_env pire_genome_assembly/2021.07.01
+######## runFASTP_1st_trim.sbatch  ##############
+## runs FASTP to do 2nd read trimming          ##
+##  mic updated this 2025-02-11 for UCSC hb    ##
+#################################################
+# usage: sbatch runFASTP_2_cssl.sbatch <indir> <outdir> <bp front trim>
 
-export SINGULARITY_BIND=/home/e1garcia
+# load modules 
+module load parallel/20200122
+module load fastp/0.23.2
+module list 
+
 
 INDIR=$1   			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp
 OUTDIR=$2  			#/home/e1garcia/shotgun_PIRE/fq_4denovo_fp1_clmp_fp2
@@ -29,9 +40,11 @@ FWDEXT=r1.fq.gz
 REVEXT=r2.fq.gz
 THREADS=20 			#1/2 of total threads avail
 
+
+# use read_length_counter.bash to determine reasonable minimum length cut off 
 #MINLEN=$((33-$nBP_FRONT_TRIM))
 #if [[ $MINLEN < 33 ]]; then
-	MINLEN=33
+	MINLEN=15 # originally set to 33
 #fi
 
 mkdir $OUTDIR $OUTDIR/failed
@@ -40,7 +53,7 @@ mkdir $OUTDIR $OUTDIR/failed
 ls $INDIR/$FQPATTERN | \
 	sed -e "s/$EXTPATTERN//" -e 's/.*\///g' | \
 	uniq | \
-	crun parallel --no-notice -j $THREADS \
+	parallel --no-notice -j $THREADS \
 	fastp \
 		--in1 $INDIR/{}$FWDEXT \
 		--in2 $INDIR/{}$REVEXT \
@@ -68,6 +81,14 @@ ls $INDIR/$FQPATTERN | \
 		--report_title "Second Trim R1R2" 
 
 # run multiqc on the fp2 results
-module load container_env multiqc
+module load  multiqc
 #srun crun multiqc $OUTDIR -n $OUTDIR/2nd_fastp_report
-srun crun multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename 2nd_fastp_report --outdir $OUTDIR $OUTDIR
+multiqc -v -p -ip -f --data-dir --data-format tsv --cl-config "max_table_rows: 3000" --filename 2nd_fastp_report --outdir $OUTDIR $OUTDIR
+
+#print some environment variables to stdout for records
+echo ----------------------------------------------------------------------------------------
+echo PRINTING SUBSET OF ENVIRONMENT VARIABLES:
+(set -o posix ; set | grep -v ^_ | grep -v ^EB | grep -v ^BASH | grep -v PATH | grep -v LS_COLORS)
+
+echo ----------------------------------------------------------------------------------------
+

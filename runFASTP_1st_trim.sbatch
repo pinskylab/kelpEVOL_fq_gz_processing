@@ -18,6 +18,7 @@
 
 module load parallel/20200122
 module load fastp/0.23.2
+module list 
 
 ### pending deletion
 # this code is requires if the input files don't live within your own parent directory
