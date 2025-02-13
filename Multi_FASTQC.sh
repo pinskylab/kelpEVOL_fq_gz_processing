@@ -2,10 +2,13 @@
 
 #SBATCH --job-name=Multi_fastqc
 #SBATCH -o /hb/home/miclark/kelpEVOL_fq_gz_processing/logs/Multi_fastqc-%j.out
-#SBATCH --cpus-per-task=2 # originally 32, changing to 2 for testing
+#SBATCH --cpus-per-task=6 # originally 32, changing to 2 for testing
 #SBATCH --time=01:00:00
-#SBATCH --mem=10G # originally 100, changing to 10 for testing
-#SBATCH --partition=128x24
+#SBATCH --mem=20G # originally 100, changing to 10 for testing
+#SBATCH --partition=lab-mpinsky
+#SBATCH --qos=pi-mpinsky
+#SBATCH --account=pi-mpinsky
+
 
 ############# Multi_FASTQC.sh ###################
 ## runs FASTQC and MultiQC reports in parallel ##

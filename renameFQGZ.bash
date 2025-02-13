@@ -2,8 +2,8 @@
 
 # bash script to rename raw fq.gz files from NovoGene with TAMUCC sample name decode file
 
-enable_lmod
 module load parallel
+module list
 
 if [[ -z "$1" ]]; then
         echo "please specify the name of the decode file"
