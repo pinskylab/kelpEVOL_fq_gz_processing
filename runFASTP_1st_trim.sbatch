@@ -31,7 +31,7 @@ FWDEXT=1.fq.gz
 REVEXT=2.fq.gz
 THREADS=6 #1/2 of total threads avail; originally 20 
 
-mkdir $OUTDIR $OUTDIR/failed
+mkdir $OUTDIR $OUTDIR/failed $OUTDIR/merged $OUTDIR/unmerged
 
 ls $INDIR/$FQPATTERN | \
 	sed -e "s/$EXTPATTERN//" -e 's/.*\///g' | \
@@ -45,8 +45,8 @@ ls $INDIR/$FQPATTERN | \
 		--unpaired1 $OUTDIR/failed/{}unprd.fq.gz \
 		--unpaired2 $OUTDIR/failed/{}unprd.fq.gz \
 		--failed_out $OUTDIR/failed/{}fail.fq.gz \
-		--merge \ 
-		--merged_out $OUTDIR/merged/{}mrg.fq.gz
+		--merge \
+		--merged_out $OUTDIR/merged/{}mrg.fq.gz \
 		-h $OUTDIR/{}fastp.html \
 		-j $OUTDIR/{}fastp.json \
 		--qualified_quality_phred 20 \
